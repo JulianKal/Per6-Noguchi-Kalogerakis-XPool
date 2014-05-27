@@ -3,6 +3,7 @@ Ball b1 = new Ball();
 Ball b2 = new Ball();
 Ball b3 = new Ball();
 float x, y, z;
+float mousestuffZ;
 
 void setup() {
   size(1000,600,P3D);
@@ -34,17 +35,33 @@ void setup() {
 
 void draw(){
   background(0);
-  translate(x,y,z);
-  
+  //translate(x,y,z);
+  //camera(mouseX, mouseY, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
+  rotateX(PI/2);
+  translate(x,-500,-500);
+  rotateZ(mousestuffZ);
+  pushMatrix();
+  translate(0,y,-25);
   fill(100);
   rectMode(CENTER);
   rect(0,0,900,500);
+  popMatrix();
   
   for(Ball b : p.getBallSet()){
-    fill(255);
-    ellipse(b.getX(),b.getY(),50,50);
+    pushMatrix();
+    stroke(255);
+    translate(b.getX(),b.getY()+y,0);
+    rotateZ(mousestuffZ);
+    sphere(25);
+    popMatrix();
   }
-    
+  if(key==CODED){
+    if(keyCode == LEFT){
+       mousestuffZ += -PI/32;
+    }else if(keyCode == RIGHT){
+      mousestuffZ += PI/32;
+    }
+  }
   p.update();
   
 }
