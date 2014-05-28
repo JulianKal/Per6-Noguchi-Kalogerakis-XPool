@@ -1,0 +1,196 @@
+class Cursor {
+  CueBall ball;
+  float x, y, z;
+  
+  
+  Cursor(){
+    x = mouseX;
+    y = mouseY;
+    z = 0;
+  }
+  
+  Cursor(CueBall ball){
+    x = mouseX;
+    y = mouseY;
+    z = 0;
+    this.setCueBall(ball);
+  } 
+ 
+  void setCueBall(CueBall ball){
+    this.ball = ball;
+  }
+ 
+  float getX(){
+    return x;
+  }
+  float getY(){
+    return y;
+  }
+  
+  float angle(){
+    return atan((mouseY-ball.getY())/(mouseX - ball.getX()));
+  }
+  
+  void display(){
+    pushMatrix();
+    fill(255);
+    rectMode(CENTER);
+    translate(mouseX, mouseY);
+    rotate(angle());
+    stroke(180, 50, 50);
+    box(175, 5, 5);
+    popMatrix();
+  }
+
+}
+
+class CueBall extends Ball{
+  color cue = color(255);
+  float x, y, z;
+  float vX, vY, vZ;
+  float aX, aY, aZ;
+  float fX, fY, fZ, fF;
+  float keX, keY, keZ;
+  float m = 0.16; //kilograms
+  
+  CueBall(){
+    x = width/2;
+    y = height/2;
+    z = 10;
+    vX = 0;
+    vY = 0;
+    vZ = 0;
+    aX = 0;
+    aY = 0; 
+    aZ = 0;
+    fX = 0;
+    fY = 0;
+    fZ = 0;
+    keX = 0;
+    keY = 0;
+    keZ = 0;
+  }
+  
+  void display(){
+    pushMatrix();
+    lights();
+    translate(x, y, z);
+    fill(cue);
+    if(!mouseHere()){
+      noStroke();
+    }
+    else{
+      stroke(180, 50, 50);
+    }
+    sphere(10); //millimeters
+    popMatrix();
+  }
+  
+  float getX(){
+    return x;
+  }
+  float getY(){
+    return y;
+  }
+  float getZ(){
+    return z;
+  }
+  float getVX(){
+    return vX;
+  }
+  float getVY(){
+    return vY;
+  }
+  float getVZ(){
+    return vZ;
+  }
+  void setX(float x){
+    this.x = x;
+  }
+  void setY(float y){
+    this.y = y;
+  }
+  void setZ(float z){
+    this.z = z;
+  }
+  void setVX(float x){
+    this.vX = x;
+  }
+  void setVY(float y){
+    this.vY = y;
+  }
+  void setVZ(float z){
+    this.vZ = z;
+  }
+  
+  boolean mouseHere(){
+    return abs(dist(mouseX, mouseY, getX(), getY()) - 92.50) <= 5; 
+  }
+  
+  void drive(){
+    x = x + vX;
+    y = y + vY;
+    z = z + vZ;
+  }
+}
+
+class Board {
+  color board = color(0, 80, 0);  
+  float x, y, z;
+  
+  Board(){
+    x = width/2;
+    y = height/2;
+    z = 0;
+  }
+  
+  void display(){
+    pushMatrix();
+    lights();
+    rectMode(CENTER);
+    stroke(250);
+    fill(board);
+    rect(x, y, 900, 450); //millimeters
+    popMatrix();
+  }
+  
+}
+
+CueBall cue;
+Board b;
+Cursor stick;
+
+void setup(){
+  frameRate(60);
+  size(1200, 750, P3D);
+  background(25); 
+  cue = new CueBall();
+  b = new Board();
+  stick = new Cursor(cue);
+}
+
+void draw(){
+  background(25);
+  cue.display();
+  b.display();
+  stick.display();
+  cue.drive();
+  println("MouseDistX: " + (cue.getX() - mouseX));
+  println("MouseDistY: " + (cue.getY() - mouseY));
+  println("X component: " + (int)(87.5 * cos(stick.angle())));
+  println("Y component: " + (int)(87.5 * sin(stick.angle())));
+}
+
+void mouseClicked(){
+  if(cue.mouseHere()){
+    if(cue.getX() - mouseX > 0){
+      cue.setVX(cue.getVX() + ((cue.getX() - mouseX) - 87.5 * cos(stick.angle()))/2.5);
+      cue.setVY(cue.getVY() + ((cue.getY() - mouseY) - 87.5 * sin(stick.angle()))/2.5);
+    }
+    else{
+      cue.setVX(cue.getVX() + ((cue.getX() - mouseX) + 87.5 * cos(stick.angle())));
+      cue.setVY(cue.getVY() + ((cue.getY() - mouseY) + 87.5 * sin(stick.angle())));
+    }
+ }  
+
+}
