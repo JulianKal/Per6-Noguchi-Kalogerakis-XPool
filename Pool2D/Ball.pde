@@ -5,6 +5,11 @@ public class Ball{
   private float FRICTION;
   private int colorNum;
   
+  public Ball(float x,float y,float vx,float vy){
+    this(x,y);
+    _vx = vx;
+    _vy = vy;
+  }
   public Ball(float x, float y){
     _x = x;
     _y = y;

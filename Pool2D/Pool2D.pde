@@ -4,6 +4,7 @@ Ball b2 = new Ball();
 Ball b3 = new Ball();
 float x, y, z;
 float mousestuffZ;
+boolean end = true;
 
 void setup() {
   size(1000,600,P3D);
@@ -12,25 +13,16 @@ void setup() {
   x = width/2;
   y = height/2;
   z=0;
-  
-  b1.setX(-150);
-  b1.setY(0);
-  b1.setXVel(45);
-  b1.setYVel(-35);
-  
-  b2.setX(150);
-  b2.setY(0);
-  b2.setXVel(-50);
-  b2.setYVel(40);
-  
-  b3.setX(0);
-  b3.setY(-150);
-  b3.setXVel(10);
-  b3.setYVel(-30);
-  
+  for(int x=0;x<10;x++){
+    p.set(new Ball(random(500)-250,random(500)-250,random(50)-25,random(50)-25));
+  }
   p.set(b1);
-  p.set(b2);
-  p.set(b3);
+  b1.setX(150);
+  b1.setY(150);
+  b1.setXVel(-50);
+  b1.setYVel(40);
+  
+  lights();
 }
 
 void draw(){
@@ -38,8 +30,18 @@ void draw(){
   //translate(x,y,z);
   //camera(mouseX, mouseY, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
   rotateX(PI/2);
-  translate(x,-500,-500);
-  rotateZ(mousestuffZ);
+  
+  if(!end){
+    translate(x,y-500,z);
+    rotateZ(mousestuffZ);
+    translate(-x,-y+500,-z);
+  }else{
+    translate(x+b1.getX()/2,y-500 + b1.getY()/2,z);
+    rotateZ(mousestuffZ);
+    translate(-x-b1.getX()/2,-y+500-b1.getY()/2,-z);
+  }
+  
+  translate(x-25,-500,-500);
   pushMatrix();
   translate(0,y,-25);
   fill(100);
@@ -50,6 +52,7 @@ void draw(){
   for(Ball b : p.getBallSet()){
     pushMatrix();
     stroke(255);
+    fill(b.getColor());
     translate(b.getX(),b.getY()+y,0);
     rotateZ(mousestuffZ);
     sphere(25);
@@ -57,11 +60,23 @@ void draw(){
   }
   if(key==CODED){
     if(keyCode == LEFT){
-       mousestuffZ += -PI/32;
+       mousestuffZ += -PI/64;
+       keyCode = UP;
     }else if(keyCode == RIGHT){
-      mousestuffZ += PI/32;
+      mousestuffZ += PI/64;
+      keyCode = UP;
     }
   }
+  
   p.update();
   
 }
+
+void exit(){
+  super.exit();
+}
+
+void mouseClicked(){
+  end  = !end;
+}
+
