@@ -14,6 +14,7 @@ public class Ball{
     _x = x;
     _y = y;
     FRICTION = -0.2;
+    colorNum = 255;
   }
   public Ball(){
     this(0,0);
