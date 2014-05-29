@@ -36,14 +36,18 @@ void draw(){
   background(0);
   //translate(x,y,z);
   //camera(mouseX, mouseY, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
-  rotateX(PI/2);
   
-  chooseRotation();
+  if(rotatable){
+    rotateX(PI/2);
+    chooseRotation();
+    
+    translate(x-25,-500,-500);
+        mx-=x+25;
+        my-=-500;
+  }else{
+    translate(x,0,0);
+  }
   
-  translate(x-25,-500,-500);
-      mx-=x+25;
-      my-=-500;
-      
   paintRectangle();
   paintBalls();
   /*
@@ -60,7 +64,8 @@ void exit(){
 }
 
 void mouseClicked(){
-  aim = !aim;
+  rotatable = !rotatable;
+  
 }
 
 void buttonListener(){
@@ -88,25 +93,28 @@ void paintRectangle(){
 void paintBalls(){
   for(Ball b : p.getBallSet()){
     pushMatrix();
-    stroke(b.getColor());
-    fill(255);
     translate(b.getX(),b.getY()+y,0);
-    sphere(25);
+    if(rotatable){
+      stroke(b.getColor());
+      fill(100);
+      sphere(25);
+    }else{
+      fill(b.getColor());
+      ellipse(0,0,50,50);
+    }
     popMatrix();
   }
 }
 
 void chooseRotation(){
-  if(rotatable){
-    if(!aim){
-      translate(x,y-500,z);
-      rotateZ(mousestuffZ);
-      translate(-x,-y+500,-z);
-    }else{
-      translate(x+b1.getX()/2,y-500 + b1.getY()/2,z);
-      rotateZ(mousestuffZ);
-      translate(-x-b1.getX()/2,-y+500-b1.getY()/2,-z);
-    }
+  if(!aim){
+    translate(x,y-500,z);
+    rotateZ(mousestuffZ);
+    translate(-x,-y+500,-z);
+  }else{
+    translate(x+b1.getX()/2,y-500 + b1.getY()/2,z);
+    rotateZ(mousestuffZ);
+    translate(-x-b1.getX()/2,-y+500-b1.getY()/2,-z);
   }
 }
 
