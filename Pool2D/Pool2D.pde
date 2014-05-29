@@ -5,8 +5,9 @@ Ball b3 = new Ball();
 Ball cueBall = new Ball();
 float x, y, z;
 float mousestuffZ;
-boolean rotatable = true;
 boolean aim = true;
+boolean rotatable = true;
+boolean scratch = false;
 float mx, my;
 
 void setup() {
@@ -50,6 +51,7 @@ void draw(){
   
   paintRectangle();
   paintBalls();
+  
   /*
   cueBall.setX(mx);
   cueBall.setY(my);
@@ -64,8 +66,8 @@ void exit(){
 }
 
 void mouseClicked(){
+  scratch = !scratch;
   rotatable = !rotatable;
-  
 }
 
 void buttonListener(){
@@ -103,6 +105,11 @@ void paintBalls(){
       ellipse(0,0,50,50);
     }
     popMatrix();
+  }
+  if(scratch){
+    
+    b1.setX(mouseX-x);
+    b1.setY(mouseY-y);
   }
 }
 

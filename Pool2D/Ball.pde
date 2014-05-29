@@ -40,7 +40,6 @@ public class Ball{
             b.insertForce(speed()*cos(translatedAngle),absoluteAngle(b));
             insertForce(speed()*cos(translatedAngle+PI),absoluteAngle(b));
           }
-          println("CONTACT123223323");
         }
       }
     }
