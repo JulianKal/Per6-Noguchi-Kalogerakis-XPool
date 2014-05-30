@@ -9,6 +9,8 @@ boolean aim = true;
 boolean rotatable = true;
 boolean scratch = false;
 float mx, my;
+float lastTime = millis();
+float delay;
 
 void setup() {
   size(1000,600,P3D);
@@ -16,7 +18,7 @@ void setup() {
   
   x = width/2;
   y = height/2;
-  z=0;
+  z= 500;
   for(int x=0;x<5;x++){
     p.set(new Ball(random(500)-250,random(500)-250,random(80)-40,random(80)-40));
   }
@@ -32,7 +34,7 @@ void setup() {
 }
 
 void draw(){
-  mx = mouseX;
+  mx = mouseX; 
   my = mouseY;
   background(0);
   //translate(x,y,z);
@@ -42,7 +44,7 @@ void draw(){
     rotateX(PI/2);
     chooseRotation();
     
-    translate(x-25,-500,-500);
+    translate(x-25,-500,-400);
         mx-=x+25;
         my-=-500;
   }else{
@@ -72,12 +74,28 @@ void mouseClicked(){
 
 void buttonListener(){
   if(key==CODED){
+    if(keyCode == UP){
+      if(p.stopped()){
+        b1.setXVel(30*cos(PI/2 + mousestuffZ));
+        b1.setYVel(30*sin(PI/2 + mousestuffZ));
+        delay = 3000;
+      }
+      keyCode = DOWN;
+    }
     if(keyCode == LEFT){
-       mousestuffZ += -PI/256;
-       keyCode = UP;
+      if(millis()-lastTime>delay){
+        mousestuffZ += -PI/256;
+        keyCode = DOWN;
+        lastTime = millis();
+        delay = 0;
+      }
     }else if(keyCode == RIGHT){
-      mousestuffZ += PI/64;
-      keyCode = UP;
+      if(millis()-lastTime>delay){
+        mousestuffZ += PI/256;
+        keyCode = DOWN;
+        lastTime = millis();
+        delay= 0;
+      }
     }
   }
 }
@@ -107,14 +125,14 @@ void paintBalls(){
     popMatrix();
   }
   if(scratch){
-    
     b1.setX(mouseX-x);
     b1.setY(mouseY-y);
   }
 }
 
 void chooseRotation(){
-  if(!aim){
+  println(p.stopped());
+  if(!p.stopped()){
     translate(x,y-500,z);
     rotateZ(mousestuffZ);
     translate(-x,-y+500,-z);

@@ -16,5 +16,14 @@ public class Pool{
   public ArrayList<Ball> getBallSet(){
     return ballSet;
   }
+  
+  public boolean stopped(){
+    for(Ball b : ballSet){
+      if(abs(b.getXVel())>0.1 && abs(b.getYVel())>0.1){
+        return false;
+      }
+    }
+    return true;
+  }
 }
 

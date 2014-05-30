@@ -13,7 +13,7 @@ public class Ball{
   public Ball(float x, float y){
     _x = x;
     _y = y;
-    FRICTION = -0.2;
+    FRICTION = -0.15;
     colorNum = 255;
   }
   public Ball(){
