@@ -11,6 +11,8 @@ boolean scratch = false;
 float mx, my;
 float lastTime = millis();
 float delay;
+float shotPower = .7;
+boolean precisionAim = false;
 
 void setup() {
   size(1000,600,P3D);
@@ -18,8 +20,8 @@ void setup() {
   
   x = width/2;
   y = height/2;
-  z= 500;
-  for(int x=0;x<2;x++){
+  z = 500;
+  for(int x=0;x<10;x++){
     p.set(new Ball(random(500)-250,random(500)-250,random(80)-40,random(80)-40));
   }
   p.set(b1);
@@ -29,7 +31,6 @@ void setup() {
   b1.setXVel(-50);
   b1.setYVel(40);
   b1.setColor(150);
-  
   lights();
 }
 
@@ -85,26 +86,53 @@ void buttonListener(){
   if(key==CODED){
     if(keyCode == UP){
       if(p.stopped()){
-        b1.setXVel(30*sin(PI+mousestuffZ));
-        b1.setYVel(30*cos(PI+mousestuffZ));
+        b1.setXVel(10*shotPower*sin(PI+mousestuffZ));
+        b1.setYVel(10*shotPower*cos(PI+mousestuffZ));
         delay = 3000;
       }
       keyCode = DOWN;
     }
     if(keyCode == LEFT){
       if(millis()-lastTime>delay){
-        mousestuffZ += -PI/256;
+        if (precisionAim){
+          mousestuffZ += PI/1810;
+        }
+        else{
+          mousestuffZ += PI/60;
+        }
         keyCode = DOWN;
         lastTime = millis();
         delay = 0;
       }
     }else if(keyCode == RIGHT){
       if(millis()-lastTime>delay){
-        mousestuffZ += PI/256;
+        if (precisionAim){
+          mousestuffZ -= PI/1810;
+        }
+        else{
+          mousestuffZ -= PI/60;
+        }
         keyCode = DOWN;
         lastTime = millis();
         delay= 0;
       }
+    }else if(keyCode == ALT){
+      if(millis()-lastTime>delay){
+        shotPower += .05;
+        keyCode = DOWN;
+        lastTime = millis();
+        delay = 0;
+      }
+    }else if(keyCode == CONTROL){
+      if(millis()-lastTime>delay){
+        shotPower -= .05;
+        keyCode = DOWN;
+        lastTime = millis();
+        delay = 0;
+      }  
+    }    
+    else if(keyCode == SHIFT){
+      precisionAim = !precisionAim;
     }
   }
 }
