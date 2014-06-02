@@ -2,7 +2,6 @@ Pool p = new Pool();
 Ball b1 = new Ball();
 Ball b2 = new Ball();
 Ball b3 = new Ball();
-Ball cueBall = new Ball();
 float x, y, z;
 float mousestuffZ;
 boolean aim = true;
@@ -25,7 +24,6 @@ void setup() {
     p.set(new Ball(random(500)-250,random(500)-250,random(80)-40,random(80)-40));
   }
   p.set(b1);
-  p.set(cueBall);
   b1.setX(150);
   b1.setY(150);
   b1.setXVel(-50);
@@ -38,31 +36,33 @@ void draw(){
   mx = mouseX; 
   my = mouseY;
   background(0);
-  
-  pushMatrix();
-  translate(mx, my, 0);
-  stroke(20);
-  rotateY(-mousestuffZ);
-  fill(155, 0, 0);
-  box(2500, 5, 5);
-  fill( 0, 0, 155);
-  box(5, 2500, 5);
-  fill(0, 155, 0);
-  box(5, 5, 2500);
-  popMatrix();
-  
+
   if(rotatable){
     rotateX(PI/2);
     chooseRotation();
-    translate(x-25,-500,-400);
-    mx-=x+25;
+    translate(x-15,-500,-400);
+    mx-=x+15;
     my-=-500;
   }else{
     translate(x,0,0);
   }
   
+
+  
   paintRectangle();
   paintBalls();
+  
+  pushMatrix();
+  translate(b1.getX(), b1.getY() + 300, 0);
+  stroke(20);
+  rotateZ(-mousestuffZ);
+  fill(105, 0, 0);
+  box(2500, 2, 2);
+  fill( 0, 0, 15 + shotPower*100);
+  box(4, 2500, 4);
+  fill(0, 105, 0);
+  box(2, 2, 2500);
+  popMatrix();
   
   /*
   cueBall.setX(mx);
@@ -70,7 +70,8 @@ void draw(){
   */
   buttonListener();
   p.update();
-  
+    
+
 }
 
 void exit(){
@@ -139,7 +140,7 @@ void buttonListener(){
 
 void paintRectangle(){
   pushMatrix();
-  translate(0,y,-25);
+  translate(0,y,-15);
       my-=y;
   fill(100);
   rectMode(CENTER);
@@ -154,7 +155,7 @@ void paintBalls(){
     if(rotatable){
       stroke(b.getColor());
       fill(100);
-      sphere(25);
+      sphere(15);
     }else{
       fill(b.getColor());
       ellipse(0,0,50,50);
@@ -173,7 +174,7 @@ void chooseRotation(){
   if(!p.stopped()){
     translate(x,y-500,z);
     rotateZ(mousestuffZ);
-    translate(-x,-y+500,-z); 
+    translate(-x,-y+500,-z);
   }
   //If at least one of the balls is in motion, then..
   else{
