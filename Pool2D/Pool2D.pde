@@ -19,7 +19,7 @@ void setup() {
   x = width/2;
   y = height/2;
   z= 500;
-  for(int x=0;x<5;x++){
+  for(int x=0;x<2;x++){
     p.set(new Ball(random(500)-250,random(500)-250,random(80)-40,random(80)-40));
   }
   p.set(b1);
@@ -37,16 +37,25 @@ void draw(){
   mx = mouseX; 
   my = mouseY;
   background(0);
-  //translate(x,y,z);
-  //camera(mouseX, mouseY, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
+  
+  pushMatrix();
+  translate(mx, my, 0);
+  stroke(20);
+  rotateY(-mousestuffZ);
+  fill(155, 0, 0);
+  box(2500, 5, 5);
+  fill( 0, 0, 155);
+  box(5, 2500, 5);
+  fill(0, 155, 0);
+  box(5, 5, 2500);
+  popMatrix();
   
   if(rotatable){
     rotateX(PI/2);
     chooseRotation();
-    
     translate(x-25,-500,-400);
-        mx-=x+25;
-        my-=-500;
+    mx-=x+25;
+    my-=-500;
   }else{
     translate(x,0,0);
   }
@@ -76,8 +85,8 @@ void buttonListener(){
   if(key==CODED){
     if(keyCode == UP){
       if(p.stopped()){
-        b1.setXVel(30*cos(PI/2 + mousestuffZ));
-        b1.setYVel(30*sin(PI/2 + mousestuffZ));
+        b1.setXVel(30*sin(PI+mousestuffZ));
+        b1.setYVel(30*cos(PI+mousestuffZ));
         delay = 3000;
       }
       keyCode = DOWN;
@@ -132,11 +141,14 @@ void paintBalls(){
 
 void chooseRotation(){
   println(p.stopped());
+  //If all of the balls have stopped moving, then..
   if(!p.stopped()){
     translate(x,y-500,z);
     rotateZ(mousestuffZ);
-    translate(-x,-y+500,-z);
-  }else{
+    translate(-x,-y+500,-z); 
+  }
+  //If at least one of the balls is in motion, then..
+  else{
     translate(x+b1.getX()/2,y-500 + b1.getY()/2,z);
     rotateZ(mousestuffZ);
     translate(-x-b1.getX()/2,-y+500-b1.getY()/2,-z);
