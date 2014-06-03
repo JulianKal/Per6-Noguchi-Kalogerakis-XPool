@@ -171,7 +171,6 @@ void paintBalls(){
 }
 
 void chooseRotation(){
-  println(p.stopped());
   //If all of the balls have stopped moving, then..
   if(!p.stopped()){
     translate(x,y-500,z);
