@@ -1,12 +1,15 @@
+//Need to fix head on collisions.
+
 public class Ball{
   private float _x, _y; //Positions of the ball, set using the translate() function.
   private float _vx, _vy; //Delta x and y, for velocity.
   private float _ax, _ay; //The acceleration (rate of change of speed)
   private int colorNum;
-  private float _spinx,_spiny,_spinhoriz;
+  private float _spinx,_spiny;
   private float _spinvert;
   private float _spinupdir; //-1 or 1. -1 is clockwise, 1 is counterclockwise. This is the spin that doesn't really affect direction.
-  
+  private float _prevRollingSpin,_prevRollingAngle, _rollingSpin;
+
   public Ball(float x,float y,float vx,float vy){
     this(x,y);
     _vx = vx;
@@ -26,13 +29,31 @@ public class Ball{
     insertLowPass();
     _x += _vx;
     _y += _vy;
-    println(speed());
-    insertSpinEffect();
     insertFriction();
     insertWallCollisions();
     insertBallCollisions();
+    insertRollingSpin();
+    insertSpinEffect(); //This has to go last so that collision checking occurs first.
   }
   
+  ////////////////////////////////////////////////////
+  //Spin. Spin will be measured in angle(radians) per frame.
+  public void insertRollingSpin(){//For when the ball is rolling forward without obstruction.
+    _rollingSpin = (speed()*(1/FPS))/RAD; //Using the radian formula for arclength of a circle
+    insertSpinHoriz(_prevRollingSpin, PI+direction());
+    insertSpinHoriz(_rollingSpin, direction());
+    _prevRollingSpin = _rollingSpin;
+    _prevRollingAngle = direction();
+  }
+  public void resetRollingSpin(){
+    insertSpinHoriz(_prevRollingSpin,_prevRollingAngle);
+    _prevRollingSpin = 0;
+    _prevRollingAngle = direction();
+  }
+  public void insertSpinHoriz(float magnitude, float dir){
+    _spinx += magnitude * cos(dir);
+    _spiny += magnitude * sin(dir);
+  }
   public void insertSpinEffect(){
     _vx += _spinx;
     _vy += _spiny;
@@ -44,7 +65,13 @@ public class Ball{
     if(abs(_spiny)<0.0001){
       _spiny = 0;
     }
+  }  
+  public float spinHorizAngle(){
+    return angle(_spinx,_spiny);
   }
+  
+  ////////////////////////////////////////////////////
+  
   public void insertBallCollisions(){
     for(Ball b : p.getBallSet()){
       if(this != b){
@@ -56,6 +83,7 @@ public class Ball{
             _y += distance(b)*sin(absoluteAngle(b));
             b.insertForce(speed()*cos(translatedAngle),absoluteAngle(b));
             insertForce(speed()*cos(translatedAngle+PI),absoluteAngle(b));
+            resetRollingSpin(); //For collisions
           }
         }
       }
@@ -75,15 +103,21 @@ public class Ball{
     _vy += sin(direction())*FRICTION;
   }
   public void insertWallCollisions(){
+    boolean collided = false;
     if(_x<-425 || _x>425){
       _x -= _vx;
       _vx *= -1;
       _ax *= -1;
+      collided = true;
     }
     if(_y<-225 || _y>225){
       _y -= _vy;
       _vy *= -1;
       _ay *= -1;
+      collided = true;
+    }
+    if(collided){
+      resetRollingSpin();
     }
   }
   public void insertForce(float velocity, float angle){
@@ -92,15 +126,6 @@ public class Ball{
     _vx += vx;
     _vy += vy;
   }
-  public void insertSpinForce(){
-  
-  }
-  
-  public void insertSpinXY(float mag, float dir){ //Mag is magnitude, dir is direction.
-    _spinx += mag * sin(dir);
-    _spiny += mag * cos(dir);
-    
-  }  
   
   public float angle(float x, float y){ //Helper function
     if(x==0){
@@ -129,9 +154,7 @@ public class Ball{
   public float direction(){
     return angle(_vx,_vy);
   }
-  public float spinHorizAngle(){
-    return angle(_spinx,_spiny);
-  }
+  
   public float absoluteAngle(Ball b){ //Angle between two balls
     float dy = b.getY() - _y;
     float dx = b.getX() - _x;
