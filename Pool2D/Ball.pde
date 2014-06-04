@@ -109,7 +109,7 @@ public class Ball{
   }
   
   public float distance(Ball b){
-    return sqrt(sq(_x-b.getX()) + sq(_y-b.getY()))-RAD;
+    return sqrt(sq(_x-b.getX()) + sq(_y-b.getY()))-RAD*2;
   }
   
   public float convert2PI(float f){ //Convert angles to between 0 and 2PI

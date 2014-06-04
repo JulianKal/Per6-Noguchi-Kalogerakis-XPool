@@ -147,6 +147,13 @@ void paintRectangle(){
   fill(100);
   rectMode(CENTER);
   rect(0,0,900,500);
+  fill(0);
+  ellipse(450,250, 40, 40);
+  ellipse(-450,250, 40, 40);
+  ellipse(450,-250, 40, 40);
+  ellipse(-450,-250, 40, 40);
+  ellipse(0,-250, 40, 40);
+  ellipse(0,250, 40, 40);
   popMatrix();
 }
 
@@ -160,7 +167,7 @@ void paintBalls(){
       sphere(RAD);
     }else{
       fill(b.getColor());
-      ellipse(0,0,RAD,RAD);
+      ellipse(0,0,RAD*2,RAD*2);
     }
     popMatrix();
   }
