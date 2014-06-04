@@ -6,8 +6,8 @@ public class Ball{
   private float _ax, _ay; //The acceleration (rate of change of speed)
   private int colorNum;
   private float _spinx,_spiny;
-  private float _spinvert;
-  private float _spinupdir; //-1 or 1. -1 is clockwise, 1 is counterclockwise. This is the spin that doesn't really affect direction.
+  private float _spinvert; //The spin that is mainly for curves.
+                           //Neg is clockwise, and Pos is counterclockwise.
   private float _prevRollingSpin,_prevRollingAngle, _rollingSpin;
 
   public Ball(float x,float y,float vx,float vy){
@@ -38,6 +38,7 @@ public class Ball{
   
   ////////////////////////////////////////////////////
   //Spin. Spin will be measured in angle(radians) per frame.
+  
   public void insertRollingSpin(){//For when the ball is rolling forward without obstruction.
     _rollingSpin = (speed()*(1/FPS))/RAD; //Using the radian formula for arclength of a circle
     insertSpinHoriz(_prevRollingSpin, PI+direction());
@@ -54,21 +55,33 @@ public class Ball{
     _spinx += magnitude * cos(dir);
     _spiny += magnitude * sin(dir);
   }
+  public void insertSpinVert(float magnitude){
+    _spinvert = magnitude;
+  }
   public void insertSpinEffect(){
     _vx += _spinx;
     _vy += _spiny;
+    insertForce(0.5*_spinvert,direction()-PI/2);
     _spinx-= 0.7 * getSpinMag()*cos(spinHorizAngle());
     _spiny-= 0.7 * getSpinMag()*sin(spinHorizAngle());
+    _spinvert *= 0.7;
     if(abs(_spinx)<0.0001){
       _spinx = 0;
     }
     if(abs(_spiny)<0.0001){
       _spiny = 0;
     }
+    if(abs(_spinvert)<0.0001){
+      _spinvert = 0;
+    }
   }  
   public float spinHorizAngle(){
     return angle(_spinx,_spiny);
   }
+  public void spinVertWallCollision(){
+    
+  }
+  
   
   ////////////////////////////////////////////////////
   
@@ -96,7 +109,7 @@ public class Ball{
     }
     if(abs(_vy)<0.1){
       _vy=0;
-    } 
+    }
   }
   public void insertFriction(){
     _vx += cos(direction())*FRICTION;
@@ -109,12 +122,14 @@ public class Ball{
       _vx *= -1;
       _ax *= -1;
       collided = true;
+      spinVertWallLR(_x>=0);
     }
     if(_y<-225 || _y>225){
       _y -= _vy;
       _vy *= -1;
       _ay *= -1;
       collided = true;
+      spinVertWallUD(_y>=0);
     }
     if(collided){
       resetRollingSpin();

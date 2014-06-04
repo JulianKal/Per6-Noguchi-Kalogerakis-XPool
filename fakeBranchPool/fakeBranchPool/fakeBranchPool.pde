@@ -16,7 +16,7 @@ float shotPower = .7;
 boolean precisionAim = false;
 float RAD = 15;
 float FRICTION = -0.05;
-float FPS = 5;
+float FPS = 60;
 
 void setup() {
   size(1000,600,P3D);
@@ -32,17 +32,18 @@ void setup() {
   }
   */
   p.set(b1);
-  b1.setX(0);
-  b1.setY(-50);
-  b1.setXVel(10);
+  b1.setX(-100);
+  b1.setY(0);
+  b1.setXVel(20);
   b1.setYVel(0);
   b1.setColor(150);
-  b1.insertSpinHoriz(1,0);
+  //b1.insertSpinHoriz(1,0);
+  //b1.insertSpinVert(2);
   
-  //p.set(b2);
-  b2.setX(0);
-  b2.setXVel(10);
-  b2.setYVel(0);
+  p.set(b2);
+  b2.setX(100);
+  b2.setXVel(-20);
+  b2.setYVel(1);
   b2.setColor(255);
   //b2.insertSpinHoriz(1,0);
   lights();
