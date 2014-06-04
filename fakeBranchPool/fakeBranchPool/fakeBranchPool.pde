@@ -1,3 +1,5 @@
+//Purely for testing the further improved physics engine (with new and improved spin!)
+
 Pool p = new Pool();
 Ball b1 = new Ball();
 Ball b2 = new Ball();
@@ -22,20 +24,21 @@ void setup() {
   x = width/2;
   y = height/2;
   z = 500;
-  for(int x=0;x<4;x++){
+  /*
+  for(int x=0;x<10;x++){
     p.set(new Ball(random(500)-250,random(500)-250,random(80)-40,random(80)-40));
   }
+  */
   p.set(b1);
-  b1.setX(150);
-  b1.setY(150);
-  b1.setXVel(-50);
-  b1.setYVel(40);
+  b1.setXVel(0);
+  b1.setYVel(-20);
+  b1.insertSpinXY(1,0);
   b1.setColor(150);
   lights();
 }
 
 void draw(){
-  mx = mouseX; 
+  mx = mouseX;
   my = mouseY;
   background(0);
 
@@ -48,8 +51,6 @@ void draw(){
   }else{
     translate(x,0,0);
   }
-  
-
   
   paintRectangle();
   paintBalls();
@@ -87,6 +88,7 @@ void mouseClicked(){
 
 void buttonListener(){
   if(key==CODED){
+    /*
     if(keyCode == UP){
       if(p.stopped()){
         b1.setXVel(10*shotPower*sin(PI+mousestuffZ));
@@ -95,6 +97,7 @@ void buttonListener(){
       }
       keyCode = DOWN;
     }
+    */
     if(keyCode == LEFT){
       if(millis()-lastTime>delay){
         if (precisionAim){
@@ -160,7 +163,7 @@ void paintBalls(){
       sphere(RAD);
     }else{
       fill(b.getColor());
-      ellipse(0,0,RAD,RAD);
+      ellipse(0,0,RAD*2,RAD*2);
     }
     popMatrix();
   }

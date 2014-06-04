@@ -3,6 +3,9 @@ public class Ball{
   private float _vx, _vy; //Delta x and y, for velocity.
   private float _ax, _ay; //The acceleration (rate of change of speed)
   private int colorNum;
+  private float _spinx,_spiny,_spinhoriz;
+  private float _spinvert;
+  private float _spinupdir; //-1 or 1. -1 is clockwise, 1 is counterclockwise. This is the spin that doesn't really affect direction.
   
   public Ball(float x,float y,float vx,float vy){
     this(x,y);
@@ -19,14 +22,30 @@ public class Ball{
   }
   
   public void update(){
+    
     insertLowPass();
     _x += _vx;
     _y += _vy;
-    
+    println(speed());
+    insertSpinEffect();
     insertFriction();
     insertWallCollisions();
-    
-    //Ball to ball collisions
+    insertBallCollisions();
+  }
+  
+  public void insertSpinEffect(){
+    _vx += _spinx;
+    _vy += _spiny;
+    _spinx-= 0.7 * getSpinMag()*cos(spinHorizAngle());
+    _spiny-= 0.7 * getSpinMag()*sin(spinHorizAngle());
+    if(abs(_spinx)<0.0001){
+      _spinx = 0;
+    }
+    if(abs(_spiny)<0.0001){
+      _spiny = 0;
+    }
+  }
+  public void insertBallCollisions(){
     for(Ball b : p.getBallSet()){
       if(this != b){
         if(distance(b)<0){
@@ -44,14 +63,13 @@ public class Ball{
   }
   
   public void insertLowPass(){ //Simple low pass filter for any float calculation errors.
-    if(abs(_vx)<0.5){
+    if(abs(_vx)<0.1){
       _vx=0;
     }
-    if(abs(_vy)<1){
+    if(abs(_vy)<0.1){
       _vy=0;
     } 
   }
-  
   public void insertFriction(){
     _vx += cos(direction())*FRICTION;
     _vy += sin(direction())*FRICTION;
@@ -74,6 +92,15 @@ public class Ball{
     _vx += vx;
     _vy += vy;
   }
+  public void insertSpinForce(){
+  
+  }
+  
+  public void insertSpinXY(float mag, float dir){ //Mag is magnitude, dir is direction.
+    _spinx += mag * sin(dir);
+    _spiny += mag * cos(dir);
+    
+  }  
   
   public float angle(float x, float y){ //Helper function
     if(x==0){
@@ -102,6 +129,9 @@ public class Ball{
   public float direction(){
     return angle(_vx,_vy);
   }
+  public float spinHorizAngle(){
+    return angle(_spinx,_spiny);
+  }
   public float absoluteAngle(Ball b){ //Angle between two balls
     float dy = b.getY() - _y;
     float dx = b.getX() - _x;
@@ -109,7 +139,7 @@ public class Ball{
   }
   
   public float distance(Ball b){
-    return sqrt(sq(_x-b.getX()) + sq(_y-b.getY()))-RAD;
+    return sqrt(sq(_x-b.getX()) + sq(_y-b.getY()))-2*RAD;
   }
   
   public float convert2PI(float f){ //Convert angles to between 0 and 2PI
@@ -132,12 +162,8 @@ public class Ball{
   public void setYVel(float y){_vy = y;}
   public float getXVel(){return _vx;}
   public float getYVel(){return _vy;}
-  public void setXAcc(float x){_ax = x;}
-  public void setYAcc(float y){_ay = y;}
-  public float getXAcc(){return _ax;}
-  public float getYAcc(){return _ay;}
   public float speed(){return sqrt(sq(_vx)+sq(_vy));}
-  public float kinetic(){return 0.5 + sq(speed());}
+  public float getSpinMag(){return sqrt(sq(_spinx)+sq(_spiny));}
   public void setColor(int c){colorNum = c;}
   public int getColor(){ return colorNum;}
 }
