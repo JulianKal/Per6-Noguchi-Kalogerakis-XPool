@@ -25,6 +25,13 @@ void setup() {
   for(int x=0;x<4;x++){
     p.set(new Ball(random(500)-250,random(500)-250,random(80)-40,random(80)-40));
   }
+  p.set(new Hole(440, 540));
+  p.set(new Hole(-440, 60));
+  p.set(new Hole(440, 60));
+  p.set(new Hole(0, 60));
+  p.set(new Hole(0, 540));
+  p.set(new Hole(-440, 540));
+  
   p.set(b1);
   b1.setX(150);
   b1.setY(150);
@@ -66,10 +73,6 @@ void draw(){
   box(2, 2, 2500);
   popMatrix();
   
-  /*
-  cueBall.setX(mx);
-  cueBall.setY(my);
-  */
   buttonListener();
   p.update();
     
@@ -138,38 +141,34 @@ void buttonListener(){
       precisionAim = !precisionAim;
     }
   }
+  
 }
 
 void paintRectangle(){
   pushMatrix();
-  translate(0,y,-15);
+  translate(0,y,-18);
       my-=y;
-  fill(100);
+  fill(0, 100, 0);
   rectMode(CENTER);
-  rect(0,0,900,500);
-  fill(0);
-  ellipse(450,250, 40, 40);
-  ellipse(-450,250, 40, 40);
-  ellipse(450,-250, 40, 40);
-  ellipse(-450,-250, 40, 40);
-  ellipse(0,-250, 40, 40);
-  ellipse(0,250, 40, 40);
+  box(900,500, -3);
   popMatrix();
 }
 
 void paintBalls(){
   for(Ball b : p.getBallSet()){
-    pushMatrix();
-    translate(b.getX(),b.getY()+y,0);
-    if(rotatable){
-      stroke(b.getColor());
-      fill(100);
-      sphere(RAD);
-    }else{
-      fill(b.getColor());
-      ellipse(0,0,RAD*2,RAD*2);
+    if(!b.inYet()){
+      pushMatrix();
+      translate(b.getX(),b.getY()+y,0);
+      if(rotatable){
+        stroke(b.getColor());
+        fill(100);
+        sphere(RAD);
+      }else{
+        fill(b.getColor());
+        ellipse(0,0,RAD*2,RAD*2);
+      }
+      popMatrix();
     }
-    popMatrix();
   }
   if(scratch){
     b1.setX(mouseX-x);

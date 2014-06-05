@@ -100,7 +100,6 @@ void mouseClicked(){
 
 void buttonListener(){
   if(key==CODED){
-    /*
     if(keyCode == UP){
       if(p.stopped()){
         b1.setXVel(10*shotPower*sin(PI+mousestuffZ));
@@ -109,7 +108,6 @@ void buttonListener(){
       }
       keyCode = DOWN;
     }
-    */
     if(keyCode == LEFT){
       if(millis()-lastTime>delay){
         if (precisionAim){
