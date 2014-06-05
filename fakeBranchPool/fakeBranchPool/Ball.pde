@@ -7,7 +7,7 @@ public class Ball{
   private int colorNum;
   private float _spinx,_spiny;
   private float _spinvert; //The spin that is mainly for curves.
-                           //Neg is clockwise, and Pos is counterclockwise.
+                           //POS is clockwise, and NEG is counterclockwise.
   private float _prevRollingSpin,_prevRollingAngle, _rollingSpin;
 
   public Ball(float x,float y,float vx,float vy){
@@ -61,7 +61,7 @@ public class Ball{
   public void insertSpinEffect(){
     _vx += _spinx;
     _vy += _spiny;
-    insertForce(0.5*_spinvert,direction()-PI/2);
+    insertForce(0.2*_spinvert,direction()+PI/2);
     _spinx-= 0.7 * getSpinMag()*cos(spinHorizAngle());
     _spiny-= 0.7 * getSpinMag()*sin(spinHorizAngle());
     _spinvert *= 0.7;
@@ -78,8 +78,21 @@ public class Ball{
   public float spinHorizAngle(){
     return angle(_spinx,_spiny);
   }
-  public void spinVertWallCollision(){
-    
+  public void spinVertWallLR(boolean right){
+    if(right){
+      insertForce(_spinvert,3*PI/2);
+    }else{
+      insertForce(_spinvert,PI/2);
+    }
+    _spinvert*=0.5;
+  }
+  public void spinVertWallUD(boolean up){
+    if(up){
+      insertForce(_spinvert,PI);
+    }else{
+      insertForce(_spinvert,0);
+    }
+    _spinvert*=0.5;
   }
   
   
