@@ -4,6 +4,7 @@ public class Ball {
   private float _ax, _ay; //The acceleration (rate of change of speed)
   private int colorNum;
   private boolean inYet = false;
+  private boolean cueBall = false;
 
   public Ball(float x, float y, float vx, float vy) {
     this(x, y);
@@ -28,7 +29,7 @@ public class Ball {
     insertWallCollisions();
 
     //Ball to ball collisions
-    for (Ball b : p.getBallSet ()) {
+    for (Ball b : p.getBallSet()) {
       if (this != b) {
         if (distance(b)<0) {
           float translatedAngle = convert2PI(absoluteAngle(b) - direction());
@@ -117,6 +118,8 @@ public class Ball {
 
   public boolean fallenIn(Hole h) {
     boolean ans = (dist(x, y, h.getX(), h.getY()) < 60);
+    setX(10000);
+    setY(10000);
     if(ans){ 
       inYet = true;
     }
@@ -186,6 +189,12 @@ public class Ball {
   }
   public int getColor() { 
     return colorNum;
+  }
+  public boolean cueBall(){
+    return cueBall;  
+  }
+  public void setCueBall(){
+    cueBall = !cueBall;
   }
 }
 

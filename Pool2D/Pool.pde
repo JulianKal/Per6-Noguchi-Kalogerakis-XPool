@@ -18,8 +18,19 @@ public class Pool{
             dist(b.getX(), b.getY(), -450, -250) < 60 ||
             dist(b.getX(), b.getY(), 0, 250) < 60 ||
             dist(b.getX(), b.getY(), 0, -250) < 60){
-          b.setColor(color(25, 0, 0));
+          if(!b.cueBall()){   
+          b.setColor(color(0, 0, 0));
+          }
+          b.setX(1000);
+          b.setY(1000);
+          b.setXVel(0);
+          b.setYVel(0);
         }   
+      }
+      else{
+        for(Hole h : holeSet){          
+          b.fallenIn(h);
+        }
       }      
     }
     for(Hole h : holeSet){

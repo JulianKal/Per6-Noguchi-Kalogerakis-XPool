@@ -9,7 +9,7 @@ public class Hole{
     fill(0);
     stroke(255);
     pushMatrix();
-    ellipse(x, y, 40, 40);
+    ellipse(x, y, 50, 50);
     popMatrix();
   }
   

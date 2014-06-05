@@ -28,16 +28,17 @@ void setup() {
   p.set(new Hole(440, 540));
   p.set(new Hole(-440, 60));
   p.set(new Hole(440, 60));
-  p.set(new Hole(0, 60));
-  p.set(new Hole(0, 540));
+  p.set(new Hole(0, 50));
+  p.set(new Hole(0, 550));
   p.set(new Hole(-440, 540));
   
   p.set(b1);
   b1.setX(150);
   b1.setY(150);
-  b1.setXVel(-50);
-  b1.setYVel(40);
+  b1.setXVel(-10);
+  b1.setYVel(10);
   b1.setColor(150);
+  b1.setCueBall();
   lights();
 }
 
