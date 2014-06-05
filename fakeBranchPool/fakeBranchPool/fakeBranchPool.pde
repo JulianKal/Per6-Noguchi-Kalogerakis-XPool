@@ -57,7 +57,7 @@ void draw(){
 
   if(rotatable){
     rotateY(mousestuffZ);
-    rotateX(PI/3);
+    rotateX(PI/2);
   }
   translate(-cueBall.getX(),-cueBall.getY(),0);
   
