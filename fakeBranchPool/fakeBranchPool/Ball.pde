@@ -9,6 +9,8 @@ public class Ball{
   private float _spinvert; //The spin that is mainly for curves.
                            //POS is clockwise, and NEG is counterclockwise.
   private float _prevRollingSpin,_prevRollingAngle, _rollingSpin;
+  private boolean inYet = false;
+  private boolean cueBall = false;
 
   public Ball(float x,float y,float vx,float vy){
     this(x,y);
@@ -183,6 +185,20 @@ public class Ball{
     return angle(_vx,_vy);
   }
   
+  public boolean fallenIn(Hole h) {
+    boolean ans = (dist(x, y, h.getX(), h.getY()) < 60);
+    setX(10000);
+    setY(10000);
+    if(ans){ 
+      inYet = true;
+    }
+    return ans;
+  }
+
+  public boolean inYet(){
+    return inYet;
+  }
+  
   public float absoluteAngle(Ball b){ //Angle between two balls
     float dy = b.getY() - _y;
     float dx = b.getX() - _x;
@@ -217,4 +233,10 @@ public class Ball{
   public float getSpinMag(){return sqrt(sq(_spinx)+sq(_spiny));}
   public void setColor(int c){colorNum = c;}
   public int getColor(){ return colorNum;}
+  public boolean cueBall(){
+    return cueBall;  
+  }
+  public void setCueBall(){
+    cueBall = !cueBall;
+  }
 }

@@ -26,17 +26,23 @@ void setup() {
   x = width/2;
   y = height/2;
   z = 500;
-  /*
   for(int x=0;x<10;x++){
-    p.set(new Ball(random(500)-250,random(500)-250,random(80)-40,random(80)-40));
+    p.set(new Ball(random(500)-250,random(500)-250,random(10)-5,random(10)-5));
   }
-  */
+  
+  p.set(new Hole(0, -250));
+  p.set(new Hole(0, 250));
+  p.set(new Hole(-440, -240));
+  p.set(new Hole(-440, 240));
+  p.set(new Hole(440, -240));
+  p.set(new Hole(440, 240));
   p.set(cueBall);
   cueBall.setX(-100);
   cueBall.setY(0);
   cueBall.setXVel(0);
   cueBall.setYVel(-10);
   cueBall.setColor(150);
+  cueBall.setCueBall();
   //cueBall.insertSpinHoriz(2,3*PI/2);
   cueBall.insertSpinVert(-2);
   
@@ -53,16 +59,20 @@ void draw(){
   mx = mouseX;
   my = mouseY;
   background(0);
-  translate(x,y,0);
-
+  translate(x,y,35);
   if(rotatable){
+<<<<<<< HEAD
+    rotateX(PI*.47);
+    rotate(mousestuffZ);
+=======
     rotateY(mousestuffZ);
-    rotateX(PI/3);
+    rotateX(PI/2);
+>>>>>>> FETCH_HEAD
   }
   translate(-cueBall.getX(),-cueBall.getY(),0);
-  
   paintRectangle();
-  paintBalls();
+  paintBalls();  
+  paintSights();
   buttonListener();
   p.update();
 }
@@ -134,7 +144,7 @@ void buttonListener(){
 void paintRectangle(){
   pushMatrix();
   translate(0,0,-RAD);
-  fill(100);
+  fill(0,100,0);
   rectMode(CENTER);
   rect(0,0,900,500);
   popMatrix();
@@ -142,23 +152,46 @@ void paintRectangle(){
 
 void paintBalls(){
   for(Ball b : p.getBallSet()){
-    pushMatrix();
-    translate(b.getX(),b.getY(),0);
-    if(rotatable){
-      stroke(b.getColor());
-      fill(100);
-      sphere(RAD);
-    }else{
-      fill(b.getColor());
-      ellipse(0,0,RAD*2,RAD*2);
+    if(!b.inYet()){
+      pushMatrix();
+      translate(b.getX(),b.getY(),0);
+      if(rotatable){
+        stroke(b.getColor());
+        fill(100);
+        sphere(RAD);
+      }else{
+        fill(b.getColor());
+        ellipse(0,0,RAD*2,RAD*2);
+      }
+      popMatrix();
     }
-    popMatrix();
   }
   if(scratch){
     cueBall.setX(mouseX-x);
     cueBall.setY(mouseY-y);
   }
 }
+
+void paintSights(){
+  if(precisionAim){
+    pushMatrix();
+    translate(cueBall.getX(), cueBall.getY(), 0);
+    noStroke();
+    rotateZ(-mousestuffZ);
+    fill( 0, 0, 15+shotPower*100, shotPower*30+30);
+    cylinder(15, 2600, 60);
+    popMatrix();
+  }
+  else{
+    pushMatrix();
+    translate(cueBall.getX(), cueBall.getY(), 0);
+    rotateZ(-mousestuffZ);
+    fill(15+shotPower*100, 0, 0, shotPower*30+30);
+    noStroke();
+    cylinder(3.5, 2600, 60);
+    popMatrix();
+  }
+} 
 
 void chooseRotation(){
   //If all of the balls have stopped moving, then..
@@ -174,4 +207,35 @@ void chooseRotation(){
     translate(-x-cueBall.getX()/2,-y+500-cueBall.getY()/2,-z);
   }
 }
+
+void cylinder(float w, float h, int sides){
+  float angle;
+  float[] x = new float[sides+1];
+  float[] y = new float[sides+1];
+  for(int i=0; i<x.length; i++){
+    angle = TWO_PI/sides*i;
+    x[i] = sin(angle)*w;
+    y[i] = cos(angle)*w;
+  }
+  beginShape(TRIANGLE_FAN); 
+  vertex(0, -h/2, 0);
+  for(int i=0; i < x.length; i++){
+    vertex(x[i], -h/2, y[i]);
+  }
+  endShape();
+  beginShape(QUAD_STRIP);
+  for(int i=0; i < x.length; i++){
+    vertex(x[i], -h/2, y[i]);
+    vertex(x[i], h/2, y[i]);
+  }
+  endShape();
+  beginShape(TRIANGLE_FAN);
+  vertex(0, h/2, 0);
+  for(int i=0; i < x.length; i++){
+    vertex(x[i], h/2, y[i]);
+  }
+  endShape();    
+}
+  
+
 
