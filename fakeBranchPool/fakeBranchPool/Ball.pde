@@ -36,6 +36,7 @@ public class Ball{
     insertBallCollisions();
     insertRollingSpin();
     insertSpinEffect(); //This has to go last so that collision checking occurs first.
+    println(_vx);
   }
   
   ////////////////////////////////////////////////////
@@ -63,10 +64,10 @@ public class Ball{
   public void insertSpinEffect(){
     _vx += _spinx;
     _vy += _spiny;
-    insertForce(0.2*_spinvert,direction()+PI/2);
+    insertForce(0.09*_spinvert,direction()+PI/2);
     _spinx-= 0.7 * getSpinMag()*cos(spinHorizAngle());
     _spiny-= 0.7 * getSpinMag()*sin(spinHorizAngle());
-    _spinvert *= 0.7;
+    _spinvert *= 0.99;
     if(abs(_spinx)<0.0001){
       _spinx = 0;
     }
@@ -82,22 +83,28 @@ public class Ball{
   }
   public void spinVertWallLR(boolean right){
     if(right){
-      insertForce(_spinvert,3*PI/2);
+      insertForce(speed()*(_spinvert/(abs(_spinvert)+2)),3*PI/2);
     }else{
-      insertForce(_spinvert,PI/2);
+      insertForce(speed()*(_spinvert/(abs(_spinvert)+2)),PI/2);
     }
+    _vx *= 1 - (_spinvert/(_spinvert+1));
+    _vy *= 1 - (_spinvert/(_spinvert+1));
     _spinvert*=0.5;
   }
   public void spinVertWallUD(boolean up){
     if(up){
-      insertForce(_spinvert,PI);
+      insertForce(speed()*(_spinvert/(_spinvert+1)),0);
     }else{
-      insertForce(_spinvert,0);
+      insertForce(speed()*(_spinvert/(_spinvert+1)),PI);
     }
+    _vx *= 1 - (_spinvert/(_spinvert+1));
+    _vy *= 1 - (_spinvert/(_spinvert+1));
     _spinvert*=0.5;
   }
-  
-  
+  public void transferSpin(Ball b){
+    b.addSpinVert(_spinvert * 0.3);
+    _spinvert *= 0.6;
+  }
   ////////////////////////////////////////////////////
   
   public void insertBallCollisions(){
@@ -109,6 +116,7 @@ public class Ball{
           if(cos(translatedAngle)>0){
             _x += distance(b)*cos(absoluteAngle(b)); //distance is less than 0.
             _y += distance(b)*sin(absoluteAngle(b));
+            transferSpin(b);
             b.insertForce(speed()*cos(translatedAngle),absoluteAngle(b));
             insertForce(speed()*cos(translatedAngle+PI),absoluteAngle(b));
             resetRollingSpin(); //For collisions
@@ -231,6 +239,9 @@ public class Ball{
   public float getYVel(){return _vy;}
   public float speed(){return sqrt(sq(_vx)+sq(_vy));}
   public float getSpinMag(){return sqrt(sq(_spinx)+sq(_spiny));}
+  public void setSpinVert(float magnitude){ _spinvert = magnitude;}
+  public void addSpinVert(float magnitude){ _spinvert += magnitude;}
+  public float getSpinVert(){return _spinvert;}
   public void setColor(int c){colorNum = c;}
   public int getColor(){ return colorNum;}
   public boolean cueBall(){

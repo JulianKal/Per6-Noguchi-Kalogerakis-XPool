@@ -39,12 +39,16 @@ void setup() {
   p.set(cueBall);
   cueBall.setX(-100);
   cueBall.setY(0);
-  cueBall.setXVel(0);
-  cueBall.setYVel(-10);
+  cueBall.setXVel(-15);
+  cueBall.setYVel(0);
   cueBall.setColor(150);
+<<<<<<< HEAD
   cueBall.setCueBall();
   //cueBall.insertSpinHoriz(2,3*PI/2);
   cueBall.insertSpinVert(-2);
+=======
+  cueBall.insertSpinVert(1);
+>>>>>>> FETCH_HEAD
   
   //p.set(b2);
   b2.setX(100);
@@ -59,7 +63,13 @@ void draw(){
   mx = mouseX;
   my = mouseY;
   background(0);
+<<<<<<< HEAD
   translate(x,y,35);
+=======
+  camera(width/2, -height/3, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
+  translate(x,y,0);
+
+>>>>>>> FETCH_HEAD
   if(rotatable){
 <<<<<<< HEAD
     rotateX(PI*.47);
@@ -67,6 +77,9 @@ void draw(){
 =======
     rotateY(mousestuffZ);
     rotateX(PI/2);
+<<<<<<< HEAD
+>>>>>>> FETCH_HEAD
+=======
 >>>>>>> FETCH_HEAD
   }
   translate(-cueBall.getX(),-cueBall.getY(),0);
