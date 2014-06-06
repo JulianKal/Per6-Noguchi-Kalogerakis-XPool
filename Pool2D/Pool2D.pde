@@ -1,5 +1,7 @@
+
+
 Pool p = new Pool();
-Ball b1 = new Ball();
+Ball cueBall = new Ball();
 Ball b2 = new Ball();
 Ball b3 = new Ball();
 float x, y, z;
@@ -13,17 +15,19 @@ float delay;
 float shotPower = .7;
 boolean precisionAim = false;
 float RAD = 15;
-float FRICTION = -0.1;
+float FRICTION = -0.05;
+float FPS = 60;
 
 void setup() {
   size(1000,600,P3D);
   background(0);
+  frameRate(FPS);
   
   x = width/2;
   y = height/2;
   z = 500;
-  for(int x=0;x<4;x++){
-    p.set(new Ball(random(500)-250,random(500)-250,random(80)-40,random(80)-40));
+  for(int x=0;x<10;x++){
+    p.set(new Ball(random(500)-250,random(500)-250,random(10)-5,random(10)-5));
   }
   p.set(new Hole(440, 540));
   p.set(new Hole(-440, 60));
@@ -32,13 +36,13 @@ void setup() {
   p.set(new Hole(0, 550));
   p.set(new Hole(-440, 540));
   
-  p.set(b1);
-  b1.setX(150);
-  b1.setY(150);
-  b1.setXVel(-10);
-  b1.setYVel(10);
-  b1.setColor(150);
-  b1.setCueBall();
+  p.set(cueBall);
+  cueBall.setX(150);
+  cueBall.setY(150);
+  cueBall.setXVel(-10);
+  cueBall.setYVel(10);
+  cueBall.setColor(150);
+  cueBall.setCueBall();
   lights();
 }
 
@@ -46,39 +50,29 @@ void draw(){
   mx = mouseX; 
   my = mouseY;
   background(0);
-
   if(rotatable){
     rotateX(PI/2);
     chooseRotation();
     translate(x-15,-500,-400);
+    pushMatrix();
+    rotateX(HALF_PI);
+    translate(0, 0, -300);
+    fill(150, 0, 0);
+    cylinder(5, 5000, 5);
+    popMatrix();
     mx-=x+15;
     my-=-500;
   }else{
     translate(x,0,0);
   }
-  
-
-  
+  translate(-cueBall.getX(),-cueBall.getY(),0);
   paintRectangle();
   paintBalls();
-  
-  pushMatrix();
-  translate(b1.getX(), b1.getY() + 300, 0);
-  stroke(20);
-  rotateZ(-mousestuffZ);
-  fill(105, 0, 0);
-  box(2500, 2, 2);
-  fill( 0, 0, 15 + shotPower*100);
-  box(4, 2500, 4);
-  fill(0, 105, 0);
-  box(2, 2, 2500);
-  popMatrix();
-  
+  paintSights();
   buttonListener();
   p.update();
-    
-
 }
+
 
 void exit(){
   super.exit();
@@ -89,12 +83,24 @@ void mouseClicked(){
   rotatable = !rotatable;
 }
 
+void paintSights(){
+  if(precisionAim){
+    pushMatrix();
+    translate(cueBall.getX(), cueBall.getY() + 300, 0);
+    stroke(50, 10);
+    rotateZ(-mousestuffZ);
+    fill( 0, 0, 15 + shotPower*100, 30);
+    cylinder(15, 2500, 30);
+    popMatrix();
+  }
+} 
+
 void buttonListener(){
   if(key==CODED){
     if(keyCode == UP){
       if(p.stopped()){
-        b1.setXVel(10*shotPower*sin(PI+mousestuffZ));
-        b1.setYVel(10*shotPower*cos(PI+mousestuffZ));
+        cueBall.setXVel(10*shotPower*sin(PI+mousestuffZ));
+        cueBall.setYVel(10*shotPower*cos(PI+mousestuffZ));
         delay = 3000;
       }
       keyCode = DOWN;
@@ -172,13 +178,12 @@ void paintBalls(){
     }
   }
   if(scratch){
-    b1.setX(mouseX-x);
-    b1.setY(mouseY-y);
+    cueBall.setX(mouseX-x);
+    cueBall.setY(mouseY-y);
   }
 }
 
 void chooseRotation(){
-  println(p.stopped());
   //If all of the balls have stopped moving, then..
   if(!p.stopped()){
     translate(x,y-500,z);
@@ -187,9 +192,39 @@ void chooseRotation(){
   }
   //If at least one of the balls is in motion, then..
   else{
-    translate(x+b1.getX()/2,y-500 + b1.getY()/2,z);
+    translate(x+cueBall.getX()/2,y-500 + cueBall.getY()/2,z);
     rotateZ(mousestuffZ);
-    translate(-x-b1.getX()/2,-y+500-b1.getY()/2,-z);
+    translate(-x-cueBall.getX()/2,-y+500-cueBall.getY()/2,-z);
   }
 }
+  
+void cylinder(float w, float h, int sides){
+  float angle;
+  float[] x = new float[sides+1];
+  float[] y = new float[sides+1];
+  for(int i=0; i<x.length; i++){
+    angle = TWO_PI/sides*i;
+    x[i] = sin(angle)*w;
+    y[i] = cos(angle)*w;
+  }
+  beginShape(TRIANGLE_FAN); 
+  vertex(0, -h/2, 0);
+  for(int i=0; i < x.length; i++){
+    vertex(x[i], -h/2, y[i]);
+  }
+  endShape();
+  beginShape(QUAD_STRIP);
+  for(int i=0; i < x.length; i++){
+    vertex(x[i], -h/2, y[i]);
+    vertex(x[i], h/2, y[i]);
+  }
+  endShape();
+  beginShape(TRIANGLE_FAN);
+  vertex(0, h/2, 0);
+  for(int i=0; i < x.length; i++){
+    vertex(x[i], h/2, y[i]);
+  }
+  endShape();    
+}
+  
 

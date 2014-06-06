@@ -1,3 +1,4 @@
+
 public class Ball {
   private float _x, _y; //Positions of the ball, set using the translate() function.
   private float _vx, _vy; //Delta x and y, for velocity.
