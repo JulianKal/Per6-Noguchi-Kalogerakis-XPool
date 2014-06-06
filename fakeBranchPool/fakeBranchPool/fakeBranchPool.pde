@@ -34,11 +34,10 @@ void setup() {
   p.set(cueBall);
   cueBall.setX(-100);
   cueBall.setY(0);
-  cueBall.setXVel(0);
-  cueBall.setYVel(-10);
+  cueBall.setXVel(-15);
+  cueBall.setYVel(0);
   cueBall.setColor(150);
-  //cueBall.insertSpinHoriz(2,3*PI/2);
-  cueBall.insertSpinVert(-2);
+  cueBall.insertSpinVert(1);
   
   //p.set(b2);
   b2.setX(100);
@@ -53,6 +52,7 @@ void draw(){
   mx = mouseX;
   my = mouseY;
   background(0);
+  camera(width/2, -height/3, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
   translate(x,y,0);
 
   if(rotatable){
