@@ -26,7 +26,6 @@ public class Ball{
   }
   
   public void update(){
-    
     insertLowPass();
     _x += _vx;
     _y += _vy;

@@ -28,10 +28,11 @@ void setup() {
   z = 500;
   for(int x=0;x<10;x++){
     p.set(new Ball(random(500)-250,random(500)-250,random(10)-5,random(10)-5));
+    p.getBallSet().get(x).setColor(color(random(5)*30 + 170,random(5)*30 + 170, random(5)*30 + 170, 100));
   }
   
-  p.set(new Hole(0, -250));
-  p.set(new Hole(0, 250));
+  p.set(new Hole(0, -285));
+  p.set(new Hole(0, 285));
   p.set(new Hole(-440, -240));
   p.set(new Hole(-440, 240));
   p.set(new Hole(440, -240));
@@ -42,13 +43,10 @@ void setup() {
   cueBall.setXVel(-15);
   cueBall.setYVel(0);
   cueBall.setColor(150);
-<<<<<<< HEAD
   cueBall.setCueBall();
   //cueBall.insertSpinHoriz(2,3*PI/2);
   cueBall.insertSpinVert(-2);
-=======
   cueBall.insertSpinVert(1);
->>>>>>> FETCH_HEAD
   
   //p.set(b2);
   b2.setX(100);
@@ -56,31 +54,19 @@ void setup() {
   b2.setYVel(1);
   b2.setColor(255);
   //b2.insertSpinHoriz(1,0);
-  lights();
 }
 
 void draw(){
   mx = mouseX;
   my = mouseY;
   background(0);
-<<<<<<< HEAD
+  pointLight(255, 255, 210, 600, 1200, 50);
+  ambientLight(220, 220, 200);
+  directionalLight(255, 255, 255, 600, 1200, 50);
   translate(x,y,35);
-=======
-  camera(width/2, -height/3, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
-  translate(x,y,0);
-
->>>>>>> FETCH_HEAD
   if(rotatable){
-<<<<<<< HEAD
-    rotateX(PI*.47);
+    rotateX(PI*.25);
     rotate(mousestuffZ);
-=======
-    rotateY(mousestuffZ);
-    rotateX(PI/2);
-<<<<<<< HEAD
->>>>>>> FETCH_HEAD
-=======
->>>>>>> FETCH_HEAD
   }
   translate(-cueBall.getX(),-cueBall.getY(),0);
   paintRectangle();
@@ -150,6 +136,7 @@ void buttonListener(){
     }    
     else if(keyCode == SHIFT){
       precisionAim = !precisionAim;
+      keyCode = DOWN;
     }
   }
 }
@@ -157,9 +144,9 @@ void buttonListener(){
 void paintRectangle(){
   pushMatrix();
   translate(0,0,-RAD);
-  fill(0,100,0);
+  fill(0,70,0);
   rectMode(CENTER);
-  rect(0,0,900,500);
+  rect(0,0,900,500,25);
   popMatrix();
 }
 
@@ -169,8 +156,9 @@ void paintBalls(){
       pushMatrix();
       translate(b.getX(),b.getY(),0);
       if(rotatable){
-        stroke(b.getColor());
-        fill(100);
+        fill(b.getColor());
+        shininess(4.0);
+        specular(255);
         sphere(RAD);
       }else{
         fill(b.getColor());
@@ -189,10 +177,10 @@ void paintSights(){
   if(precisionAim){
     pushMatrix();
     translate(cueBall.getX(), cueBall.getY(), 0);
-    noStroke();
+    stroke(0, 0, 15+shotPower*100, shotPower*30+30);
     rotateZ(-mousestuffZ);
     fill( 0, 0, 15+shotPower*100, shotPower*30+30);
-    cylinder(15, 2600, 60);
+    cylinder(15, 2600, 90);
     popMatrix();
   }
   else{
@@ -200,8 +188,8 @@ void paintSights(){
     translate(cueBall.getX(), cueBall.getY(), 0);
     rotateZ(-mousestuffZ);
     fill(15+shotPower*100, 0, 0, shotPower*30+30);
-    noStroke();
-    cylinder(3.5, 2600, 60);
+    stroke(15+shotPower*100, 0, 0, shotPower*30+30);
+    cylinder(3.5, 2600, 90);
     popMatrix();
   }
 } 

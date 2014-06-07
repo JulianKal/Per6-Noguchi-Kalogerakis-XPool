@@ -1,5 +1,4 @@
 public class Hole{
-public class Hole{
   float x, y;
       
   public Hole(float x, float y){    
@@ -8,7 +7,7 @@ public class Hole{
   } 
   void update(){
     stroke(35, 0, 0, 50);
-    fill(45, 255);
+    fill(35, 35, 53, 255);
     pushMatrix();
     translate(x, y, -500);
     rotateX(HALF_PI);
