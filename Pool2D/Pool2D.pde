@@ -2,7 +2,8 @@
 
 Pool p = new Pool();
 float x, y, z;
-float viewHorizontal,viewVertical,keyHorizontal,mouseHorizontal;
+float viewHorizontal,keyHorizontal,mouseHorizontal;
+float viewVertical = .35;
 boolean aim = true;
 boolean rotatable = true;
 boolean scratch = false;
@@ -55,7 +56,7 @@ void draw(){
   if(rotatable){
     viewHorizontal = mouseHorizontal + keyHorizontal;
     mouseHorizontal = -(mouseX-x) * 0.001;
-    rotateX(PI*.35);
+    rotateX(PI*viewVertical);
     rotate(viewHorizontal);
   }
   if(!scratch && shooting){
@@ -96,6 +97,16 @@ void shoot(){
 }
 
 void keyPressed(){
+  if(key=='s'){
+    if(viewVertical < .55){
+      viewVertical += .005;
+    }
+  }
+  if(key=='a'){
+    if(viewVertical > .1){
+      viewVertical -= .005;
+    }
+  }
   if(key=='x'){
     if(shotPower<15){
       shotPower+=.5;
@@ -130,6 +141,9 @@ void keyPressed(){
   }
   if(key==' '){
     shoot();
+  }
+  if(key=='b'){
+    println(" " + cueBall.getX() + ", " + cueBall.getY());
   }
 }
 
