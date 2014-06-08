@@ -1,11 +1,8 @@
 //Purely for testing the further improved physics engine (with new and improved spin!)
 
 Pool p = new Pool();
-Ball cueBall = new Ball();
-Ball b2 = new Ball();
-Ball b3 = new Ball();
 float x, y, z;
-float mousestuffZ;
+float viewHorizontal,viewVertical,keyHorizontal,mouseHorizontal;
 boolean aim = true;
 boolean rotatable = true;
 boolean scratch = false;
@@ -15,8 +12,9 @@ float delay;
 float shotPower = .7;
 boolean precisionAim = false;
 float RAD = 15;
-float FRICTION = -0.05;
+float FRICTION = -0.1;
 float FPS = 60;
+Ball cueBall;
 
 void setup() {
   size(1000,600,P3D);
@@ -26,9 +24,15 @@ void setup() {
   x = width/2;
   y = height/2;
   z = 500;
-  for(int x=0;x<10;x++){
-    p.set(new Ball(random(500)-250,random(500)-250,random(10)-5,random(10)-5));
-    p.getBallSet().get(x).setColor(color(random(5)*30 + 170,random(5)*30 + 170, random(5)*30 + 170, 100));
+  
+  PImage cueImage = loadImage("Zero.png");
+  cueBall = new Ball(random(500)-250,random(500)-250, cueImage);
+  cueBall.setCueBall();
+  cueBall.initializeSphere(35);
+  p.set(cueBall);
+  for(int x=1;x<15;x++){
+    p.set(new Ball(random(500)-250,random(500)-250, loadImage("" + x + ".png")));
+    p.getBallSet().get(x).initializeSphere(35);
   }
   
   p.set(new Hole(0, -285));
@@ -37,36 +41,19 @@ void setup() {
   p.set(new Hole(-440, 240));
   p.set(new Hole(440, -240));
   p.set(new Hole(440, 240));
-  p.set(cueBall);
-  cueBall.setX(-100);
-  cueBall.setY(0);
-  cueBall.setXVel(-15);
-  cueBall.setYVel(0);
-  cueBall.setColor(150);
-  cueBall.setCueBall();
-  //cueBall.insertSpinHoriz(2,3*PI/2);
-  cueBall.insertSpinVert(-2);
-  cueBall.insertSpinVert(1);
-  
-  //p.set(b2);
-  b2.setX(100);
-  b2.setXVel(-10);
-  b2.setYVel(1);
-  b2.setColor(255);
-  //b2.insertSpinHoriz(1,0);
 }
 
 void draw(){
-  mx = mouseX;
-  my = mouseY;
-  background(0);
-  pointLight(255, 255, 210, 600, 1200, 50);
-  ambientLight(220, 220, 200);
-  directionalLight(255, 255, 255, 600, 1200, 50);
+  
+  
+  background(190, 197, 185);
+  ambientLight(255, 255, 255);
   translate(x,y,35);
   if(rotatable){
-    rotateX(PI*.25);
-    rotate(mousestuffZ);
+    viewHorizontal = mouseHorizontal + keyHorizontal;
+    mouseHorizontal = -(mouseX-x) * 0.001;
+    rotateX(PI*.35);
+    rotate(viewHorizontal);
   }
   translate(-cueBall.getX(),-cueBall.getY(),0);
   paintRectangle();
@@ -81,59 +68,51 @@ void exit(){
 }
 
 void mouseClicked(){
-  scratch = !scratch;
-  rotatable = !rotatable;
+  shoot();
+}
+
+void shoot(){
+  if(p.stopped()){
+    cueBall.insertForce(shotPower,(1.5*PI)-viewHorizontal);
+  }
+}
+
+void keyPressed(){
+  if(key=='x'){
+    if(shotPower<15){
+      shotPower+=.5;
+    }
+  }
+  if(key=='z'){
+    if(shotPower>1){
+      shotPower-=1;
+    }
+  }
+  if(key==','){
+    keyHorizontal += PI/32;
+  }
+  if(key=='.'){
+    keyHorizontal -= PI/32;
+  }
+  if(key=='p'){
+    scratch = !scratch;
+    rotatable = !rotatable;
+  }
+  if(key==' '){
+    shoot();
+  }
 }
 
 void buttonListener(){
   if(key==CODED){
     if(keyCode == UP){
       if(p.stopped()){
-        cueBall.setXVel(10*shotPower*sin(PI+mousestuffZ));
-        cueBall.setYVel(10*shotPower*cos(PI+mousestuffZ));
+        cueBall.insertForce(shotPower,(1.5*PI)-viewHorizontal);
+        //cueBall.insertSpinVert(1);
         delay = 3000;
       }
       keyCode = DOWN;
     }
-    if(keyCode == LEFT){
-      if(millis()-lastTime>delay){
-        if (precisionAim){
-          mousestuffZ += PI/1810;
-        }
-        else{
-          mousestuffZ += PI/60;
-        }
-        keyCode = DOWN;
-        lastTime = millis();
-        delay = 0;
-      }
-    }else if(keyCode == RIGHT){
-      if(millis()-lastTime>delay){
-        if (precisionAim){
-          mousestuffZ -= PI/1810;
-        }
-        else{
-          mousestuffZ -= PI/60;
-        }
-        keyCode = DOWN;
-        lastTime = millis();
-        delay= 0;
-      }
-    }else if(keyCode == ALT){
-      if(millis()-lastTime>delay){
-        shotPower += .05;
-        keyCode = DOWN;
-        lastTime = millis();
-        delay = 0;
-      }
-    }else if(keyCode == CONTROL){
-      if(millis()-lastTime>delay){
-        shotPower -= .05;
-        keyCode = DOWN;
-        lastTime = millis();
-        delay = 0;
-      }  
-    }    
     else if(keyCode == SHIFT){
       precisionAim = !precisionAim;
       keyCode = DOWN;
@@ -154,16 +133,28 @@ void paintBalls(){
   for(Ball b : p.getBallSet()){
     if(!b.inYet()){
       pushMatrix();
+      lights();
+      ambientLight(255, 255, 255);
+      directionalLight(255, 255, 255, b.getX() + 25, b.getY() - 25, - 50); 
+      directionalLight(255, 255, 255, b.getX() - 25, b.getY() + 25, - 50); 
+      directionalLight(255, 255, 255, b.getX() - 25, b.getY() - 25, 50); 
+      directionalLight(255, 255, 255, b.getX() + 25, b.getY() + 25, 50); 
+      pointLight(255, 255, 255, b.getX() + 25, b.getY() - 25, + 50); 
       translate(b.getX(),b.getY(),0);
-      if(rotatable){
+      /*if(rotatable){
         fill(b.getColor());
-        shininess(4.0);
-        specular(255);
+        //shininess(4.0);
+        //specular(255);
+        stroke(0);
+        strokeWeight(0.25);
         sphere(RAD);
       }else{
         fill(b.getColor());
         ellipse(0,0,RAD*2,RAD*2);
       }
+      */
+      b.insertSpinRotations();
+      b.renderGlobe();  
       popMatrix();
     }
   }
@@ -178,7 +169,7 @@ void paintSights(){
     pushMatrix();
     translate(cueBall.getX(), cueBall.getY(), 0);
     stroke(0, 0, 15+shotPower*100, shotPower*30+30);
-    rotateZ(-mousestuffZ);
+    rotateZ(-viewHorizontal);
     fill( 0, 0, 15+shotPower*100, shotPower*30+30);
     cylinder(15, 2600, 90);
     popMatrix();
@@ -186,7 +177,7 @@ void paintSights(){
   else{
     pushMatrix();
     translate(cueBall.getX(), cueBall.getY(), 0);
-    rotateZ(-mousestuffZ);
+    rotateZ(-viewHorizontal);
     fill(15+shotPower*100, 0, 0, shotPower*30+30);
     stroke(15+shotPower*100, 0, 0, shotPower*30+30);
     cylinder(3.5, 2600, 90);
@@ -198,13 +189,13 @@ void chooseRotation(){
   //If all of the balls have stopped moving, then..
   if(!p.stopped()){
     translate(x,y-500,z);
-    rotateZ(mousestuffZ);
+    rotateZ(viewHorizontal);
     translate(-x,-y+500,-z);
   }
   //If at least one of the balls is in motion, then..
   else{
     translate(x+cueBall.getX()/2,y-500 + cueBall.getY()/2,z);
-    rotateZ(mousestuffZ);
+    rotateZ(viewHorizontal);
     translate(-x-cueBall.getX()/2,-y+500-cueBall.getY()/2,-z);
   }
 }
@@ -238,6 +229,7 @@ void cylinder(float w, float h, int sides){
   endShape();    
 }
   
+
 
 
 
