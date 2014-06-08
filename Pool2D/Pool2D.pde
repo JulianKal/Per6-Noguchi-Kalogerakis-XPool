@@ -6,6 +6,7 @@ float viewHorizontal,viewVertical,keyHorizontal,mouseHorizontal;
 boolean aim = true;
 boolean rotatable = true;
 boolean scratch = false;
+boolean shooting = true;
 float mx, my;
 float lastTime = millis();
 float delay;
@@ -44,23 +45,36 @@ void setup() {
 }
 
 void draw(){
-  
-  
   background(190, 197, 185);
   ambientLight(255, 255, 255);
+  if(shooting){
+    showBallAim();
+  }
   translate(x,y,35);
+  
   if(rotatable){
     viewHorizontal = mouseHorizontal + keyHorizontal;
     mouseHorizontal = -(mouseX-x) * 0.001;
     rotateX(PI*.35);
     rotate(viewHorizontal);
   }
-  translate(-cueBall.getX(),-cueBall.getY(),0);
+  if(!scratch && shooting){
+    translate(-cueBall.getX(),-cueBall.getY(),0);
+  }
   paintRectangle();
+  if(shooting){
+    paintSights();
+  }
   paintBalls();  
-  paintSights();
   buttonListener();
   p.update();
+  
+  if(p.stopped()){
+    try{
+      Thread.sleep(3000);
+   }catch(Exception e){}
+   shooting = true;
+  }
 }
 
 void exit(){
@@ -72,8 +86,10 @@ void mouseClicked(){
 }
 
 void shoot(){
-  if(p.stopped()){
+  if(shooting){
     cueBall.insertForce(shotPower,(1.5*PI)-viewHorizontal);
+    shotPower = 0;
+    shooting = false;
   }
 }
 
@@ -97,6 +113,18 @@ void keyPressed(){
   if(key=='p'){
     scratch = !scratch;
     rotatable = !rotatable;
+  }
+  if(key=='w'){
+    
+  }
+  if(key=='a'){
+    
+  }
+  if(key=='s'){
+    
+  }
+  if(key=='d'){
+    
   }
   if(key==' '){
     shoot();
@@ -164,8 +192,17 @@ void paintBalls(){
   }
 }
 
+void showBallAim(){
+  translate(30,30,0);
+  fill(255);
+  ellipse(0,0,60,60);
+  
+}
+
 void paintSights(){
+  //cue stick
   if(precisionAim){
+    /*
     pushMatrix();
     translate(cueBall.getX(), cueBall.getY(), 0);
     stroke(0, 0, 15+shotPower*100, shotPower*30+30);
@@ -173,30 +210,24 @@ void paintSights(){
     fill( 0, 0, 15+shotPower*100, shotPower*30+30);
     cylinder(15, 2600, 90);
     popMatrix();
+    */
   }
   else{
     pushMatrix();
     translate(cueBall.getX(), cueBall.getY(), 0);
     rotateZ(-viewHorizontal);
-    fill(15+shotPower*100, 0, 0, shotPower*30+30);
-    stroke(15+shotPower*100, 0, 0, shotPower*30+30);
-    cylinder(3.5, 2600, 90);
+    pushMatrix();
+    translate(0,250+shotPower*8,0);
+    fill(0, 0, 15+shotPower*100, shotPower*30+30);
+    stroke(15+shotPower*15, 0, 0, shotPower*15+30);
+    cylinder(3.5, 500-(shotPower*16), 90);
     popMatrix();
-  }
-} 
-
-void chooseRotation(){
-  //If all of the balls have stopped moving, then..
-  if(!p.stopped()){
-    translate(x,y-500,z);
-    rotateZ(viewHorizontal);
-    translate(-x,-y+500,-z);
-  }
-  //If at least one of the balls is in motion, then..
-  else{
-    translate(x+cueBall.getX()/2,y-500 + cueBall.getY()/2,z);
-    rotateZ(viewHorizontal);
-    translate(-x-cueBall.getX()/2,-y+500-cueBall.getY()/2,-z);
+    pushMatrix();
+    fill(255,51,102);
+    translate(0,175+shotPower*8,90);
+    cylinder(0.5, shotPower*16, 90);
+    popMatrix();
+    popMatrix();
   }
 }
 
