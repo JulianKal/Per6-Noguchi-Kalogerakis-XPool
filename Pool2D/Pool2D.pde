@@ -28,10 +28,14 @@ void setup() {
   y = height/2;
   z = 500;
   
+  keyHorizontal = -PI/2;
+  
   PImage cueImage = loadImage("Zero.png");
-  cueBall = new Ball(random(500)-250,random(500)-250, cueImage);
+  cueBall = new Ball(-300,0, cueImage);
   cueBall.setCueBall();
   cueBall.initializeSphere(35);
+  scratch = true;
+  rotatable = false;
   p.set(cueBall);
   for(int x=1;x<=15;x++){
     Ball b = new Ball(random(500)-250,random(500)-250, loadImage("" + x + ".png"));
@@ -40,6 +44,21 @@ void setup() {
     p.set(b);
     p.getBallSet().get(x).initializeSphere(35);
   }
+  p.getBall(1).setXY(100,0);
+  p.getBall(2).setXY(100+15*sqrt(3),15);
+  p.getBall(3).setXY(100+15*sqrt(3),-15);
+  p.getBall(4).setXY(100+30*sqrt(3),30);
+  p.getBall(5).setXY(100+30*sqrt(3),0);
+  p.getBall(6).setXY(100+30*sqrt(3),-30);
+  p.getBall(7).setXY(100+45*sqrt(3),-45);
+  p.getBall(8).setXY(100+45*sqrt(3),-15);
+  p.getBall(9).setXY(100+45*sqrt(3),15);
+  p.getBall(10).setXY(100+45*sqrt(3),45);
+  p.getBall(11).setXY(100+60*sqrt(3),-60);
+  p.getBall(12).setXY(100+60*sqrt(3),-30);
+  p.getBall(13).setXY(100+60*sqrt(3),0);
+  p.getBall(14).setXY(100+60*sqrt(3),30);
+  p.getBall(15).setXY(100+60*sqrt(3),60);
   
   p.set(new Hole(0, -285));
   p.set(new Hole(0, 285));
@@ -189,6 +208,12 @@ void paintRectangle(){
   fill(0,70,0);
   rectMode(CENTER);
   rect(0,0,900,500,25);
+  pushMatrix();
+  translate(-22.5, -22.5, -15);
+  fill(0,0,118);
+  rectMode(CENTER);
+  rect(30, 30, 960, 560, 45);
+  popMatrix();
   popMatrix();
 }
 
@@ -204,18 +229,6 @@ void paintBalls(){
       directionalLight(255, 255, 255, b.getX() + 25, b.getY() + 25, 50); 
       pointLight(255, 255, 255, b.getX() + 25, b.getY() - 25, + 50); 
       translate(b.getX(),b.getY(),0);
-      /*if(rotatable){
-        fill(b.getColor());
-        //shininess(4.0);
-        //specular(255);
-        stroke(0);
-        strokeWeight(0.25);
-        sphere(RAD);
-      }else{
-        fill(b.getColor());
-        ellipse(0,0,RAD*2,RAD*2);
-      }
-      */
       b.insertSpinRotations();
       b.renderGlobe();  
       popMatrix();
@@ -229,49 +242,34 @@ void paintBalls(){
 
 void showBallAim(){
   pushMatrix();
-  translate(30,30,0);
+  translate(x,30,0);
   fill(255);
   ellipse(0,0,60,60);
   noStroke();
   fill(100,100,20);
   ellipse(100*addSpinVert,-100*addSpinHoriz,3,3);
   popMatrix();
-  
 }
 
 void paintSights(){
-  //cue stick
-  if(precisionAim){
-    /*
+  pushMatrix();
+  translate(cueBall.getX(), cueBall.getY(), 0);
+  rotateZ(-viewHorizontal);
+  
     pushMatrix();
-    translate(cueBall.getX(), cueBall.getY(), 0);
-    stroke(0, 0, 15+shotPower*100, shotPower*30+30);
-    rotateZ(-viewHorizontal);
-    fill( 0, 0, 15+shotPower*100, shotPower*30+30);
-    cylinder(15, 2600, 90);
+    translate(0,250+shotPower*8,0);
+    fill(0, 0, 15+shotPower*100, shotPower*30+30);
+    stroke(15+shotPower*15, 0, 0, shotPower*15+30);
+    cylinder(3.5, 500-(shotPower*16), 90);
     popMatrix();
-    */
-  }
-  else{
+    
     pushMatrix();
-    translate(cueBall.getX(), cueBall.getY(), 0);
-    rotateZ(-viewHorizontal);
-      pushMatrix();
-      translate(0,250+shotPower*8,0);
-      translate(addSpinVert*75,0,addSpinHoriz*75);
-      fill(0, 0, 15+shotPower*100, shotPower*30+30);
-      stroke(15+shotPower*15, 0, 0, shotPower*15+30);
-      cylinder(3.5, 500-(shotPower*16), 90);
-      popMatrix();
-      
-      pushMatrix();
-      fill(255,51,102);
-      translate(0,shotPower*8,0);
-      translate(addSpinVert*75,0,addSpinHoriz*75);
-      cylinder(0.5, shotPower*16, 90);
-      popMatrix();
+    fill(255,51,102);
+    translate(0,shotPower*8,0);
+    translate(addSpinVert*75,0,addSpinHoriz*75);
+    cylinder(0.5, shotPower*16, 90);
     popMatrix();
-  }
+  popMatrix();
 }
 
 void cylinder(float w, float h, int sides){

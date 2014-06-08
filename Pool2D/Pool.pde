@@ -36,6 +36,9 @@ public class Pool{
   public void set(Ball b){
     ballSet.add(b);
   }
+  public Ball getBall(int n){
+    return ballSet.get(n);
+  }
   public void set(Hole h){
     holeSet.add(h);
   }

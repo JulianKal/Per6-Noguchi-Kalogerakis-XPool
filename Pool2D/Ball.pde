@@ -257,6 +257,7 @@ public class Ball{
   public void setBallNumber(int x){ballNumber = x;}
   public void setX(float x){_x = x;}
   public void setY(float y){_y = y;}
+  public void setXY(float x, float y){_x=x;_y=y;}
   public float getX(){return _x;}
   public float getY(){return _y;}
   public void setXVel(float x){_vx = x;}
