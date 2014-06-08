@@ -10,6 +10,7 @@ public class Ball{
   private float _prevRollingSpin,_prevRollingAngle, _rollingSpin;
   private boolean inYet = false;
   private boolean cueBall = false;
+  private int ballNumber;
   private float rotation,rotationVert;
   ////////////////////////////////////////////////////////////////
   public PImage skin;
@@ -95,18 +96,18 @@ public class Ball{
     }else{
       insertForce(speed()*(_spinvert/(abs(_spinvert)+2)),PI/2);
     }
-    _vx *= 1 - (_spinvert/(_spinvert+1));
-    _vy *= 1 - (_spinvert/(_spinvert+1));
+    _vx *= 1 - (abs(_spinvert)/(abs(_spinvert)+1));
+    _vy *= 1 - (abs(_spinvert)/(abs(_spinvert)+1));
     _spinvert*=0.5;
   }
   public void spinVertWallUD(boolean up){
     if(up){
-      insertForce(speed()*(_spinvert/(_spinvert+1)),0);
+      insertForce(speed()*(_spinvert/(abs(_spinvert)+1)),0);
     }else{
-      insertForce(speed()*(_spinvert/(_spinvert+1)),PI);
+      insertForce(speed()*(_spinvert/(abs(_spinvert)+1)),PI);
     }
-    _vx *= 1 - (_spinvert/(_spinvert+1));
-    _vy *= 1 - (_spinvert/(_spinvert+1));
+    _vx *= 1 - (abs(_spinvert)/(abs(_spinvert)+1));
+    _vy *= 1 - (abs(_spinvert)/(abs(_spinvert)+1));
     _spinvert*=0.5;
   }
   public void transferSpin(Ball b){
@@ -244,8 +245,16 @@ public class Ball{
     return f;
   }
   
+  public void stop(){
+    _vx = 0;
+    _vy = 0;
+    _spinx = 0;
+    _spiny = 0;
+  }
+  
   //Getters and setters;
-  //public float getForce(){return sqrt(sq(_
+  public int getBallNumber(){return ballNumber;}
+  public void setBallNumber(int x){ballNumber = x;}
   public void setX(float x){_x = x;}
   public void setY(float y){_y = y;}
   public float getX(){return _x;}
@@ -267,10 +276,11 @@ public class Ball{
   public void setCueBall(){
     cueBall = !cueBall;
   }
- public PImage getPImage(){
+  public PImage getPImage(){
     return skin;
   }
-    
+
+
   /////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////DO NOT ENTER///////////////////////////////////////////
   ///////////////////////////////////SKINS CODE//////////////////////////////////////////// 

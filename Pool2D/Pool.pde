@@ -18,13 +18,9 @@ public class Pool{
             dist(b.getX(), b.getY(), -450, -250) < 60 ||
             dist(b.getX(), b.getY(), 0, 250) < 60 ||
             dist(b.getX(), b.getY(), 0, -250) < 60){
-          if(!b.cueBall()){   
-          b.setColor(color(0, 0, 0));
-          }
-          b.setX(1000);
-          b.setY(1000);
-          b.setXVel(0);
-          b.setYVel(0);
+          b.setX(515);
+          b.setY(0);
+          b.stop();
         }   
       }
       else{
@@ -49,7 +45,7 @@ public class Pool{
   
   public boolean stopped(){
     for(Ball b : ballSet){
-      if(abs(b.getXVel())>0.1 && abs(b.getYVel())>0.1){
+      if(abs(b.getXVel())>0.0001 && abs(b.getYVel())>0.0001){
         return false;
       }
     }

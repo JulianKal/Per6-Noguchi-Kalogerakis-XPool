@@ -4,6 +4,7 @@ Pool p = new Pool();
 float x, y, z;
 float viewHorizontal,keyHorizontal,mouseHorizontal;
 float viewVertical = .35;
+float addSpinHoriz, addSpinVert;
 boolean aim = true;
 boolean rotatable = true;
 boolean scratch = false;
@@ -14,7 +15,7 @@ float delay;
 float shotPower = .7;
 boolean precisionAim = false;
 float RAD = 15;
-float FRICTION = -0.05;
+float FRICTION = -0.02;
 float FPS = 60;
 Ball cueBall;
 
@@ -32,8 +33,11 @@ void setup() {
   cueBall.setCueBall();
   cueBall.initializeSphere(35);
   p.set(cueBall);
-  for(int x=1;x<15;x++){
-    p.set(new Ball(random(500)-250,random(500)-250, loadImage("" + x + ".png")));
+  for(int x=1;x<=15;x++){
+    Ball b = new Ball(random(500)-250,random(500)-250, loadImage("" + x + ".png"));
+    b.initializeSphere(35);
+    b.setBallNumber(x);
+    p.set(b);
     p.getBallSet().get(x).initializeSphere(35);
   }
   
@@ -56,6 +60,7 @@ void draw(){
   if(rotatable){
     viewHorizontal = mouseHorizontal + keyHorizontal;
     mouseHorizontal = -(mouseX-x) * 0.001;
+    viewVertical = mouseY*0.001;
     rotateX(PI*viewVertical);
     rotate(viewHorizontal);
   }
@@ -90,19 +95,24 @@ void mouseClicked(){
 
 void shoot(){
   if(shooting){
+    println(shotPower*addSpinHoriz);
     cueBall.insertForce(shotPower,(1.5*PI)-viewHorizontal);
+    cueBall.insertSpinHoriz(shotPower*addSpinHoriz,(1.5*PI)-viewHorizontal);
+    cueBall.insertSpinVert(shotPower*addSpinVert);
     shotPower = 0;
     shooting = false;
+    addSpinVert = 0;
+    addSpinHoriz = 0;
   }
 }
 
 void keyPressed(){
-  if(key=='s'){
+  if(key==';'){
     if(viewVertical < .55){
       viewVertical += .005;
     }
   }
-  if(key=='a'){
+  if(key=='/'){
     if(viewVertical > .1){
       viewVertical -= .005;
     }
@@ -126,18 +136,27 @@ void keyPressed(){
   if(key=='p'){
     scratch = !scratch;
     rotatable = !rotatable;
+    cueBall.stop();
   }
   if(key=='w'){
-    
+    if(addSpinHoriz<0.2){
+      addSpinHoriz += 0.01;
+    }
   }
   if(key=='a'){
-    
+   if(addSpinVert >-.2){
+     addSpinVert-=0.01;
+   }
   }
   if(key=='s'){
-    
+    if(addSpinHoriz >-.2){
+      addSpinHoriz-=0.01;
+    }
   }
   if(key=='d'){
-    
+    if(addSpinVert<0.2){
+      addSpinVert+=0.01;
+    }
   }
   if(key==' '){
     shoot();
@@ -209,9 +228,14 @@ void paintBalls(){
 }
 
 void showBallAim(){
+  pushMatrix();
   translate(30,30,0);
   fill(255);
   ellipse(0,0,60,60);
+  noStroke();
+  fill(100,100,20);
+  ellipse(100*addSpinVert,-100*addSpinHoriz,3,3);
+  popMatrix();
   
 }
 
@@ -234,6 +258,7 @@ void paintSights(){
     rotateZ(-viewHorizontal);
       pushMatrix();
       translate(0,250+shotPower*8,0);
+      translate(addSpinVert*75,0,addSpinHoriz*75);
       fill(0, 0, 15+shotPower*100, shotPower*30+30);
       stroke(15+shotPower*15, 0, 0, shotPower*15+30);
       cylinder(3.5, 500-(shotPower*16), 90);
@@ -241,8 +266,9 @@ void paintSights(){
       
       pushMatrix();
       fill(255,51,102);
-      translate(-10,175+shotPower*8,90);
-      cylinder(0.5, shotPower*8, 90);
+      translate(0,shotPower*8,0);
+      translate(addSpinVert*75,0,addSpinHoriz*75);
+      cylinder(0.5, shotPower*16, 90);
       popMatrix();
     popMatrix();
   }
