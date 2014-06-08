@@ -13,7 +13,7 @@ float delay;
 float shotPower = .7;
 boolean precisionAim = false;
 float RAD = 15;
-float FRICTION = -0.1;
+float FRICTION = -0.05;
 float FPS = 60;
 Ball cueBall;
 
@@ -70,10 +70,12 @@ void draw(){
   p.update();
   
   if(p.stopped()){
-    try{
-      Thread.sleep(3000);
-   }catch(Exception e){}
-   shooting = true;
+    if(shooting==false){
+      try{
+        Thread.sleep(3000);
+     }catch(Exception e){}
+    }
+    shooting = true;
   }
 }
 
@@ -216,17 +218,18 @@ void paintSights(){
     pushMatrix();
     translate(cueBall.getX(), cueBall.getY(), 0);
     rotateZ(-viewHorizontal);
-    pushMatrix();
-    translate(0,250+shotPower*8,0);
-    fill(0, 0, 15+shotPower*100, shotPower*30+30);
-    stroke(15+shotPower*15, 0, 0, shotPower*15+30);
-    cylinder(3.5, 500-(shotPower*16), 90);
-    popMatrix();
-    pushMatrix();
-    fill(255,51,102);
-    translate(0,175+shotPower*8,90);
-    cylinder(0.5, shotPower*16, 90);
-    popMatrix();
+      pushMatrix();
+      translate(0,250+shotPower*8,0);
+      fill(0, 0, 15+shotPower*100, shotPower*30+30);
+      stroke(15+shotPower*15, 0, 0, shotPower*15+30);
+      cylinder(3.5, 500-(shotPower*16), 90);
+      popMatrix();
+      
+      pushMatrix();
+      fill(255,51,102);
+      translate(-10,175+shotPower*8,90);
+      cylinder(0.5, shotPower*8, 90);
+      popMatrix();
     popMatrix();
   }
 }
