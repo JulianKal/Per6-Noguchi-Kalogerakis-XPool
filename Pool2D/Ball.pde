@@ -10,6 +10,7 @@ public class Ball{
   private float _prevRollingSpin,_prevRollingAngle, _rollingSpin;
   private boolean inYet = false;
   private boolean cueBall = false;
+  private boolean ballCollisions = true;
   private int ballNumber;
   private float rotation,rotationVert;
   ////////////////////////////////////////////////////////////////
@@ -158,14 +159,14 @@ public class Ball{
   }
   public void insertWallCollisions(){
     boolean collided = false;
-    if(_x<-425 || _x>425){
+    if(_x<-440 || _x>440){
       _x -= _vx;
       _vx *= -1;
       _ax *= -1;
       collided = true;
       spinVertWallLR(_x>=0);
     }
-    if(_y<-225 || _y>225){
+    if(_y<-240 || _y>240){
       _y -= _vy;
       _vy *= -1;
       _ay *= -1;

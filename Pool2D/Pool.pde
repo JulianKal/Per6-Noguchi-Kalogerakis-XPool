@@ -12,12 +12,12 @@ public class Pool{
     for(Ball b : ballSet){
       if(!b.inYet()){
         b.update();
-        if (dist(b.getX(), b.getY(), 450, 250) < 60 ||
-            dist(b.getX(), b.getY(), -450, 250) < 60 ||
-            dist(b.getX(), b.getY(), 450, -250) < 60 ||
-            dist(b.getX(), b.getY(), -450, -250) < 60 ||
-            dist(b.getX(), b.getY(), 0, 250) < 60 ||
-            dist(b.getX(), b.getY(), 0, -250) < 60){
+        if (dist(b.getX(), b.getY(), 445, 245) < 40 ||
+            dist(b.getX(), b.getY(), -445, 245) < 40 ||
+            dist(b.getX(), b.getY(), 445, -245) < 40 ||
+            dist(b.getX(), b.getY(), -445, -245) < 40 ||
+            dist(b.getX(), b.getY(), 0, 275) < 40 ||
+            dist(b.getX(), b.getY(), 0, -275) < 40){
           b.setX(515);
           b.setY(0);
           b.stop();

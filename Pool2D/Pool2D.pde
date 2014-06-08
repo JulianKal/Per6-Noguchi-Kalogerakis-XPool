@@ -60,12 +60,16 @@ void setup() {
   p.getBall(14).setXY(100+60*sqrt(3),30);
   p.getBall(15).setXY(100+60*sqrt(3),60);
   
-  p.set(new Hole(0, -285));
-  p.set(new Hole(0, 285));
-  p.set(new Hole(-440, -240));
-  p.set(new Hole(-440, 240));
-  p.set(new Hole(440, -240));
-  p.set(new Hole(440, 240));
+  p.set(new Hole(0, -275));
+  p.set(new Hole(0, 275));
+  
+  for(int x=0;x<40;x+=5){
+    p.set(new Hole(-445-x, -245-x));
+    p.set(new Hole(-445-x, 245+x));
+    p.set(new Hole(445+x, -245-x));
+    p.set(new Hole(445+x, 245+x));
+  }
+  
 }
 
 void draw(){
@@ -90,7 +94,7 @@ void draw(){
   if(shooting){
     paintSights();
   }
-  paintBalls();  
+  paintBalls();
   buttonListener();
   p.update();
   
@@ -137,7 +141,7 @@ void keyPressed(){
     }
   }
   if(key=='x'){
-    if(shotPower<15){
+    if(shotPower<25){
       shotPower+=.5;
     }
   }

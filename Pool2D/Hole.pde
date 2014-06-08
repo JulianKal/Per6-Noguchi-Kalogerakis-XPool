@@ -6,12 +6,14 @@ public class Hole{
     this.y = y;
   } 
   void update(){
-    stroke(35, 0, 0, 50);
-    fill(35, 35, 53, 255);
+    //stroke(35, 0, 0, 50);
+    //fill(35, 35, 53, 255);
+    fill(0);
+    noStroke();
     pushMatrix();
-    translate(x, y, -500);
+    translate(x, y, -20);
     rotateX(HALF_PI);
-    cylinder(40, 1000, 60);
+    cylinder(40, 20, 20);
     popMatrix();
   }
   
