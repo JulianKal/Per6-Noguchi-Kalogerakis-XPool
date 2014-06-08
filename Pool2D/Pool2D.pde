@@ -170,6 +170,12 @@ void paintRectangle(){
   fill(0,70,0);
   rectMode(CENTER);
   rect(0,0,900,500,25);
+  pushMatrix();
+  translate(-22.5, -22.5, -15);
+  fill(0,0,118);
+  rectMode(CENTER);
+  rect(30, 30, 960, 560, 45);
+  popMatrix();
   popMatrix();
 }
 
@@ -185,18 +191,6 @@ void paintBalls(){
       directionalLight(255, 255, 255, b.getX() + 25, b.getY() + 25, 50); 
       pointLight(255, 255, 255, b.getX() + 25, b.getY() - 25, + 50); 
       translate(b.getX(),b.getY(),0);
-      /*if(rotatable){
-        fill(b.getColor());
-        //shininess(4.0);
-        //specular(255);
-        stroke(0);
-        strokeWeight(0.25);
-        sphere(RAD);
-      }else{
-        fill(b.getColor());
-        ellipse(0,0,RAD*2,RAD*2);
-      }
-      */
       b.insertSpinRotations();
       b.renderGlobe();  
       popMatrix();
@@ -212,40 +206,24 @@ void showBallAim(){
   translate(30,30,0);
   fill(255);
   ellipse(0,0,60,60);
-  
 }
 
 void paintSights(){
-  //cue stick
-  if(precisionAim){
-    /*
+  pushMatrix();
+  translate(cueBall.getX(), cueBall.getY(), 0);
+  rotateZ(-viewHorizontal);
     pushMatrix();
-    translate(cueBall.getX(), cueBall.getY(), 0);
-    stroke(0, 0, 15+shotPower*100, shotPower*30+30);
-    rotateZ(-viewHorizontal);
-    fill( 0, 0, 15+shotPower*100, shotPower*30+30);
-    cylinder(15, 2600, 90);
+    translate(0,250+shotPower*8,0);
+    fill(0, 0, 15+shotPower*100, shotPower*30+30);
+    stroke(15+shotPower*15, 0, 0, shotPower*15+30);
+    cylinder(3.5, 500-(shotPower*16), 90);
     popMatrix();
-    */
-  }
-  else{
     pushMatrix();
-    translate(cueBall.getX(), cueBall.getY(), 0);
-    rotateZ(-viewHorizontal);
-      pushMatrix();
-      translate(0,250+shotPower*8,0);
-      fill(0, 0, 15+shotPower*100, shotPower*30+30);
-      stroke(15+shotPower*15, 0, 0, shotPower*15+30);
-      cylinder(3.5, 500-(shotPower*16), 90);
-      popMatrix();
-      
-      pushMatrix();
-      fill(255,51,102);
-      translate(-10,175+shotPower*8,90);
-      cylinder(0.5, shotPower*8, 90);
-      popMatrix();
+    fill(255,51,102);
+    translate(-10,175+shotPower*8,90);
+    cylinder(0.5, shotPower*8, 90);
     popMatrix();
-  }
+  popMatrix();
 }
 
 void cylinder(float w, float h, int sides){
