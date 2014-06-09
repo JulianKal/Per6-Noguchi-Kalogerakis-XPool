@@ -15,6 +15,7 @@ float mx, my;
 float lastTime = millis();
 float delay;
 float shotPower = .7;
+public static sfloat specialPower = 1.0;
 boolean precisionAim = false;
 float RAD = 15;
 float FRICTION = -0.04;
@@ -173,13 +174,16 @@ void mouseClicked(){
 void shoot(){
   if(shooting){
     println(shotPower*addSpinHoriz);
-    cueBall.insertForce(shotPower,(1.5*PI)-viewHorizontal);
+    cueBall.insertForce(shotPower*specialPower,(1.5*PI)-viewHorizontal);
     cueBall.insertSpinHoriz(shotPower*addSpinHoriz,(1.5*PI)-viewHorizontal);
     cueBall.insertSpinVert(shotPower*addSpinVert);
     shotPower = 0;
     shooting = false;
     addSpinVert = 0;
     addSpinHoriz = 0;
+    if(specialPower > 1){
+      specialPower = 1;
+    }
   }
 }
 
