@@ -24,36 +24,32 @@ public class Hole{
     return y;
   }
 
-void cylinder(float w, float h, int sides){
-  float angle;
-  float[] x = new float[sides+1];
-  float[] y = new float[sides+1];
-  for(int i=0; i<x.length; i++){
-    angle = TWO_PI/sides*i;
-    x[i] = sin(angle)*w;
-    y[i] = cos(angle)*w;
+  void cylinder(float w, float h, int sides){
+    float angle;
+    float[] x = new float[sides+1];
+    float[] y = new float[sides+1];
+    for(int i=0; i<x.length; i++){
+      angle = TWO_PI/sides*i;
+      x[i] = sin(angle)*w;
+      y[i] = cos(angle)*w;
+    }
+    beginShape(TRIANGLE_FAN); 
+    vertex(0, -h/2, 0);
+    for(int i=0; i < x.length; i++){
+      vertex(x[i], -h/2, y[i]);
+    }
+    endShape();
+    beginShape(QUAD_STRIP);
+    for(int i=0; i < x.length; i++){
+      vertex(x[i], -h/2, y[i]);
+      vertex(x[i], h/2, y[i]);
+    }
+    endShape();
+    beginShape(TRIANGLE_FAN);
+    vertex(0, h/2, 0);
+    for(int i=0; i < x.length; i++){
+      vertex(x[i], h/2, y[i]);
+    }
+    endShape();    
   }
-  beginShape(TRIANGLE_FAN); 
-  vertex(0, -h/2, 0);
-  for(int i=0; i < x.length; i++){
-    vertex(x[i], -h/2, y[i]);
-  }
-  endShape();
-  beginShape(QUAD_STRIP);
-  for(int i=0; i < x.length; i++){
-    vertex(x[i], -h/2, y[i]);
-    vertex(x[i], h/2, y[i]);
-  }
-  endShape();
-  beginShape(TRIANGLE_FAN);
-  vertex(0, h/2, 0);
-  for(int i=0; i < x.length; i++){
-    vertex(x[i], h/2, y[i]);
-  }
-  endShape();    
 }
-  
-
-
-}
-

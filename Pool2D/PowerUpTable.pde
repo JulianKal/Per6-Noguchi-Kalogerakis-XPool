@@ -17,7 +17,7 @@ public class PowerUpTable{
   
   public boolean isEmpty(){
     for(PowerUpStack P : powerUps){
-      if(!powerUps.empty()){
+      if(!P.getStack().empty()){
         return false;
       }
     }
@@ -26,19 +26,18 @@ public class PowerUpTable{
   
   public void add(int i){
     PowerUp p = new PowerUp(i);
-    powerUps.get(i).push(p);
+    powerUps.get(i).getStack().push(p);
   }
   
   
-  public PowerUp remove(int i){
+  public void remove(int i){
     if(!powerUps.isEmpty()){
-      if(!powerUps.get(i).empty()){
-        return powerUps.get(i).pop();
+      if(!powerUps.get(i).getStack().empty()){
+        powerUps.get(i).getStack().pop();
       }
     }
     else{
       println("You have no PowerUps!!!!");
     }
   }
-  
 }

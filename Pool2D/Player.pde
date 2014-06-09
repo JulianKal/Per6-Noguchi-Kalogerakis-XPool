@@ -4,7 +4,8 @@ public class Player{
   private int ballCount; //Balls left
   private boolean scratch;
   private boolean lost;
-  private boolean won= false;
+  private boolean won = false;
+  private PowerUpTable powers;
   private ArrayList<Ball> pocketed;
   
   public Player(){
@@ -12,46 +13,65 @@ public class Player{
     gotBallIn = true;
     ballCount = 7;
     lost = false;
+    won = false;
     pocketed = new ArrayList<Ball>();
+    powers = new PowerUpTable();
   }
   
   public void pocketBall(Ball b){
+    if(b.cueBall){
+      scratch=true;
+      return;
+    }
     switch(ballColor){
+      println(b.getBallNumber());
       case 0:
-      if(b.getBallNumber()==8){
-        lost=true;
-      }else if(b.getBallNumber()<8){
-        ballColor = 2;
-      }else if(b.getBallNumber()>8){
-        ballColor = 1;
-      }
+        if(b.getBallNumber()==8){
+          lost=true;
+        }else if(b.getBallNumber()<8){
+          ballColor = 2;
+          if(this==p1){
+            p2.setColor(1);
+          }else{
+            p1.setColor(1);
+          }
+        }else if(b.getBallNumber()>8){
+          ballColor = 1;
+          if(this==p1){
+            p2.setColor(2);
+          }else{
+            p1.setColor(2);
+          }
+        }
+        
       break;
       case 2:
-      if(b.getBallNumber()==8){
-        lost = true;
-      }else if(b.getBallNumber()<8){
-        gotBallIn = gotBallIn && true;
-      }else if(b.getBallNumber()>8){
-        gotBallIn = false;
-      }
+        if(b.getBallNumber()==8){
+          lost = true;
+        }else if(b.getBallNumber()<8){
+          gotBallIn = gotBallIn && true;
+        }else if(b.getBallNumber()>8){
+          gotBallIn = false;
+        }
       break;
       case 1:
-      if(b.getBallNumber()==8){
-        lost = true;
-      }else if(b.getBallNumber()<8){
-        gotBallIn = false;
-      }else if(b.getBallNumber()>8){
-        gotBallIn = gotBallIn && true;
-      }
+        if(b.getBallNumber()==8){
+          lost = true;
+        }else if(b.getBallNumber()<8){
+          gotBallIn = false;
+        }else if(b.getBallNumber()>8){
+          gotBallIn = gotBallIn && true;
+        }
       break;
       case 8:
-      if(b.getBallNumber()==8){
-        won = true;
-      }else{
-        gotBallIn = false;
+        if(b.getBallNumber()==8){
+          won = true;
+        }else{
+          gotBallIn = false;
+        }
       }
     }
-  }
+    
   
   public boolean getScratched(){return scratch;}
   public void gotScratch(){scratch=true;}
@@ -70,26 +90,8 @@ public class Player{
     }
   }
   public int getBallCount(){return ballCount;}
-
-
- private PowerUpTable powers;
- private boolean solids;
- 
- public Player(){
-   boolean solids = false;
-   powers = new PowerUpTable();
- }
- 
- public PowerUpTable getPowers(){
-   return powers;
- }
-  
-  public boolean getSolids(){
-    return solids;
+  public PowerUpTable getPowers(){
+    return powers;
   }
-
-  public void switchStripSolid(){
-   solids = !solids;
-  }  
-  
 }
+  

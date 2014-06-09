@@ -393,5 +393,3 @@ public class Ball{
   }
 
 }
-
-
