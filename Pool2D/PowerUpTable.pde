@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 public class PowerUpTable{
   
-  private ArrayList<PowerUpStack>[] powerUps;
+  private ArrayList<PowerUpStack> powerUps;
   
   public PowerUpTable(){
     powerUps = new ArrayList<PowerUpStack>();
