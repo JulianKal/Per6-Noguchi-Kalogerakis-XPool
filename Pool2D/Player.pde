@@ -7,6 +7,7 @@ public class Player{
   private boolean won = false;
   private PowerUpTable powers;
   private ArrayList<Ball> pocketed;
+  private String name;
   
   public Player(){
     ballColor = 0;
@@ -15,17 +16,27 @@ public class Player{
     lost = false;
     won = false;
     pocketed = new ArrayList<Ball>();
+<<<<<<< HEAD
     powers = new PowerUpTable();
   }
   
   public void pocketBall(Ball b){
     if(b.cueBall){
+=======
+    boolean solids = false;
+   powers = new PowerUpTable();
+  }
+  
+  public void pocketBall(Ball b){
+     if(b.cueBall){
+>>>>>>> FETCH_HEAD
       scratch=true;
       return;
     }
     switch(ballColor){
       println(b.getBallNumber());
       case 0:
+<<<<<<< HEAD
         if(b.getBallNumber()==8){
           lost=true;
         }else if(b.getBallNumber()<8){
@@ -44,6 +55,29 @@ public class Player{
           }
         }
         
+=======
+      if(b.getBallNumber()==8){
+        lost=true;
+      }else if(b.getBallNumber()<8){
+        ballColor = 2;
+        /*
+        if(this==p1){
+          p2.setColor(1);
+        }else{
+          p1.setColor(1);
+        }
+        */
+      }else if(b.getBallNumber()>8){
+        ballColor = 1;
+        /*
+         if(this==p1){
+          p2.setColor(2);
+        }else{
+          p1.setColor(2);
+        }
+        */
+      }
+>>>>>>> FETCH_HEAD
       break;
       case 2:
         if(b.getBallNumber()==8){
@@ -82,6 +116,8 @@ public class Player{
   public void setBallCount(int x){ballCount = x;}
   public boolean lost(){ return lost;}
   public boolean won(){ return won;}
+  public String getName(){return name;}
+  public void setName(String name){this.name = name;}
   public void decreaseBallCount(){
     if(ballCount>0){
       ballCount--;
@@ -90,8 +126,24 @@ public class Player{
     }
   }
   public int getBallCount(){return ballCount;}
+<<<<<<< HEAD
   public PowerUpTable getPowers(){
     return powers;
+=======
+
+
+ private PowerUpTable powers;
+ private boolean solids;
+ 
+
+ 
+ public PowerUpTable getPowers(){
+   return powers;
+ }
+  
+  public boolean getSolids(){
+    return solids;
+>>>>>>> FETCH_HEAD
   }
 }
   

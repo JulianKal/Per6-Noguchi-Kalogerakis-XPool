@@ -17,15 +17,22 @@ public class PowerUpTable{
   
   public boolean isEmpty(){
     for(PowerUpStack P : powerUps){
+<<<<<<< HEAD
       if(!P.getStack().empty()){
+=======
+      /*
+      if(!powerUps.empty()){
+>>>>>>> FETCH_HEAD
         return false;
       }
+      */
     }
     return true;
   }
   
   public void add(int i){
     PowerUp p = new PowerUp(i);
+<<<<<<< HEAD
     powerUps.get(i).getStack().push(p);
   }
   
@@ -34,10 +41,27 @@ public class PowerUpTable{
     if(!powerUps.isEmpty()){
       if(!powerUps.get(i).getStack().empty()){
         powerUps.get(i).getStack().pop();
+=======
+    //powerUps.get(i).push(p);
+  }
+  
+  /*
+  public PowerUp remove(int i){
+    if(!powerUps.isEmpty()){
+      /*
+      if(!powerUps.get(i).empty()){
+        return powerUps.get(i).pop();
+>>>>>>> FETCH_HEAD
       }
+      
     }
     else{
       println("You have no PowerUps!!!!");
     }
   }
+<<<<<<< HEAD
+=======
+  */
+  
+>>>>>>> FETCH_HEAD
 }

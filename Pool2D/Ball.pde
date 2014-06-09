@@ -127,6 +127,7 @@ public class Ball{
   ////////////////////////////////////////////////////
   
   public void insertBallCollisions(){
+    if(!scratch){
     for(Ball b : p.getBallSet()){
       if(this != b){
         if(distance(b)<0){
@@ -142,6 +143,7 @@ public class Ball{
           }
         }
       }
+    }
     }
   }
   

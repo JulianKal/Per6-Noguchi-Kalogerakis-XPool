@@ -1,8 +1,6 @@
 import javax.swing.*;
 
 Pool p = new Pool();
-Player p1,p2;
-Player turn;
 float x, y, z;
 float viewHorizontal,keyHorizontal,mouseHorizontal;
 float viewVertical = .35;
@@ -11,6 +9,8 @@ boolean aim = true;
 boolean rotatable = true;
 boolean scratch = false;
 boolean shooting = true;
+boolean specialMode = true;
+boolean checked = true;
 float mx, my;
 float lastTime = millis();
 float delay;
@@ -23,12 +23,6 @@ float FPS = 60;
 Ball cueBall;
 
 void setup() {
-  Player p1 = new Player();
-  p1.setColor(0);
-  Player p2 = new Player();
-  p2.setColor(0);
-  
-  turn = p1;
   
   size(1000,600,P3D);
   background(0);
@@ -83,24 +77,9 @@ void setup() {
 }
 
 void draw(){
-  if(p.stopped()){
-    checkTurns();
-  }
   
   background(190, 197, 185);
   ambientLight(255, 255, 255);
-  
-  pushMatrix();
-  
-  fill(100);
-  textFont(createFont("Ariel",16,true));
-  if(turn==p1){
-    text("Turn: Player 1:",20,50);
-  }else{
-    text("Turn: Player 2:",20,50);
-  }
-  
-  popMatrix();
   
   if(shooting){
     showBallAim();
@@ -126,44 +105,12 @@ void draw(){
   p.update();
   
   if(p.stopped()){
-    if(shooting==false){
-      try{
-        Thread.sleep(3000);
-        checkTurns();
-     }catch(Exception e){}
-    }
     shooting = true;
   }
 }
 
 void exit(){
   super.exit();
-}
-
-void checkTurns(){
-  if(!turn.getGotBallIn()){
-    changeTurns();
-  }
-  if(turn.getScratched()){
-    changeTurns();
-    scratch = !scratch;
-    rotatable = !rotatable;
-  }
-  if(turn.lost()){
-    //WIN!
-    println("End game.");
-  }
-  if(turn.won()){
-    println("end game.");
-  }
-}
-
-void changeTurns(){
-  if(turn==p1){
-    turn=p2;
-  }else{
-    turn=p1;
-  }
 }
 
 void mouseClicked(){
