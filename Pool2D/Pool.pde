@@ -21,6 +21,7 @@ public class Pool{
           b.setX(515);
           b.setY(0);
           b.stop();
+          turn.pocketBall(b);
         }   
       }
       else{
