@@ -6,6 +6,7 @@ public class Player{
   private boolean lost;
   private boolean won= false;
   private ArrayList<Ball> pocketed;
+  private String name;
   
   public Player(){
     ballColor = 0;
@@ -13,17 +14,37 @@ public class Player{
     ballCount = 7;
     lost = false;
     pocketed = new ArrayList<Ball>();
+    boolean solids = false;
+   powers = new PowerUpTable();
   }
   
   public void pocketBall(Ball b){
+     if(b.cueBall){
+      scratch=true;
+      return;
+    }
     switch(ballColor){
       case 0:
       if(b.getBallNumber()==8){
         lost=true;
       }else if(b.getBallNumber()<8){
         ballColor = 2;
+        /*
+        if(this==p1){
+          p2.setColor(1);
+        }else{
+          p1.setColor(1);
+        }
+        */
       }else if(b.getBallNumber()>8){
         ballColor = 1;
+        /*
+         if(this==p1){
+          p2.setColor(2);
+        }else{
+          p1.setColor(2);
+        }
+        */
       }
       break;
       case 2:
@@ -62,6 +83,8 @@ public class Player{
   public void setBallCount(int x){ballCount = x;}
   public boolean lost(){ return lost;}
   public boolean won(){ return won;}
+  public String getName(){return name;}
+  public void setName(String name){this.name = name;}
   public void decreaseBallCount(){
     if(ballCount>0){
       ballCount--;
@@ -75,10 +98,7 @@ public class Player{
  private PowerUpTable powers;
  private boolean solids;
  
- public Player(){
-   boolean solids = false;
-   powers = new PowerUpTable();
- }
+
  
  public PowerUpTable getPowers(){
    return powers;

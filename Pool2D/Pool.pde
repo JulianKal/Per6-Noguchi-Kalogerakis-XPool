@@ -1,6 +1,7 @@
 public class Pool{
   private ArrayList<Ball> ballSet;
   private ArrayList<Hole> holeSet;
+  int temp = 0;
   
   public Pool(){
     ballSet = new ArrayList<Ball>();
@@ -19,9 +20,12 @@ public class Pool{
             dist(b.getX(), b.getY(), 0, 275) < 40 ||
             dist(b.getX(), b.getY(), 0, -275) < 40){
           b.setX(515);
-          b.setY(0);
+          b.setY(temp++);
           b.stop();
-          turn.pocketBall(b);
+          if(b==cueBall){
+            rotatable = false;
+            scratch = true;
+          }
         }   
       }
       else{
