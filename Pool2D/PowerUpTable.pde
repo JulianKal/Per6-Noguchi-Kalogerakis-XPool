@@ -1,18 +1,6 @@
 import java.util.*;
+import java.io.*;
 public class PowerUpTable{
-  ////////////////////////////////////////////////
-  public class PowerUpStack{
-    private Stack<PowerUp> S;
-    
-    public PowerUpStack(){
-      S = new Stack<PowerUp>();
-    }
-
-    public Stack<PowerUp> getStack(){
-      return S;
-    }
-  }
-  ////////////////////////////////////////////////
   
   private ArrayList<PowerUpStack>[] powerUps;
   

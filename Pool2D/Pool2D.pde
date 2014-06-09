@@ -15,7 +15,7 @@ float mx, my;
 float lastTime = millis();
 float delay;
 float shotPower = .7;
-public static sfloat specialPower = 1.0;
+public static float specialPower = 1.0;
 boolean precisionAim = false;
 float RAD = 15;
 float FRICTION = -0.04;
