@@ -3,6 +3,7 @@ public class Ball{
   private float _x, _y; //Positions of the ball, set using the translate() function.
   private float _vx, _vy; //Delta x and y, for velocity.
   private float _ax, _ay; //The acceleration (rate of change of speed)
+  private float elevation = 0;
   private int colorNum;
   private float _spinx,_spiny;
   private float _spinvert; //The spin that is mainly for curves.
@@ -235,7 +236,7 @@ public class Ball{
   }
   
   public float distance(Ball b){
-    return sqrt(sq(_x-b.getX()) + sq(_y-b.getY()))-2*R;
+    return sqrt(sq(_x-b.getX()) + sq(_y-b.getY()) + sq(elevation - b.getElevation()))-2*R;
   }
   
   public float convert2PI(float f){ //Convert angles to between 0 and 2PI
@@ -263,6 +264,8 @@ public class Ball{
   public void setXY(float x, float y){_x=x;_y=y;}
   public float getX(){return _x;}
   public float getY(){return _y;}
+  public float getElevation(){return elevation;}
+  public void setElevation(float e){elevation = e;}
   public void setXVel(float x){_vx = x;}
   public void setYVel(float y){_vy = y;}
   public float getXVel(){return _vx;}

@@ -18,17 +18,17 @@ public class PowerUp{
   }
   
   public void usePower(){
-    if(type == 1){
-      //someScratchMethod();
-    }
-    else if (type == 2){
+    if (type == 2){
       Pool2D.specialPower += .65;
     }
     else if(type == 3){
-      //randomizeBalls();
+      Pool2D.randomizeNow = true;
     }
     else if(type == 4){
-      //liftEnemyBalls();
+      Pool2D.liftSolidsNow = true;
+    } 
+    else if(type == 5){
+      Pool2D.dropSolidsNow = true;
     }
   }
   
