@@ -32,4 +32,8 @@ public class PowerUpTable{
     return powerUps.get(i).pop();
   }
   
+   public PowerUp get(int i){
+    return powerUps.get(i).peek();
+  }
+  
 }

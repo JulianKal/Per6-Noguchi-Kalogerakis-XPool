@@ -17,6 +17,7 @@ float delay;
 float shotPower = .7;
 public static float specialPower = 1.0;
 public static boolean randomizeNow = false;
+public static boolean addPower = false;
 public static boolean liftSolidsNow = false;
 public static boolean dropSolidsNow = false;
 boolean precisionAim = false;
@@ -26,6 +27,7 @@ float FPS = 60;
 Ball cueBall;
 PowerUpTable POWERS = new PowerUpTable();
 boolean POWERMODE = true;
+//boolean POWERMODE = false;
 
 void setup() {
   
@@ -98,9 +100,21 @@ void draw(){
   
   background(190, 197, 185);
   ambientLight(255, 255, 255);
+  if(addPower){
+    int i = 1 + (int)(random(5));
+    if(i == 4){
+      POWERS.add(5);
+    }
+    if(i == 5){
+      POWERS.add(4);
+    }
+    POWERS.add(i);
+    addPower = false;
+  }
   
   if(shooting){
     showBallAim();
+    showPowers();
   }
   translate(x,y,35);
   
@@ -297,11 +311,6 @@ void paintBalls(){
       pushMatrix();
       lights();
       ambientLight(255, 255, 255);
-      directionalLight(255, 255, 255, b.getX() + 25, b.getY() - 25, - 50); 
-      directionalLight(255, 255, 255, b.getX() - 25, b.getY() + 25, - 50); 
-      directionalLight(255, 255, 255, b.getX() - 25, b.getY() - 25, 50); 
-      directionalLight(255, 255, 255, b.getX() + 25, b.getY() + 25, 50); 
-      pointLight(255, 255, 255, b.getX() + 25, b.getY() - 25, + 50); 
       if(liftSolidsNow && !dropSolidsNow && b.getBallNumber() <= 8 && b.getBallNumber() > 0){
         b.setElevation(b.getElevation() + 1);
       }
@@ -317,6 +326,13 @@ void paintBalls(){
       translate(b.getX(),b.getY(), b.getElevation());
       b.insertSpinRotations();
       b.renderGlobe();  
+      popMatrix();
+      pushMatrix();
+      directionalLight(255, 255, 255, b.getX() + 25, b.getY() - 25, - 50); 
+      directionalLight(255, 255, 255, b.getX() - 25, b.getY() + 25, - 50); 
+      directionalLight(255, 255, 255, b.getX() - 25, b.getY() - 25, 50); 
+      directionalLight(255, 255, 255, b.getX() + 25, b.getY() + 25, 50); 
+      pointLight(255, 255, 255, b.getX() + 25, b.getY() - 25, + 50); 
       popMatrix();
     }
   }
@@ -337,6 +353,24 @@ void showBallAim(){
   popMatrix();
 }
 
+void showPowers(){
+  for(int i=0; i<6; i++){
+    if(!POWERS.getStack(i).empty()){
+      pushMatrix();
+      translate((i-1)*45,0,0);
+      stroke(255, 140);
+      fill(50 * i, 135);
+      if(i==5){
+        rect(0, 0, 45, 50*(i-1));
+      }
+      else{
+        rect(0, 0, 45, 50*i);
+      }
+      popMatrix();
+    }
+  }
+}
+
 void paintSights(){
   pushMatrix();
   translate(cueBall.getX(), cueBall.getY(), 0);
@@ -344,9 +378,10 @@ void paintSights(){
   
     pushMatrix();
     translate(0,250+shotPower*8,0);
+    translate(addSpinVert*75,0,addSpinHoriz*75);
     fill(0, 0, 15+shotPower*100, shotPower*30+30);
     if(specialPower > 1){
-      stroke(15+shotPower*15, 15+shotPower*15, 0, shotPower*15+30);
+      stroke(15+shotPower*15, shotPower*15+30);
     }
     stroke(15+shotPower*15, 0, 0, shotPower*15+30);
     cylinder(3.5, 500-(shotPower*16), 90);
@@ -368,12 +403,15 @@ public void randomizeBalls(){
       b.setY(random(500)-250);
     }
   }
+  randomizeNow = false;
 }
 
 public void liftSolids(){
   for(Ball b: p.getBallSet()){
     if((abs(b.getX()) < 450 && abs(b.getY()) < 250) && b.getBallNumber() <= 8 && b.getBallNumber() > 0){
-      b.setElevation(b.getElevation() + 10);
+      if(liftSolidsNow && !dropSolidsNow){
+        b.setElevation(b.getElevation() + 10);
+      }
     }
   }
 }
