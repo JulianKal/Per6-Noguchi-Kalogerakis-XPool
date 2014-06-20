@@ -1,5 +1,8 @@
 import javax.swing.*;
 
+////////////////////////////////////////////////////////////////////
+//SETTING UP////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 Pool p = new Pool();
 float x, y, z;
 float viewHorizontal,keyHorizontal,mouseHorizontal;
@@ -21,7 +24,7 @@ public static boolean addPower = false;
 public static boolean liftSolidsNow = false;
 public static boolean dropSolidsNow = false;
 boolean precisionAim = false;
-float RAD = 15;
+float RAD = 12.5;
 float FRICTION = -0.04;
 float FPS = 60;
 Ball cueBall;
@@ -96,6 +99,10 @@ void setup() {
   
 }
 
+////////////////////////////////////////////////////////////////////
+//DRAWIN'////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
 void draw(){
   
   background(190, 197, 185);
@@ -150,9 +157,10 @@ void mouseClicked(){
   rotatable = !rotatable;
 }
 
+
 void shoot(){
   if(shooting){
-    println(shotPower*addSpinHoriz);
+    //println(shotPower*addSpinHoriz);
     cueBall.insertForce(shotPower*specialPower,(1.5*PI)-viewHorizontal);
     cueBall.insertSpinHoriz(shotPower*addSpinHoriz,(1.5*PI)-viewHorizontal);
     cueBall.insertSpinVert(shotPower*addSpinVert);
@@ -297,7 +305,7 @@ void paintRectangle(){
   rectMode(CENTER);
   rect(0,0,900,500,25);
   pushMatrix();
-  translate(-22.5, -22.5, -15);
+  translate(-22.5, -22.5, -12.5);
   fill(0,0,118);
   rectMode(CENTER);
   rect(30, 30, 960, 560, 45);
@@ -310,7 +318,6 @@ void paintBalls(){
     if(!b.inYet()){
       pushMatrix();
       lights();
-      ambientLight(255, 255, 255);
       if(liftSolidsNow && !dropSolidsNow && b.getBallNumber() <= 8 && b.getBallNumber() > 0){
         b.setElevation(b.getElevation() + 1);
       }
@@ -328,11 +335,11 @@ void paintBalls(){
       b.renderGlobe();  
       popMatrix();
       pushMatrix();
-      directionalLight(255, 255, 255, b.getX() + 25, b.getY() - 25, - 50); 
-      directionalLight(255, 255, 255, b.getX() - 25, b.getY() + 25, - 50); 
-      directionalLight(255, 255, 255, b.getX() - 25, b.getY() - 25, 50); 
-      directionalLight(255, 255, 255, b.getX() + 25, b.getY() + 25, 50); 
-      pointLight(255, 255, 255, b.getX() + 25, b.getY() - 25, + 50); 
+      //directionalLight(255, 255, 255, b.getX() + 25, b.getY() - 25, - 50); 
+      //directionalLight(255, 255, 255, b.getX() - 25, b.getY() + 25, - 50); 
+      //directionalLight(255, 255, 255, b.getX() - 25, b.getY() - 25, 50); 
+      //directionalLight(255, 255, 255, b.getX() + 25, b.getY() + 25, 50); 
+      //pointLight(255, 255, 255, b.getX() + 25, b.getY() - 25, + 50); 
       popMatrix();
     }
   }
