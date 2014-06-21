@@ -5,32 +5,22 @@ import javax.swing.*;
 ////////////////////////////////////////////////////////////////////
 Pool p = new Pool();
 float x, y, z;
-float viewHorizontal,keyHorizontal,mouseHorizontal;
+float viewHorizontal, keyHorizontal, mouseHorizontal;
 float viewVertical = .35;
 float addSpinHoriz, addSpinVert;
 boolean aim = true;
 boolean rotatable = true;
 static boolean scratch = false;
 boolean shooting = true;
-boolean specialMode = true;
 boolean checked = true;
 float mx, my;
 float lastTime = millis();
 float delay;
 float shotPower = .7;
-public static float specialPower = 1.0;
-public static boolean randomizeNow = false;
-public static boolean addPower = false;
-public static boolean liftSolidsNow = false;
-public static boolean dropSolidsNow = false;
-boolean precisionAim = false;
-float RAD = 12.5;
+float RAD = 13;
 float FRICTION = -0.04;
 float FPS = 60;
 Ball cueBall;
-PowerUpTable POWERS = new PowerUpTable();
-boolean POWERMODE = true;
-//boolean POWERMODE = false;
 
 void setup() {
   
@@ -84,19 +74,6 @@ void setup() {
     p.set(new Hole(445+x, 245+x));
   }
   
-  if(POWERMODE){
-    POWERS.add(1);
-    POWERS.add(1);
-    POWERS.add(2);
-    POWERS.add(2);
-    POWERS.add(3);
-    POWERS.add(3);
-    POWERS.add(4);
-    POWERS.add(5);
-    POWERS.add(4);
-    POWERS.add(5);
-  }
-  
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -104,21 +81,8 @@ void setup() {
 ////////////////////////////////////////////////////////////////////
 
 void draw(){
-  
   background(190, 197, 185);
   ambientLight(255, 255, 255);
-  if(addPower){
-    int i = 1 + (int)(random(5));
-    if(i == 4){
-      POWERS.add(5);
-    }
-    if(i == 5){
-      POWERS.add(4);
-    }
-    POWERS.add(i);
-    addPower = false;
-  }
-  
   if(shooting){
     showBallAim();
     showPowers();
@@ -140,7 +104,6 @@ void draw(){
     paintSights();
   }
   paintBalls();
-  buttonListener();
   p.update();
   
   if(p.stopped()){
@@ -161,67 +124,17 @@ void mouseClicked(){
 void shoot(){
   if(shooting){
     //println(shotPower*addSpinHoriz);
-    cueBall.insertForce(shotPower*specialPower,(1.5*PI)-viewHorizontal);
+    cueBall.insertForce(shotPower,(1.5*PI)-viewHorizontal);
     cueBall.insertSpinHoriz(shotPower*addSpinHoriz,(1.5*PI)-viewHorizontal);
     cueBall.insertSpinVert(shotPower*addSpinVert);
     shotPower = 0;
     shooting = false;
     addSpinVert = 0;
     addSpinHoriz = 0;
-    if(specialPower > 1){
-      specialPower = 1;
-    }
   }
 }
 
 void keyPressed(){
-  if(key == '1' && shooting){
-    try{
-      POWERS.remove(1);
-    }catch(Exception e){
-      e.printStackTrace();
-    }
-    key = 'p'; 
-  }
-  if(key == '2' && shooting){
-    try{
-      POWERS.remove(2).usePower();
-    }catch(Exception e){
-      e.printStackTrace();
-    }
-    keyCode = DOWN; 
-  }
-  if(key == '3' && shooting){
-    try{
-      POWERS.remove(3).usePower();
-    }catch(Exception e){
-      e.printStackTrace();
-    }
-    if(randomizeNow){
-      randomizeBalls();
-    }
-  }
-  if(key == '4' && shooting){
-    try{
-      POWERS.remove(4).usePower();
-    }catch(Exception e){
-      e.printStackTrace();
-    }
-    if(liftSolidsNow){
-      liftSolids();
-    }
-  }
-  if(key == '5' && shooting){
-    try{
-      POWERS.remove(5).usePower();
-    }catch(Exception e){
-      e.printStackTrace();
-    }
-    liftSolidsNow = false;
-    if(dropSolidsNow){
-      dropSolids();
-    }
-  }
   if(key==';'){
     if(viewVertical < .55){
       viewVertical += .005;
@@ -281,23 +194,6 @@ void keyPressed(){
   }
 }
 
-void buttonListener(){
-  if(key==CODED){
-    if(keyCode == UP){
-      if(p.stopped()){
-        cueBall.insertForce(shotPower,(1.5*PI)-viewHorizontal);
-        //cueBall.insertSpinVert(1);
-        delay = 3000;
-      }
-      keyCode = DOWN;
-    }
-    else if(keyCode == SHIFT){
-      precisionAim = !precisionAim;
-      keyCode = DOWN;
-    }
-  }
-}
-
 void paintRectangle(){
   pushMatrix();
   translate(0,0,-RAD);
@@ -305,7 +201,7 @@ void paintRectangle(){
   rectMode(CENTER);
   rect(0,0,900,500,25);
   pushMatrix();
-  translate(-22.5, -22.5, -12.5);
+  translate(-22.5, -22.5, -RAD);
   fill(0,0,118);
   rectMode(CENTER);
   rect(30, 30, 960, 560, 45);
@@ -318,28 +214,16 @@ void paintBalls(){
     if(!b.inYet()){
       pushMatrix();
       lights();
-      if(liftSolidsNow && !dropSolidsNow && b.getBallNumber() <= 8 && b.getBallNumber() > 0){
-        b.setElevation(b.getElevation() + 1);
-      }
-      if(!liftSolidsNow && dropSolidsNow && b.getBallNumber() <= 8 && b.getBallNumber() > 0){
-        b.setElevation(b.getElevation() - 1);
-      }
-      if(b.getElevation() > 120){
-        b.setElevation(120);
-      }
-      if(b.getElevation() < 0){
-        b.setElevation(0);
-      }
       translate(b.getX(),b.getY(), b.getElevation());
       b.insertSpinRotations();
       b.renderGlobe();  
       popMatrix();
       pushMatrix();
-      //directionalLight(255, 255, 255, b.getX() + 25, b.getY() - 25, - 50); 
-      //directionalLight(255, 255, 255, b.getX() - 25, b.getY() + 25, - 50); 
-      //directionalLight(255, 255, 255, b.getX() - 25, b.getY() - 25, 50); 
-      //directionalLight(255, 255, 255, b.getX() + 25, b.getY() + 25, 50); 
-      //pointLight(255, 255, 255, b.getX() + 25, b.getY() - 25, + 50); 
+      directionalLight(255, 255, 255, b.getX() + 25, b.getY() - 25, - 50); 
+      directionalLight(255, 255, 255, b.getX() - 25, b.getY() + 25, - 50); 
+      directionalLight(255, 255, 255, b.getX() - 25, b.getY() - 25, 50); 
+      directionalLight(255, 255, 255, b.getX() + 25, b.getY() + 25, 50); 
+      pointLight(255, 255, 255, b.getX() + 25, b.getY() - 25, + 50); 
       popMatrix();
     }
   }
@@ -358,24 +242,6 @@ void showBallAim(){
   fill(100,100,20);
   ellipse(100*addSpinVert,-100*addSpinHoriz,3,3);
   popMatrix();
-}
-
-void showPowers(){
-  for(int i=0; i<6; i++){
-    if(!POWERS.getStack(i).empty()){
-      pushMatrix();
-      translate((i-1)*45,0,0);
-      stroke(255, 140);
-      fill(50 * i, 135);
-      if(i==5){
-        rect(0, 0, 45, 50*(i-1));
-      }
-      else{
-        rect(0, 0, 45, 50*i);
-      }
-      popMatrix();
-    }
-  }
 }
 
 void paintSights(){
