@@ -4,6 +4,7 @@ import javax.swing.*;
 //SETTING UP////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 Pool p = new Pool();
+Ball cueBall;
 float x, y, z;
 float viewHorizontal, keyHorizontal, mouseHorizontal;
 float viewVertical = .35;
@@ -20,7 +21,6 @@ float shotPower = .7;
 float RAD = 13;
 float FRICTION = -0.04;
 float FPS = 60;
-Ball cueBall;
 
 void setup() {
   
@@ -85,7 +85,6 @@ void draw(){
   ambientLight(255, 255, 255);
   if(shooting){
     showBallAim();
-    showPowers();
   }
   translate(x,y,35);
   
@@ -218,13 +217,6 @@ void paintBalls(){
       b.insertSpinRotations();
       b.renderGlobe();  
       popMatrix();
-      pushMatrix();
-      directionalLight(255, 255, 255, b.getX() + 25, b.getY() - 25, - 50); 
-      directionalLight(255, 255, 255, b.getX() - 25, b.getY() + 25, - 50); 
-      directionalLight(255, 255, 255, b.getX() - 25, b.getY() - 25, 50); 
-      directionalLight(255, 255, 255, b.getX() + 25, b.getY() + 25, 50); 
-      pointLight(255, 255, 255, b.getX() + 25, b.getY() - 25, + 50); 
-      popMatrix();
     }
   }
   if(scratch){
@@ -253,9 +245,6 @@ void paintSights(){
     translate(0,250+shotPower*8,0);
     translate(addSpinVert*75,0,addSpinHoriz*75);
     fill(0, 0, 15+shotPower*100, shotPower*30+30);
-    if(specialPower > 1){
-      stroke(15+shotPower*15, shotPower*15+30);
-    }
     stroke(15+shotPower*15, 0, 0, shotPower*15+30);
     cylinder(3.5, 500-(shotPower*16), 90);
     popMatrix();
@@ -269,33 +258,6 @@ void paintSights(){
   popMatrix();
 }
 
-public void randomizeBalls(){
-  for(Ball b : p.getBallSet()){
-    if(abs(b.getX()) < 450 && abs(b.getY()) < 250){
-      b.setX(random(900)-450);
-      b.setY(random(500)-250);
-    }
-  }
-  randomizeNow = false;
-}
-
-public void liftSolids(){
-  for(Ball b: p.getBallSet()){
-    if((abs(b.getX()) < 450 && abs(b.getY()) < 250) && b.getBallNumber() <= 8 && b.getBallNumber() > 0){
-      if(liftSolidsNow && !dropSolidsNow){
-        b.setElevation(b.getElevation() + 10);
-      }
-    }
-  }
-}
-
-public void dropSolids(){
-  for(Ball b: p.getBallSet()){
-    if((abs(b.getX()) < 450 && abs(b.getY()) < 250) && b.getBallNumber() <= 8 && b.getBallNumber() > 0){
-      b.setElevation(b.getElevation() - 10);
-    }
-  }
-}
 
 void cylinder(float w, float h, int sides){
   float angle;

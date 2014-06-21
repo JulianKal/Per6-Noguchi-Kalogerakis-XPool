@@ -221,9 +221,6 @@ public class Ball{
     setY(10000);
     if(ans){ 
       inYet = true;
-      if(random(10) < 3){
-        addPower = true;
-      }
     }
     return ans;
   }
@@ -289,7 +286,7 @@ public class Ball{
   public PImage getPImage(){
     return skin;
   }
-
+*/
 
   /////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////DO NOT ENTER///////////////////////////////////////////

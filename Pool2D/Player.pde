@@ -15,7 +15,6 @@ public class Player{
     lost = false;
     pocketed = new ArrayList<Ball>();
     boolean solids = false;
-   powers = new PowerUpTable();
   }
   
   public void pocketBall(Ball b){
@@ -93,23 +92,4 @@ public class Player{
     }
   }
   public int getBallCount(){return ballCount;}
-
-
- private PowerUpTable powers;
- private boolean solids;
- 
-
- 
- public PowerUpTable getPowers(){
-   return powers;
- }
-  
-  public boolean getSolids(){
-    return solids;
-  }
-
-  public void switchStripSolid(){
-   solids = !solids;
-  }  
-  
 }
