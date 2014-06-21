@@ -59,20 +59,20 @@ void setup() {
     p.getBallSet().get(x).initializeSphere(35);
   }
   p.getBall(1).setXY(100,0);
-  p.getBall(2).setXY(100+15*sqrt(3),15);
-  p.getBall(3).setXY(100+15*sqrt(3),-15);
-  p.getBall(4).setXY(100+30*sqrt(3),30);
-  p.getBall(5).setXY(100+30*sqrt(3),0);
-  p.getBall(6).setXY(100+30*sqrt(3),-30);
-  p.getBall(7).setXY(100+45*sqrt(3),-45);
-  p.getBall(8).setXY(100+45*sqrt(3),-15);
-  p.getBall(9).setXY(100+45*sqrt(3),15);
-  p.getBall(10).setXY(100+45*sqrt(3),45);
-  p.getBall(11).setXY(100+60*sqrt(3),-60);
-  p.getBall(12).setXY(100+60*sqrt(3),-30);
-  p.getBall(13).setXY(100+60*sqrt(3),0);
-  p.getBall(14).setXY(100+60*sqrt(3),30);
-  p.getBall(15).setXY(100+60*sqrt(3),60);
+  p.getBall(2).setXY(100+RAD*sqrt(3),RAD);
+  p.getBall(3).setXY(100+RAD*sqrt(3),-RAD);
+  p.getBall(4).setXY(100+2*RAD*sqrt(3),2*RAD);
+  p.getBall(5).setXY(100+2*RAD*sqrt(3),0);
+  p.getBall(6).setXY(100+2*RAD*sqrt(3),-2*RAD);
+  p.getBall(7).setXY(100+3*RAD*sqrt(3),-3*RAD);
+  p.getBall(8).setXY(100+3*RAD*sqrt(3),-RAD);
+  p.getBall(9).setXY(100+3*RAD*sqrt(3),RAD);
+  p.getBall(10).setXY(100+3*RAD*sqrt(3),3*RAD);
+  p.getBall(11).setXY(100+4*RAD*sqrt(3),-4*RAD);
+  p.getBall(12).setXY(100+4*RAD*sqrt(3),-2*RAD);
+  p.getBall(13).setXY(100+4*RAD*sqrt(3),0);
+  p.getBall(14).setXY(100+4*RAD*sqrt(3),2*RAD);
+  p.getBall(15).setXY(100+4*RAD*sqrt(3),4*RAD);
   
   p.set(new Hole(0, -275));
   p.set(new Hole(0, 275));
