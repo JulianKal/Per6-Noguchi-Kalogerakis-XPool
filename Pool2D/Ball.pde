@@ -40,6 +40,7 @@ public class Ball{
     this(0, 0, loadImage("ZeroImage.png"));
   }
   
+  /*
   public void update(){
     insertLowPass();
     _x += _vx;
@@ -293,7 +294,7 @@ public class Ball{
   ///////////////////////////////BALL RENDERING CODE///////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////  
   
-  public void renderGlobe() {
+  public void renderGlobe(PImage skin) {
     pushMatrix();
     //strokeWeight(0.25);
     smooth();

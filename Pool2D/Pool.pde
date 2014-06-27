@@ -12,7 +12,7 @@ public class Pool{
   public void update(){
     for(Ball b : ballSet){
       if(!b.inYet()){
-        b.update();
+        //b.update();
         if (dist(b.getX(), b.getY(), 445, 245) < 40 ||
             dist(b.getX(), b.getY(), -445, 245) < 40 ||
             dist(b.getX(), b.getY(), 445, -245) < 40 ||
