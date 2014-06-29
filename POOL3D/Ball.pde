@@ -6,7 +6,7 @@ public class Ball extends Mass{
   //////////////////////////////////////////////////////////////////////////
   public PImage skin;
   private int sDetail = 60;  // Sphere detail setting
-  private float R = 12.5;
+  private float R = 10.5;
   private float[] cx, cz, sphereX, sphereY, sphereZ;
   private float sinLUT[];
   private float cosLUT[];
@@ -23,9 +23,11 @@ public class Ball extends Mass{
     setMovable(false);
     setMass(6);
     ENERGY_LOSS_CONSTANT = 1;
+    initializeSphere(30);
   }
   public Ball(float x, float y, float z, PImage skin){
-    this(x,y,z,skin,0,0,0);    
+    this(x,y,z,skin,0,0,0);
+    initializeSphere(30);
   }
   public Ball(){
     this(0, 0, 0, loadImage("14.png"),0,0,0);
@@ -43,7 +45,7 @@ public class Ball extends Mass{
     noStroke();
     translate(center.getX(),center.getY(),center.getZ());
     sphere(RAD);
-    //renderGlobe();  
+    renderGlobe();  
     //ambient(125,125,125);
     //specular(150, 150, 150);
     //shininess(250);
@@ -56,7 +58,7 @@ public class Ball extends Mass{
    for(Surface s : surfaces){
      if(distanceTo(s)<=RAD){
        reflect(s);
-       println(s.normal());
+       //println(s.normal());
 //       if(checkIntersection(s)){
 //         reflect(s);
 //       }

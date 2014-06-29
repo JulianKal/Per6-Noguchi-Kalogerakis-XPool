@@ -3,13 +3,12 @@ float FPS = 60;
 static float RAD = 13;
 static float RES = 10;
 float FRICTION = -.04;
-float viewAngle, mousePrecisionAngle, mouseRotatorAngle;
-float viewVertical = .35;
 Cloth c;
 Bumper b1, b2, b3, b4, b5, b6;
 Ball testBall;
+ViewManager worldViewer;
 static int WINDOW_X = 1200;
-static int WINDOW_Y = 700;
+static int WINDOW_Y = 600;
 
 ArrayList<Collidable> objects;
 ArrayList<Bumper> bumpers;
@@ -20,7 +19,7 @@ void setup(){
   X_MID = WINDOW_X/2;
   Y_MID = WINDOW_Y/2;
   Z_MID = 0;
-  background(24,10,10);
+  background(24,10,10,30);
   frameRate(FPS);
   c = new Cloth();
   
@@ -51,15 +50,24 @@ void setup(){
     }
   }
   
+  worldViewer = new ViewManager();
 }
 
 void draw(){
+  smooth();
+  fill(0, 0, 0, 180);
   lighting();
   translate(X_MID, Y_MID, Z_MID);
-  background(0);
-  rotateView();
+  background(0, 0, 0, 30);
+  worldViewer.update();
   renderSurfaces();
   update();
+}
+
+void keyPressed(){
+  if(key==' '){
+    worldViewer.toggleView();
+  }
 }
 
 void renderSurfaces(){
@@ -74,17 +82,6 @@ void update(){
   }
 }
 
-void rotateView(){
-  translate(0,0,0); //Center of rotation
-  viewAngle = mousePrecisionAngle + mouseRotatorAngle;
-  mousePrecisionAngle  = (mouseX-X_MID) * 0.001;
-  if(abs(mousePrecisionAngle) > .32){
-    mouseRotatorAngle += mousePrecisionAngle/14;
-  }
-  viewVertical = mouseY*0.001;
-  rotateX(PI*viewVertical);
-  rotate(viewAngle);
-}
 
 void lighting(){
   ambientLight(255, 255, 250);

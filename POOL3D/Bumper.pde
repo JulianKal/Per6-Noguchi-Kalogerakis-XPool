@@ -73,7 +73,7 @@ public class Bumper{
     
     pushMatrix();
     for(int x=0;x<surfaces.size();x++){
-      surfaces.get(x).renderSurfaces(0,50,20);
+      surfaces.get(x).renderSurfaces(r,g,b);
     }
     popMatrix();
     
