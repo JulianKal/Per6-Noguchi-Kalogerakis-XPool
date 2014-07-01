@@ -214,8 +214,9 @@ void paintBalls(){
       pushMatrix();
       lights();
       translate(b.getX(),b.getY(), b.getElevation());
+      b.update();
       b.insertSpinRotations();
-      b.renderGlobe();  
+      b.renderGlobe(b.getPImage());  
       popMatrix();
     }
   }

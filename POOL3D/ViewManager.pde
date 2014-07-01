@@ -36,7 +36,7 @@ public class ViewManager{
   public void viewPosition(){
     viewAngle = mousePrecisionAngle + mouseRotatorAngle;
     mousePrecisionAngle = (mouseX-X_MID) * 0.001;
-    if(abs(mousePrecisionAngle) > .22){
+    if(abs(mousePrecisionAngle) > .42){
       mouseRotatorAngle += mousePrecisionAngle/35;
     }
     viewVertical = mouseY*0.001;
@@ -46,13 +46,18 @@ public class ViewManager{
   
   public void shootingView(){
     //translate(0,0,0); //translate to the coordinates of the cueball; this will come later. DOES NOT FOLLOW THE BALL AFTER SHOT.
-    if(abs(mousePrecisionAngle) > 18){
-      mousePrecisionAngle/=1.04;  
-    }
-    viewAngle += mousePrecisionAngle/3000;
     mousePrecisionAngle += (mouseX-X_MID)*.0008;
+    if(abs(mouseX-X_MID) > 50){
+      viewAngle += mousePrecisionAngle/3000;
+    }
+    else{
+      mousePrecisionAngle /= 1.5;
+    }
     rotateX(PI*viewVertical);
     rotate(viewAngle);
+    if(abs(mousePrecisionAngle) > 18){
+      mousePrecisionAngle/=1.1;  
+    }
   }
   
   public void topView(){
