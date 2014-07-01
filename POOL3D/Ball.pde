@@ -6,7 +6,7 @@ public class Ball extends Mass{
   //////////////////////////////////////////////////////////////////////////
   public PImage skin;
   private int sDetail = 60;  // Sphere detail setting
-  private float R = 10.5;
+  private float R = 12.5;
   private float[] cx, cz, sphereX, sphereY, sphereZ;
   private float sinLUT[];
   private float cosLUT[];
@@ -23,18 +23,16 @@ public class Ball extends Mass{
     setMovable(false);
     setMass(6);
     ENERGY_LOSS_CONSTANT = 1;
-    initializeSphere(30);
   }
   public Ball(float x, float y, float z, PImage skin){
     this(x,y,z,skin,0,0,0);
-    initializeSphere(30);
   }
   public Ball(){
     this(0, 0, 0, loadImage("14.png"),0,0,0);
   }
   
   public void update(){
-    center.addVelocity(0,0,-0.1);
+    //center.addVelocity(0,0,-0.1);
     center.update();
     insertCollisions();
   }
@@ -45,7 +43,7 @@ public class Ball extends Mass{
     noStroke();
     translate(center.getX(),center.getY(),center.getZ());
     sphere(RAD);
-    renderGlobe();  
+    //renderGlobe();  
     //ambient(125,125,125);
     //specular(150, 150, 150);
     //shininess(250);
@@ -55,20 +53,16 @@ public class Ball extends Mass{
   
   //Collisions//////////////////////////////////////////////////////////////////////////////
   public void insertCollisions(){
-   for(Surface s : surfaces){
-     if(distanceTo(s)<=RAD){
-       reflect(s);
-       //println(s.normal());
-//       if(checkIntersection(s)){
-//         reflect(s);
-//       }
-     }
-   }
+    for(Surface s : surfaces){
+      if(s.distance(center)<=RAD){
+        if(s.pointOnSurface(s.normalPoint(center))){
+          reflect(s);
+        }
+      }
+    }
   }
   
-  public float distanceTo(Surface s){
-    return abs(center.getX()*s.a + center.getY()*s.b + center.getZ()*s.c) / sqrt(sq(s.a) + sq(s.b) + sq(s.c));
-  }
+  /*
   public boolean checkIntersection(Surface s){
     Point intersection = intersect(s);
     return false;
@@ -80,13 +74,23 @@ public class Ball extends Mass{
     float t = k1/k2;
     return new Point(center.getX()+(t*center.velocity().x),center.getY()+(t*center.velocity().y),center.getZ()+(t*center.velocity().z));
   }
+  */
   public void reflect(Surface s){
+    PVector normal = s.normal();
+    PVector velocity = center.velocity();
     
+    PVector projection = PVector.mult(normal,normal.dot(velocity)/sq(normal.mag()));
+    
+    center.setVelocity(PVector.add(velocity, PVector.mult(projection,-2)));
   }
   
   /*
-  The formula is: 
-  r = v - 2(v • n)n 
+  The formula is:
+  r = v - 2(v • n)n
+ 
+ The better formula is
+  r = - ( -v + 2 * proj(v)(n))
+  r = -( -v + 2(v.dot(n))/mag(n)^2*n
   
   Where: 
   r is the reflection vector, v is the incident vector, n is the normal vector, and • is the dot product. 

@@ -1,5 +1,5 @@
 static float X_MID, Y_MID, Z_MID; //Purely for translational purposes.
-float FPS = 60;
+float FPS = 1000; //If you set the FPS to lower htan this, you get some weird collisions (collisions with more than one wall).
 static float RAD = 13;
 static float RES = 10;
 float FRICTION = -.04;
@@ -36,7 +36,7 @@ void setup(){
   bumpers.add( new Bumper( 420, -200,  420,  200,  420 - 40 * cos(PI/4.00),  200 - 40 * sin(PI/4.00),  420 - 40 * cos(PI/4), -200 + 40 * sin(PI/4)));
   
   
-  testBall = new Ball(0,0,300,loadImage("14.png"),0,0,0);
+  testBall = new Ball(0,0,0,loadImage("14.png"),0.5,1,0);
   objects.add(testBall);
   objects.add(c.getSurface());
   
