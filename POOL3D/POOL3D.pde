@@ -1,8 +1,12 @@
 //To do:
 //To speed up the code, change squareroot < radius to blah < radius^2
-//Improve collisions with location modifications.
+//Improve collisions with location modifications (fix overlap at ricochets)
+//Rolling collisions!!!!!!!!
 //Find out reason for delayed collisions with edges.
 //Change collision detecting such that each ball can only make one collision with each surface (points and segments included)
+//      Update: this works now, but it needs to be coupled with collision detecting from the pool cloth which still doesn't work well.
+//      Update: Now the balls are sinking into the cushions at every bounce and not just with edge detecting.
+
 
 static float X_MID, Y_MID, Z_MID; //Purely for translational purposes.
 float FPS = 2000; //If you set the FPS to lower htan this, you get some weird collisions (collisions with more than one wall).
@@ -52,12 +56,12 @@ void setup(){
     }
   }
 
-  for(Surface s : surfaces){ //Optimization : remove duplicates.
-    for(Segment seg : s.getSegments()){
-      objects.add(seg);
-      segments.add(seg);
-    }
-  }
+//  for(Surface s : surfaces){ //Optimization : remove duplicates.
+//    for(Segment seg : s.getSegments()){
+//      objects.add(seg);
+//      segments.add(seg);
+//    }
+//  }
 //  ArrayList<Point> pointList = new ArrayList<Point>();
 //  pointList.add(new Point(400,200,-4));
 //  pointList.add(new Point(-400,200,-4));
