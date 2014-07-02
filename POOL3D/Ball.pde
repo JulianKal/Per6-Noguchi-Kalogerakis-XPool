@@ -67,7 +67,7 @@ public class Ball extends Mass{
       for(Surface s : surfaces){
         if(!collided){
           if(s.distance(center) <= RAD && s.pointOnSurface(s.normalPoint(center))){
-            reflect(s.normal());  
+            reflect(s.normalPoint(center).vectorTo(center));
           }
         }
       }      

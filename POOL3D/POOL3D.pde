@@ -80,7 +80,7 @@ void setup(){
   testBall = new Ball(100,100,0,loadImage("14.png"),2,1,0);
   objects.add(testBall);
   
-  //objects.add(c.getSurface);
+  objects.add(c.getSurface());
   
   worldViewer = new ViewManager();
 }
