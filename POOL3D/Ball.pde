@@ -53,20 +53,45 @@ public class Ball extends Mass{
   
   //Collisions//////////////////////////////////////////////////////////////////////////////
   public void insertCollisions(){
-    for(Surface s : surfaces){
-      if(s.distance(center) <= RAD && s.pointOnSurface(s.normalPoint(center))){
-        reflect(s.normal());  
-      }else{
-        for(Segment seg : s.getSegments()){
-          Point norm = seg.normalPoint(center);
-          if(center.distance(norm) <= RAD){
-            reflect(norm.vectorTo(center));
-//            println(norm);
-          }
+    boolean collided = false;
+    for(Segment seg : segments){
+      if(!collided){
+        Point norm = seg.normalPoint(center);
+        if(center.distance(norm) <= RAD){
+           reflect(norm.vectorTo(center));
+           collided = true;
         }
       }
     }
+    if(!collided){
+      for(Surface s : surfaces){
+        if(!collided){
+          if(s.distance(center) <= RAD && s.pointOnSurface(s.normalPoint(center))){
+            reflect(s.normal());  
+          }
+        }
+      }      
+    }
     
+    
+//    
+//    for(Surface s : surfaces){
+//      for(Segment seg : s.getSegments()){
+//         if(!collided){
+//           Point norm = seg.normalPoint(center);
+//           if(center.distance(norm) <= RAD){
+//             reflect(norm.vectorTo(center));
+//             collided = true;
+//           }
+//         }
+//      }
+//      if(!collided){
+//        if(s.distance(center) <= RAD && s.pointOnSurface(s.normalPoint(center))){
+//          reflect(s.normal());  
+//        }
+//      }
+//    }
+//    
     
     //hurr code
 //    for(Segment s : segments){

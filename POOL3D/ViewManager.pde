@@ -37,7 +37,7 @@ public class ViewManager{
     viewAngle = mousePrecisionAngle + mouseRotatorAngle;
     mousePrecisionAngle = (mouseX-X_MID) * 0.001;
     if(abs(mousePrecisionAngle) > .42){
-      mouseRotatorAngle += mousePrecisionAngle/100;
+      mouseRotatorAngle += mousePrecisionAngle/35;
     }
     viewVertical = mouseY*0.001;
     rotateX(PI*viewVertical);

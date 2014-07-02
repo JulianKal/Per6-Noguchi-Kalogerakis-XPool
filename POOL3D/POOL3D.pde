@@ -5,7 +5,7 @@
 //Find out reason for delayed collisions with edges.
 //Change collision detecting such that each ball can only make one collision with each surface (points and segments included)
 //      Update: this works now, but it needs to be coupled with collision detecting from the pool cloth which still doesn't work well.
-//      Update: Now the balls are sinking into the cushions at every bounce and not just with edge detecting.
+//      Update: Problem fixed by only allowing collisions with one object at a time. A very temporary fix.
 
 
 static float X_MID, Y_MID, Z_MID; //Purely for translational purposes.
@@ -54,14 +54,13 @@ void setup(){
       surfaces.add(s);
       objects.add(s);
     }
+    for(Segment s : b.getSegments()){
+      segments.add(s);
+      objects.add(s);
+    }
   }
 
-//  for(Surface s : surfaces){ //Optimization : remove duplicates.
-//    for(Segment seg : s.getSegments()){
-//      objects.add(seg);
-//      segments.add(seg);
-//    }
-//  }
+
 //  ArrayList<Point> pointList = new ArrayList<Point>();
 //  pointList.add(new Point(400,200,-4));
 //  pointList.add(new Point(-400,200,-4));
@@ -70,10 +69,15 @@ void setup(){
 //  objects.add(new Surface(pointList));
 //  surfaces.add(new Surface(pointList));
 //  segments.add(new Segment(new Point(400,200,-4),new Point(-400,200,-4)));
-  
+//  for(Surface s : surfaces){ //Optimization : remove duplicates.
+//    for(Segment seg : s.getSegments()){
+//      objects.add(seg);
+//      segments.add(seg);
+//    }
+//  }
 
     
-  testBall = new Ball(100,100,0,loadImage("14.png"),2,5,0);
+  testBall = new Ball(100,100,0,loadImage("14.png"),2,1,0);
   objects.add(testBall);
   
   //objects.add(c.getSurface);
