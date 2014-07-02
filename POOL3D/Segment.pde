@@ -24,8 +24,8 @@ public class Segment extends Collidable{
   public Point normalPoint(Point p){
     //formula from http://www.geometrictools.com/Documentation/DistancePointLine.pdf
     Point zero = new Point(0,0,0);
-    PVector direction = zero.vectorTo(points.get(1));
     PVector starting = zero.vectorTo(points.get(0));
+    PVector direction = points.get(0).vectorTo(points.get(1));
     float t = direction.dot(new PVector(p.getX()-starting.x,p.getY()-starting.y,p.getZ()-starting.z)) / (direction.dot(direction));
     if(t<=0){
       return new Point(starting);

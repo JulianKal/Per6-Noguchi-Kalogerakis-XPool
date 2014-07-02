@@ -49,7 +49,7 @@ public class Point extends Collidable{
   }
   
   public PVector vectorTo(Point p){
-    return new PVector(_x-p.getX(),_y-p.getY(),_z-p.getZ());
+    return new PVector(p.getX()-_x,p.getY()-_y,p.getZ()-_z);
   }
   
   public float distance(Point p){

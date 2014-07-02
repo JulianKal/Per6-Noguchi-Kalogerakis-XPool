@@ -1,6 +1,8 @@
 //To do:
 //To speed up the code, change squareroot < radius to blah < radius^2
 //Improve collisions with location modifications.
+//Find out reason for delayed collisions with edges.
+//Change collision detecting such that each ball can only make one collision with each surface (points and segments included)
 
 static float X_MID, Y_MID, Z_MID; //Purely for translational purposes.
 float FPS = 2000; //If you set the FPS to lower htan this, you get some weird collisions (collisions with more than one wall).
@@ -37,36 +39,37 @@ void setup(){
   points = new ArrayList<Point>();
   
   
-//  bumpers.add( new Bumper(-400, -220,  -20, -220,  -20 - 27 * cos(PI/2.25), -220 + 27 * sin(PI/2.25), -400 + 40 * cos(PI/4), -220 + 40 * sin(PI/4)));
-//  bumpers.add( new Bumper( 400, -220,   20, -220,   20 + 27 * cos(PI/2.25), -220 + 27 * sin(PI/2.25),  400 - 40 * cos(PI/4), -220 + 40 * sin(PI/4)));
-//  bumpers.add( new Bumper(-400,  220,  -20,  220,  -20 - 27 * cos(PI/2.25),  220 - 27 * sin(PI/2.25), -400 + 40 * cos(PI/4),  220 - 40 * sin(PI/4)));
-//  bumpers.add( new Bumper( 400,  220,   20,  220,   20 + 27 * cos(PI/2.25),  220 - 27 * sin(PI/2.25),  400 - 40 * cos(PI/4),  220 - 40 * sin(PI/4)));
-//  bumpers.add( new Bumper(-420, -200, -420,  200, -420 + 40 * cos(PI/4.00),  200 - 40 * sin(PI/4.00), -420 + 40 * cos(PI/4), -200 + 40 * sin(PI/4)));
-//  bumpers.add( new Bumper( 420, -200,  420,  200,  420 - 40 * cos(PI/4.00),  200 - 40 * sin(PI/4.00),  420 - 40 * cos(PI/4), -200 + 40 * sin(PI/4)));
-//  for(Bumper b : bumpers){
-//    for(Surface s : b.getSurfaces()){
-//      surfaces.add(s);
-//      objects.add(s);
-//    }
-//  }
-//
-  ArrayList<Point> pointList = new ArrayList<Point>();
-  pointList.add(new Point(400,200,-4));
-  pointList.add(new Point(-400,200,-4));
-  pointList.add(new Point(-400,400,-4));
-  pointList.add(new Point(400,400,-4));
-  objects.add(new Surface(pointList));
-  surfaces.add(new Surface(pointList));
-  segments.add(new Segment(new Point(400,200,-4),new Point(-400,200,-4)));
+  bumpers.add( new Bumper(-400, -220,  -20, -220,  -20 - 27 * cos(PI/2.25), -220 + 27 * sin(PI/2.25), -400 + 40 * cos(PI/4), -220 + 40 * sin(PI/4)));
+  bumpers.add( new Bumper( 400, -220,   20, -220,   20 + 27 * cos(PI/2.25), -220 + 27 * sin(PI/2.25),  400 - 40 * cos(PI/4), -220 + 40 * sin(PI/4)));
+  bumpers.add( new Bumper(-400,  220,  -20,  220,  -20 - 27 * cos(PI/2.25),  220 - 27 * sin(PI/2.25), -400 + 40 * cos(PI/4),  220 - 40 * sin(PI/4)));
+  bumpers.add( new Bumper( 400,  220,   20,  220,   20 + 27 * cos(PI/2.25),  220 - 27 * sin(PI/2.25),  400 - 40 * cos(PI/4),  220 - 40 * sin(PI/4)));
+  bumpers.add( new Bumper(-420, -200, -420,  200, -420 + 40 * cos(PI/4.00),  200 - 40 * sin(PI/4.00), -420 + 40 * cos(PI/4), -200 + 40 * sin(PI/4)));
+  bumpers.add( new Bumper( 420, -200,  420,  200,  420 - 40 * cos(PI/4.00),  200 - 40 * sin(PI/4.00),  420 - 40 * cos(PI/4), -200 + 40 * sin(PI/4)));
+  for(Bumper b : bumpers){
+    for(Surface s : b.getSurfaces()){
+      surfaces.add(s);
+      objects.add(s);
+    }
+  }
+
+  for(Surface s : surfaces){ //Optimization : remove duplicates.
+    for(Segment seg : s.getSegments()){
+      objects.add(seg);
+      segments.add(seg);
+    }
+  }
+//  ArrayList<Point> pointList = new ArrayList<Point>();
+//  pointList.add(new Point(400,200,-4));
+//  pointList.add(new Point(-400,200,-4));
+//  pointList.add(new Point(-400,400,-4));
+//  pointList.add(new Point(400,400,-4));
+//  objects.add(new Surface(pointList));
+//  surfaces.add(new Surface(pointList));
+//  segments.add(new Segment(new Point(400,200,-4),new Point(-400,200,-4)));
   
-//  for(Surface s : surfaces){
-//    for(Segment seg : s.getSegments()){
-//      objects.add(seg);
-//      segments.add(seg);
-//    }
-//  }
+
     
-  testBall = new Ball(0,0,0,loadImage("14.png"),0,0.05,0);
+  testBall = new Ball(100,100,0,loadImage("14.png"),2,5,0);
   objects.add(testBall);
   
   //objects.add(c.getSurface);

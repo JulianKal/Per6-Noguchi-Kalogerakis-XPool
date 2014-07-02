@@ -6,10 +6,10 @@ public class Bumper{
   
   public Bumper(float a,float b, float c, float d, float e, float f, float g, float h){
     
-    p1 = new Point(a,b,-2);
-    p2 = new Point(c,d,-2);
-    p3 = new Point(e,f,-2);
-    p4 = new Point(g,h,-2);
+    p1 = new Point(a,b,0);
+    p2 = new Point(c,d,0);
+    p3 = new Point(e,f,0);
+    p4 = new Point(g,h,0);
     p5 = new Point(a,b,0.1-RAD);
     p6 = new Point(c,d,0.1-RAD);
     p7 = new Point(e,f,0.1-RAD);

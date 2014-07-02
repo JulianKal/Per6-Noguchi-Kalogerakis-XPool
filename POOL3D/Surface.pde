@@ -44,8 +44,8 @@ public class Surface extends Collidable{
     c = normal.z;
   }
   public void calculateNormal(){
-    PVector p1 = points.get(0).vectorTo(points.get(2));
-    PVector p2 = points.get(1).vectorTo(points.get(3));
+    PVector p1 = points.get(2).vectorTo(points.get(0));
+    PVector p2 = points.get(3).vectorTo(points.get(1));
     normal = p1.cross(p2);
   }
   public float distance(Point p){
@@ -54,7 +54,7 @@ public class Surface extends Collidable{
   public Point normalPoint(Point p){
     Point o = points.get(0);
     PVector unitNormal = PVector.mult(normal, 1/normal.mag());
-    PVector offset = PVector.mult(unitNormal,-1 * unitNormal.dot(p.vectorTo(o)));
+    PVector offset = PVector.mult(unitNormal,-1*unitNormal.dot(o.vectorTo(p)));
     return new Point(PVector.add(p.getPVector(),offset));
   }
   public boolean pointOnSurface(Point p){

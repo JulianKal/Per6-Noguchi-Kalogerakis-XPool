@@ -60,15 +60,11 @@ public class Ball extends Mass{
         }
       }
     }
-    int x=0;
     for(Segment s : segments){
       Point norm = s.normalPoint(center);
-      println(x++);
-      println(norm);
-      println(center.distance(norm));
-      println();
       if(center.distance(norm) <= RAD){
         reflect(norm.vectorTo(center));
+        println(norm);
       }
     }
   }
