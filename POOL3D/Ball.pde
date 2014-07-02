@@ -32,9 +32,9 @@ public class Ball extends Mass{
   }
   
   public void update(){
-    //center.addVelocity(0,0,-0.1);
-    center.update();
     insertCollisions();
+//    center.addVelocity(0,0,-0.1);
+    center.update();
   }
   
   public void renderSurfaces(int r,int g,int b){
@@ -43,7 +43,7 @@ public class Ball extends Mass{
     noStroke();
     translate(center.getX(),center.getY(),center.getZ());
     sphere(RAD);
-    //renderGlobe();  
+    //renderGlobe();
     //ambient(125,125,125);
     //specular(150, 150, 150);
     //shininess(250);
@@ -54,34 +54,41 @@ public class Ball extends Mass{
   //Collisions//////////////////////////////////////////////////////////////////////////////
   public void insertCollisions(){
     for(Surface s : surfaces){
-      if(s.distance(center)<=RAD){
+      if(s.distance(center) <= RAD){
         if(s.pointOnSurface(s.normalPoint(center))){
-          reflect(s);
+          reflect(s.normal());
         }
+      }
+    }
+    int x=0;
+    for(Segment s : segments){
+      Point norm = s.normalPoint(center);
+      println(x++);
+      println(norm);
+      println(center.distance(norm));
+      println();
+      if(center.distance(norm) <= RAD){
+        reflect(norm.vectorTo(center));
       }
     }
   }
   
-  /*
-  public boolean checkIntersection(Surface s){
-    Point intersection = intersect(s);
-    return false;
-  }
-  public Point intersect(Surface s){ //Velocity should never be 0 if gravity is in effect.
-    //Turning the vector into a parametric equation- <x + tv1, y + tv2, z + tv3>
-    float k1 = s.d - (s.a*center.getX()) - (s.b*center.getY()) - (s.c*center.getZ());
-    float k2 = center.velocity().dot(s.a,s.b,s.c);
-    float t = k1/k2;
-    return new Point(center.getX()+(t*center.velocity().x),center.getY()+(t*center.velocity().y),center.getZ()+(t*center.velocity().z));
-  }
-  */
-  public void reflect(Surface s){
-    PVector normal = s.normal();
+  public void reflect(PVector normalVector){
+    PVector normal = normalVector;
     PVector velocity = center.velocity();
     
-    PVector projection = PVector.mult(normal,normal.dot(velocity)/sq(normal.mag()));
+    PVector projection = PVector.mult(normal,normal.dot(velocity)/normal.magSq());
     
     center.setVelocity(PVector.add(velocity, PVector.mult(projection,-2)));
+  }
+  public void correctDistance(float d, Surface s){
+    //After a collision with something, it corrects the distance so that no multiple fallacious collisions are detected.
+    //D should be a negative number.
+    PVector unit = PVector.mult(s.normal(),1/s.normal().mag());
+    unit.mult(d);
+    center.setX(center.getX()+unit.x);
+    center.setY(center.getY()+unit.y);
+    center.setZ(center.getZ()+unit.z);
   }
   
   /*

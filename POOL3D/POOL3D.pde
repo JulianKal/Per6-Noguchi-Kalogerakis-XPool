@@ -1,5 +1,9 @@
+//To do:
+//To speed up the code, change squareroot < radius to blah < radius^2
+//Improve collisions with location modifications.
+
 static float X_MID, Y_MID, Z_MID; //Purely for translational purposes.
-float FPS = 1000; //If you set the FPS to lower htan this, you get some weird collisions (collisions with more than one wall).
+float FPS = 2000; //If you set the FPS to lower htan this, you get some weird collisions (collisions with more than one wall).
 static float RAD = 13;
 static float RES = 10;
 float FRICTION = -.04;
@@ -10,9 +14,12 @@ ViewManager worldViewer;
 static int WINDOW_X = 1200;
 static int WINDOW_Y = 600;
 
+//List of collidables
 ArrayList<Collidable> objects;
 ArrayList<Bumper> bumpers;
 ArrayList<Surface> surfaces;
+ArrayList<Segment> segments;
+ArrayList<Point> points;
 
 void setup(){
   size(WINDOW_X, WINDOW_Y,P3D);
@@ -26,29 +33,43 @@ void setup(){
   objects = new ArrayList<Collidable>();
   bumpers = new ArrayList<Bumper>();
   surfaces = new ArrayList<Surface>();
-  
-  bumpers.add( new Bumper(-400, -220,  -20, -220,  -20 - 27 * cos(PI/2.25), -220 + 27 * sin(PI/2.25), -400 + 40 * cos(PI/4), -220 + 40 * sin(PI/4)));
-  bumpers.add( new Bumper( 400, -220,   20, -220,   20 + 27 * cos(PI/2.25), -220 + 27 * sin(PI/2.25),  400 - 40 * cos(PI/4), -220 + 40 * sin(PI/4)));
-  bumpers.add( new Bumper(-400,  220,  -20,  220,  -20 - 27 * cos(PI/2.25),  220 - 27 * sin(PI/2.25), -400 + 40 * cos(PI/4),  220 - 40 * sin(PI/4)));
-  bumpers.add( new Bumper( 400,  220,   20,  220,   20 + 27 * cos(PI/2.25),  220 - 27 * sin(PI/2.25),  400 - 40 * cos(PI/4),  220 - 40 * sin(PI/4)));
-  
-  bumpers.add( new Bumper(-420, -200, -420,  200, -420 + 40 * cos(PI/4.00),  200 - 40 * sin(PI/4.00), -420 + 40 * cos(PI/4), -200 + 40 * sin(PI/4)));
-  bumpers.add( new Bumper( 420, -200,  420,  200,  420 - 40 * cos(PI/4.00),  200 - 40 * sin(PI/4.00),  420 - 40 * cos(PI/4), -200 + 40 * sin(PI/4)));
+  segments = new ArrayList<Segment>();
+  points = new ArrayList<Point>();
   
   
-  testBall = new Ball(0,0,0,loadImage("14.png"),0.5,1,0);
+//  bumpers.add( new Bumper(-400, -220,  -20, -220,  -20 - 27 * cos(PI/2.25), -220 + 27 * sin(PI/2.25), -400 + 40 * cos(PI/4), -220 + 40 * sin(PI/4)));
+//  bumpers.add( new Bumper( 400, -220,   20, -220,   20 + 27 * cos(PI/2.25), -220 + 27 * sin(PI/2.25),  400 - 40 * cos(PI/4), -220 + 40 * sin(PI/4)));
+//  bumpers.add( new Bumper(-400,  220,  -20,  220,  -20 - 27 * cos(PI/2.25),  220 - 27 * sin(PI/2.25), -400 + 40 * cos(PI/4),  220 - 40 * sin(PI/4)));
+//  bumpers.add( new Bumper( 400,  220,   20,  220,   20 + 27 * cos(PI/2.25),  220 - 27 * sin(PI/2.25),  400 - 40 * cos(PI/4),  220 - 40 * sin(PI/4)));
+//  bumpers.add( new Bumper(-420, -200, -420,  200, -420 + 40 * cos(PI/4.00),  200 - 40 * sin(PI/4.00), -420 + 40 * cos(PI/4), -200 + 40 * sin(PI/4)));
+//  bumpers.add( new Bumper( 420, -200,  420,  200,  420 - 40 * cos(PI/4.00),  200 - 40 * sin(PI/4.00),  420 - 40 * cos(PI/4), -200 + 40 * sin(PI/4)));
+//  for(Bumper b : bumpers){
+//    for(Surface s : b.getSurfaces()){
+//      surfaces.add(s);
+//      objects.add(s);
+//    }
+//  }
+//
+  ArrayList<Point> pointList = new ArrayList<Point>();
+  pointList.add(new Point(400,200,-4));
+  pointList.add(new Point(-400,200,-4));
+  pointList.add(new Point(-400,400,-4));
+  pointList.add(new Point(400,400,-4));
+  objects.add(new Surface(pointList));
+  surfaces.add(new Surface(pointList));
+  segments.add(new Segment(new Point(400,200,-4),new Point(-400,200,-4)));
+  
+//  for(Surface s : surfaces){
+//    for(Segment seg : s.getSegments()){
+//      objects.add(seg);
+//      segments.add(seg);
+//    }
+//  }
+    
+  testBall = new Ball(0,0,0,loadImage("14.png"),0,0.05,0);
   objects.add(testBall);
-  objects.add(c.getSurface());
   
-  surfaces.add(c.getSurface());
-  
-  
-  for(int x=0;x<bumpers.size();x++){
-    for(int y=0;y<bumpers.get(x).getSurfaces().size();y++){
-      objects.add(bumpers.get(x).getSurfaces().get(y));
-      surfaces.add(bumpers.get(x).getSurfaces().get(y));
-    }
-  }
+  //objects.add(c.getSurface);
   
   worldViewer = new ViewManager();
 }

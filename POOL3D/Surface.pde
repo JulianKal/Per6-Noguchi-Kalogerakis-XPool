@@ -5,8 +5,15 @@ public class Surface extends Collidable{
   public float a, b, c, d;
   PVector normal;
   
+  ArrayList<Segment> segments;
+  
   public Surface(ArrayList<Point> points){
     this.points = points;
+    segments = new ArrayList<Segment>();
+    for(int x=1;x<points.size();x++){
+      segments.add(new Segment(points.get(x-1),points.get(x)));
+    }
+    segments.add(new Segment(points.get(0),points.get(points.size()-1)));//Segment between first and last.
     calculateEquation(); //Only needs to be calculated once.
 //    println("constants: "+a+" "+b+" "+c+" "+d);
   }
@@ -194,4 +201,7 @@ public class Surface extends Collidable{
   public PVector normal(){
     return normal;
   }
+  
+  public ArrayList<Segment> getSegments(){ return segments;}
+  
 }

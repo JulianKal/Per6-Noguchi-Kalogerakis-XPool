@@ -13,10 +13,10 @@ public class Cloth{
   }
   
   public void initSurface(){
-    points.add(new Point(-420,-200,-RAD));
-    points.add(new Point(-420,200,-RAD));
-    points.add(new Point(420,200,-RAD));
-    points.add(new Point(420,-200,-RAD));
+    points.add(new Point(-420,-220,-RAD));
+    points.add(new Point(-420,220,-RAD));
+    points.add(new Point(420,220,-RAD));
+    points.add(new Point(420,-220,-RAD));
     surface = new Surface(points);
   }
   

@@ -28,16 +28,16 @@ public class ViewManager{
       viewVertical = 0;
       topView();
     }
-    println("\nPrecisionAngle " + degrees(mousePrecisionAngle)%360);
-    println("RotatorAngle " + degrees(mouseRotatorAngle)%360);
-    println("\nViewAngle " + degrees(viewAngle)%360);
+//    println("\nPrecisionAngle " + degrees(mousePrecisionAngle)%360);
+//    println("RotatorAngle " + degrees(mouseRotatorAngle)%360);
+//    println("\nViewAngle " + degrees(viewAngle)%360);
   }
   
   public void viewPosition(){
     viewAngle = mousePrecisionAngle + mouseRotatorAngle;
     mousePrecisionAngle = (mouseX-X_MID) * 0.001;
     if(abs(mousePrecisionAngle) > .42){
-      mouseRotatorAngle += mousePrecisionAngle/100;
+      mouseRotatorAngle += mousePrecisionAngle/300;
     }
     viewVertical = mouseY*0.001;
     rotateX(PI*viewVertical);
@@ -69,5 +69,5 @@ public class ViewManager{
     rotateX(PI*viewVertical);
     rotate(viewAngle);
   }
-    
+  
 }

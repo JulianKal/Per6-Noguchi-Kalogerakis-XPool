@@ -52,6 +52,10 @@ public class Point extends Collidable{
     return new PVector(_x-p.getX(),_y-p.getY(),_z-p.getZ());
   }
   
+  public float distance(Point p){
+    return sqrt(sq(_x-p.getX()) + sq(_y-p.getY()) + sq(_z-p.getZ()));
+  }
+  
   public float getX(){ return _x;}
   public float getY(){ return _y;}
   public float getZ(){ return _z;}
