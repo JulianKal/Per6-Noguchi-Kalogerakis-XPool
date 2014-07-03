@@ -74,6 +74,7 @@ public class Surface extends Collidable{
     }else{
       println("Genji doesn't do cs the right way.");
     }
+    println(spare);
     int intersections = 0;
     for(int x=1;x<points.size();x++){
       if(intersect(p,spare,points.get(x-1),points.get(x))){
@@ -83,6 +84,7 @@ public class Surface extends Collidable{
     if(intersect(p,spare,points.get(0),points.get(points.size()-1))){
       intersections++;
     }
+    println(intersections);
     if(intersections % 2==1){
       return true;
     }
@@ -181,11 +183,14 @@ public class Surface extends Collidable{
     //println(""+a1+" "+b1+" "+c1+" "+t1+" "+d1+" "+e1+" "+f1+"      "+a2+" "+b2+" "+c2+" "+t2+" "+d2+" "+e2+" "+f2+" ");
  
     if(t1<0){ //The intersection is not on the ray.
+      println("hurr");
       return false;
     }
     if(t2>1 || t2<0){ //The intersection is not between the two points.
+      println("durr");
       return false;
     }
+    println("hurrdurr");
     return true;
   }
   //Intersection helper formulas

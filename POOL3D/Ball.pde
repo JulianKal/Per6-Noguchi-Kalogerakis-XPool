@@ -32,9 +32,9 @@ public class Ball extends Mass{
   }
   
   public void update(){
-    insertCollisions();
-//    center.addVelocity(0,0,-0.1);
+    center.addVelocity(0,0,-0.1);
     center.update();
+    insertCollisions();
   }
   
   public void renderSurfaces(int r,int g,int b){
@@ -63,44 +63,15 @@ public class Ball extends Mass{
         }
       }
     }
-    if(!collided){
-      for(Surface s : surfaces){
-        if(!collided){
-          if(s.distance(center) <= RAD && s.pointOnSurface(s.normalPoint(center))){
-            reflect(s.normalPoint(center).vectorTo(center));
-          }
+    for(Surface s : surfaces){
+      if(s.distance(center) <= RAD){
+        if(s.pointOnSurface(s.normalPoint(center))){
+          println("hello");
+          reflect(s.normal());
         }
-      }      
+      }
+      
     }
-    
-    
-//    
-//    for(Surface s : surfaces){
-//      for(Segment seg : s.getSegments()){
-//         if(!collided){
-//           Point norm = seg.normalPoint(center);
-//           if(center.distance(norm) <= RAD){
-//             reflect(norm.vectorTo(center));
-//             collided = true;
-//           }
-//         }
-//      }
-//      if(!collided){
-//        if(s.distance(center) <= RAD && s.pointOnSurface(s.normalPoint(center))){
-//          reflect(s.normal());  
-//        }
-//      }
-//    }
-//    
-    
-    //hurr code
-//    for(Segment s : segments){
-//      Point norm = s.normalPoint(center);
-//      if(center.distance(norm) <= RAD){
-//        reflect(norm.vectorTo(center));
-//        println(norm);
-//      }
-//    }
   }
   
   public void reflect(PVector normalVector){
