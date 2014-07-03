@@ -4,25 +4,28 @@ public class World{
   ArrayList<Surface> surfaces;
   ArrayList<Segment> segments;
   ArrayList<Point> points;
+  ArrayList<Collidable> objects;
   Point p1,p2,p3,p4,p5,p6,p7,p8;
   
   public World(int x, int y, int z){ //Dimensions of the world will be 2x, 2y, and 2z
-    initPoints();
+    surfaces = new ArrayList<Surface>();
+    segments = new ArrayList<Segment>();
+    points = new ArrayList<Point>();
+    initPoints(x,y,z);
     initSurfaces();
     initSegments();
+    objectify();
   }
   
-  public void initPoints(){
-    points = new ArrayList<Point>();
-    p1 = new Point(800,800,800);
-    p2 = new Point(800,-800,800);
-    p3 = new Point(-800,-800,800);
-    p4 = new Point(-800,800,800);
-    p5 = new Point(800,800,-800);
-    p6 = new Point(800,-800,-800);
-    p7 = new Point(-800,-800,-800);
-    p8 = new Point(-800,800,-800);
-
+  public void initPoints(float x,float y,float z){
+    p1 = new Point(x,y,z);
+    p2 = new Point(x,-y,z);
+    p3 = new Point(-x,-y,z);
+    p4 = new Point(-x,y,z);
+    p5 = new Point(x,y,-z);
+    p6 = new Point(x,-y,-z);
+    p7 = new Point(-x,-y,-z);
+    p8 = new Point(-x,y,-z);
   }
   
   public void initSurfaces(){
@@ -70,7 +73,6 @@ public class World{
   }
   
   public void initSegments(){
-    segments = new ArrayList<Segment>();
     //Walls////////////////////////////////////////////////////////////////
     segments.add(new Segment(p1,p2));
     segments.add(new Segment(p1,p4));
@@ -88,5 +90,22 @@ public class World{
     
   }
   
+  public void objectify(){
+    objects = new ArrayList<Collidable>();
+    for(Surface s : surfaces){
+      objects.add(s);
+    }
+    for(Segment s : segments){
+      objects.add(s);
+    }
+    for(Point p : points){
+      objects.add(p);
+    }
+    
+  }
+  
+  public ArrayList<Segment> getSegments(){ return segments;}
+  public ArrayList<Surface> getSurfaces(){ return surfaces;}
+  public ArrayList<Collidable> getObjects(){ return objects;}
   
 }
