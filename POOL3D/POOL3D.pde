@@ -34,13 +34,8 @@ void setup(){
   Z_MID = 0;
   background(24,10,10,30);
   frameRate(FPS);
-  c = new Cloth();
+  init();
   
-  objects = new ArrayList<Collidable>();
-  bumpers = new ArrayList<Bumper>();
-  surfaces = new ArrayList<Surface>();
-  segments = new ArrayList<Segment>();
-  points = new ArrayList<Point>();
   
   ArrayList<Point> spoints1 = new ArrayList<Point>();
   spoints1.add(new Point(400,400,400));
@@ -124,13 +119,23 @@ void setup(){
 //  }
 
     
-  testBall = new Ball(0,0,0,loadImage("14.png"),0.2,0,0.5);
-  objects.add(testBall);
+//  testBall = new Ball(0,0,0,loadImage("14.png"),0.2,0,0.5);
+//  objects.add(testBall);
   
 //  objects.add(c.getSurface());
 //  surfaces.add(c.getSurface());
   
   worldViewer = new ViewManager();
+}
+
+void init(){
+  objects = new ArrayList<Collidable>();
+  bumpers = new ArrayList<Bumper>();
+  surfaces = new ArrayList<Surface>();
+  segments = new ArrayList<Segment>();
+  points = new ArrayList<Point>();
+  
+  
 }
 
 void draw(){

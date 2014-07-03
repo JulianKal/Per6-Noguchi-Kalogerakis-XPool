@@ -1,3 +1,5 @@
+//For the classic pool-game version.
+
 public class Bumper{
   Point p1,p2,p3,p4,p5,p6,p7,p8;
   Surface s1,s2,s3,s4,s5;
