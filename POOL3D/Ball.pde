@@ -32,7 +32,7 @@ public class Ball extends Mass{
   }
   
   public void update(){
-    center.addVelocity(0,0,-0.1);
+//    center.addVelocity(0,0,-0.001);
     center.update();
     insertCollisions();
   }
@@ -55,8 +55,9 @@ public class Ball extends Mass{
   public void insertCollisions(){
     boolean collided = false;
     for(Segment seg : segments){
+      println("segment");
       if(!collided){
-        Point norm = seg.normalPoint(center);
+        Point norm =  seg.normalPoint(center);
         if(center.distance(norm) <= RAD){
            reflect(norm.vectorTo(center));
            collided = true;
@@ -66,11 +67,9 @@ public class Ball extends Mass{
     for(Surface s : surfaces){
       if(s.distance(center) <= RAD){
         if(s.pointOnSurface(s.normalPoint(center))){
-          println("hello");
           reflect(s.normal());
         }
       }
-      
     }
   }
   

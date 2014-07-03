@@ -6,28 +6,28 @@ public class Bumper{
   
   public Bumper(float a,float b, float c, float d, float e, float f, float g, float h){
     
-    p1 = new Point(a,b,0);
-    p2 = new Point(c,d,0);
-    p3 = new Point(e,f,0);
-    p4 = new Point(g,h,0);
-    p5 = new Point(a,b,0.1-RAD);
-    p6 = new Point(c,d,0.1-RAD);
-    p7 = new Point(e,f,0.1-RAD);
-    p8 = new Point(g,h,0.1-RAD);
+    p1 = new Point(a,b,100);
+    p2 = new Point(c,d,100);
+    p3 = new Point(e,f,100);
+    p4 = new Point(g,h,100);
+    p5 = new Point(a,b,0.1-3*RAD);
+    p6 = new Point(c,d,0.1-3*RAD);
+    p7 = new Point(e,f,0.1-3*RAD);
+    p8 = new Point(g,h,0.1-3*RAD);
     
     segments = new ArrayList<Segment>();
-    segments.add(new Segment(p1,p5));
-    segments.add(new Segment(p1,p2));
-    segments.add(new Segment(p1,p4));
-    segments.add(new Segment(p3,p2));
-    segments.add(new Segment(p3,p4));
-    segments.add(new Segment(p3,p7));
-    segments.add(new Segment(p6,p2));
-    segments.add(new Segment(p6,p5));
-    segments.add(new Segment(p6,p7));
-    segments.add(new Segment(p8,p5));
-    segments.add(new Segment(p8,p7));
-    segments.add(new Segment(p8,p4));
+//    segments.add(new Segment(p1,p5));
+//    segments.add(new Segment(p1,p2));
+//    segments.add(new Segment(p1,p4));
+//    segments.add(new Segment(p3,p2));
+//    segments.add(new Segment(p3,p4));
+//    segments.add(new Segment(p3,p7));
+//    segments.add(new Segment(p6,p2));
+//    segments.add(new Segment(p6,p5));
+//    segments.add(new Segment(p6,p7));
+//    segments.add(new Segment(p8,p5));
+//    segments.add(new Segment(p8,p7));
+//    segments.add(new Segment(p8,p4));
     
     ArrayList<Point> s1points = new ArrayList<Point>();
     ArrayList<Point> s2points = new ArrayList<Point>();

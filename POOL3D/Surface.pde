@@ -5,15 +5,8 @@ public class Surface extends Collidable{
   public float a, b, c, d;
   PVector normal;
   
-  ArrayList<Segment> segments;
-  
   public Surface(ArrayList<Point> points){
     this.points = points;
-    segments = new ArrayList<Segment>();
-    for(int x=1;x<points.size();x++){
-      segments.add(new Segment(points.get(x-1),points.get(x)));
-    }
-    segments.add(new Segment(points.get(0),points.get(points.size()-1)));//Segment between first and last.
     calculateEquation(); //Only needs to be calculated once.
 //    println("constants: "+a+" "+b+" "+c+" "+d);
   }
@@ -27,7 +20,7 @@ public class Surface extends Collidable{
   
   public void renderSurfaces(int r,int g,int b){
     pushMatrix();
-    fill(200,0,0);
+    fill(200,0,0,200);
     beginShape();
     for(Point p : points){
       p.placeVertex();
@@ -44,8 +37,8 @@ public class Surface extends Collidable{
     c = normal.z;
   }
   public void calculateNormal(){
-    PVector p1 = points.get(2).vectorTo(points.get(0));
-    PVector p2 = points.get(3).vectorTo(points.get(1));
+    PVector p1 = points.get(0).vectorTo(points.get(2));
+    PVector p2 = points.get(1).vectorTo(points.get(3));
     normal = p1.cross(p2);
   }
   public float distance(Point p){
@@ -54,7 +47,7 @@ public class Surface extends Collidable{
   public Point normalPoint(Point p){
     Point o = points.get(0);
     PVector unitNormal = PVector.mult(normal, 1/normal.mag());
-    PVector offset = PVector.mult(unitNormal,-1*unitNormal.dot(o.vectorTo(p)));
+    PVector offset = PVector.mult(unitNormal,-1 * unitNormal.dot(o.vectorTo(p)));
     return new Point(PVector.add(p.getPVector(),offset));
   }
   public boolean pointOnSurface(Point p){
@@ -74,7 +67,6 @@ public class Surface extends Collidable{
     }else{
       println("Genji doesn't do cs the right way.");
     }
-    println(spare);
     int intersections = 0;
     for(int x=1;x<points.size();x++){
       if(intersect(p,spare,points.get(x-1),points.get(x))){
@@ -84,7 +76,6 @@ public class Surface extends Collidable{
     if(intersect(p,spare,points.get(0),points.get(points.size()-1))){
       intersections++;
     }
-    println(intersections);
     if(intersections % 2==1){
       return true;
     }
@@ -106,6 +97,7 @@ public class Surface extends Collidable{
     boolean finished = false;
     if(!finished){
       // Using x and y parametric equations to solve for the t's.
+//      println("a");
       if(e1!=0 && d2-(d1*e2/e1)!=0){ //Original formula.
         t2 = longFormula(a1,a2,b2,d1,e1,b1,e2,d2);
         t1 = shortFormula(b2,b1,t2,e2,e1);
@@ -130,6 +122,7 @@ public class Surface extends Collidable{
       }
     }
     if(!finished){
+//      println("b");
       // Using x and z
       if(f1!=0 && d2-(d1*f2/f1)!=0){ //Original formula.
         t2 = longFormula(a1,a2,c2,d1,f1,c1,f2,d2);
@@ -156,6 +149,7 @@ public class Surface extends Collidable{
     }
     
     if(!finished){
+//      println("c");
       // Using y and z
       if(f1!=0 && e2-(e1*f2/f1)!=0){ //Original formula.
         t2 = longFormula(b1,b2,c2,e1,f1,c1,f2,e2);
@@ -180,17 +174,17 @@ public class Surface extends Collidable{
         }
       }
     }
-    //println(""+a1+" "+b1+" "+c1+" "+t1+" "+d1+" "+e1+" "+f1+"      "+a2+" "+b2+" "+c2+" "+t2+" "+d2+" "+e2+" "+f2+" ");
+    if(!finished){
+      return false;
+    }
+//    println(""+a1+" "+b1+" "+c1+" "+t1+" "+d1+" "+e1+" "+f1+"      "+a2+" "+b2+" "+c2+" "+t2+" "+d2+" "+e2+" "+f2+" ");
  
     if(t1<0){ //The intersection is not on the ray.
-      println("hurr");
       return false;
     }
     if(t2>1 || t2<0){ //The intersection is not between the two points.
-      println("durr");
       return false;
     }
-    println("hurrdurr");
     return true;
   }
   //Intersection helper formulas
@@ -206,7 +200,4 @@ public class Surface extends Collidable{
   public PVector normal(){
     return normal;
   }
-  
-  public ArrayList<Segment> getSegments(){ return segments;}
-  
 }

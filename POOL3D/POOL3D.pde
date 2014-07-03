@@ -42,6 +42,52 @@ void setup(){
   segments = new ArrayList<Segment>();
   points = new ArrayList<Point>();
   
+  ArrayList<Point> spoints1 = new ArrayList<Point>();
+  spoints1.add(new Point(400,400,400));
+  spoints1.add(new Point(400,-400,400));
+  spoints1.add(new Point(400,-400,-400));
+  spoints1.add(new Point(400,400,-400));
+  surfaces.add(new Surface(spoints1));
+  
+  ArrayList<Point> spoints2 = new ArrayList<Point>();
+  spoints2.add(new Point(400,400,400));
+  spoints2.add(new Point(400,-400,400));
+  spoints2.add(new Point(-400,-400,400));
+  spoints2.add(new Point(-400,400,400));
+  surfaces.add(new Surface(spoints2));
+  
+//  ArrayList<Point> spoints3 = new ArrayList<Point>();
+//  spoints3.add(new Point(400,400,400));
+//  spoints3.add(new Point(400,400,-400));
+//  spoints3.add(new Point(-400,400,-400));
+//  spoints3.add(new Point(-400,400,400));
+//  surfaces.add(new Surface(spoints3));
+  
+  ArrayList<Point> spoints4 = new ArrayList<Point>();
+  spoints4.add(new Point(-400,-400,400));
+  spoints4.add(new Point(400,-400,400));
+  spoints4.add(new Point(400,-400,-400));
+  spoints4.add(new Point(-400,-400,-400));
+  surfaces.add(new Surface(spoints4));
+  
+  ArrayList<Point> spoints5 = new ArrayList<Point>();
+  spoints5.add(new Point(-400,400,400));
+  spoints5.add(new Point(-400,-400,400));
+  spoints5.add(new Point(-400,-400,-400));
+  spoints5.add(new Point(-400,400,-400));
+  surfaces.add(new Surface(spoints5));
+  
+  ArrayList<Point> spoints6 = new ArrayList<Point>();
+  spoints6.add(new Point(-400,-400,-400));
+  spoints6.add(new Point(-400,400,-400));
+  spoints6.add(new Point(400,400,-400));
+  spoints6.add(new Point(400,-400,-400));
+  surfaces.add(new Surface(spoints6));
+  
+  for(Surface s: surfaces){
+    objects.add(s);
+  }
+  
   
 //  bumpers.add( new Bumper(-400, -220,  -20, -220,  -20 - 27 * cos(PI/2.25), -220 + 27 * sin(PI/2.25), -400 + 40 * cos(PI/4), -220 + 40 * sin(PI/4)));
 //  bumpers.add( new Bumper( 400, -220,   20, -220,   20 + 27 * cos(PI/2.25), -220 + 27 * sin(PI/2.25),  400 - 40 * cos(PI/4), -220 + 40 * sin(PI/4)));
@@ -49,17 +95,18 @@ void setup(){
 //  bumpers.add( new Bumper( 400,  220,   20,  220,   20 + 27 * cos(PI/2.25),  220 - 27 * sin(PI/2.25),  400 - 40 * cos(PI/4),  220 - 40 * sin(PI/4)));
 //  bumpers.add( new Bumper(-420, -200, -420,  200, -420 + 40 * cos(PI/4.00),  200 - 40 * sin(PI/4.00), -420 + 40 * cos(PI/4), -200 + 40 * sin(PI/4)));
 //  bumpers.add( new Bumper( 420, -200,  420,  200,  420 - 40 * cos(PI/4.00),  200 - 40 * sin(PI/4.00),  420 - 40 * cos(PI/4), -200 + 40 * sin(PI/4)));
-  for(Bumper b : bumpers){
-    for(Surface s : b.getSurfaces()){
-      surfaces.add(s);
-      objects.add(s);
-    }
-    for(Segment s : b.getSegments()){
-      segments.add(s);
-      objects.add(s);
-    }
-  }
+//  for(Bumper b : bumpers){
+//    for(Surface s : b.getSurfaces()){
+//      surfaces.add(s);
+//      objects.add(s);
+//    }
+//    for(Segment s : b.getSegments()){
+//      segments.add(s);
+//      objects.add(s);
+//    }
+//  }
 
+  
 
 //  ArrayList<Point> pointList = new ArrayList<Point>();
 //  pointList.add(new Point(400,200,-4));
@@ -77,11 +124,11 @@ void setup(){
 //  }
 
     
-  testBall = new Ball(100,100,200,loadImage("14.png"),0,0,0);
+  testBall = new Ball(0,0,0,loadImage("14.png"),0.2,0,0.5);
   objects.add(testBall);
   
-  objects.add(c.getSurface());
-  surfaces.add(c.getSurface());
+//  objects.add(c.getSurface());
+//  surfaces.add(c.getSurface());
   
   worldViewer = new ViewManager();
 }
