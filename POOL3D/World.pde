@@ -4,6 +4,7 @@ public class World{
   ArrayList<Surface> surfaces;
   ArrayList<Segment> segments;
   ArrayList<Point> points;
+  ArrayList<Ball> balls;
   ArrayList<Collidable> objects;
   Point p1,p2,p3,p4,p5,p6,p7,p8;
   
@@ -11,10 +12,25 @@ public class World{
     surfaces = new ArrayList<Surface>();
     segments = new ArrayList<Segment>();
     points = new ArrayList<Point>();
+    balls = new ArrayList<Ball>();
     initPoints(x,y,z);
     initSurfaces();
     initSegments();
+    initBalls();
     objectify();
+  }
+  
+  public void renderSurfaces(){
+    for(Collidable c : objects){
+      c.renderSurfaces(200,0,0);
+    }
+  }
+  
+  public void update(){
+    for(Ball b : balls){
+      b.update();
+    }
+    
   }
   
   public void initPoints(float x,float y,float z){
@@ -39,8 +55,8 @@ public class World{
     
     points1.add(p1);
     points1.add(p2);
-    points1.add(p4);
     points1.add(p3);
+    points1.add(p4);
     
     points2.add(p5);
     points2.add(p6);
@@ -75,8 +91,16 @@ public class World{
     surfaces.add(new Surface(points6));
     ///////////////////////////////////////////////////////////////////////
     
+    //Bumpers//////////////////////////////////////////////////////////////
+    points1 = new ArrayList<Point>();
+    points2 = new ArrayList<Point>();
+    points3 = new ArrayList<Point>();
+    points4 = new ArrayList<Point>();
+    points5 = new ArrayList<Point>();
+    points6 = new ArrayList<Point>(); 
     
     
+    ///////////////////////////////////////////////////////////////////////
   }
   
   public void initSegments(){
@@ -95,20 +119,28 @@ public class World{
     segments.add(new Segment(p4,p8));
     ///////////////////////////////////////////////////////////////////////
     
+    //Bumpers//////////////////////////////////////////////////////////////
+    
+    
+    ///////////////////////////////////////////////////////////////////////
+  }
+  
+  public void initBalls(){
+    balls.add( new Ball(0,0,100,loadImage("14.png"),3,2,1)); 
+    
+    
   }
   
   public void objectify(){
     objects = new ArrayList<Collidable>();
-    int x=0;
     for(Surface s : surfaces){
       objects.add(s);
-      println(x++);
     }
     for(Segment s : segments){
       objects.add(s);
     }
-    for(Point p : points){
-      objects.add(p);
+    for(Ball b : balls){
+      objects.add(b);
     }
     
   }
@@ -116,5 +148,6 @@ public class World{
   public ArrayList<Segment> getSegments(){ return segments;}
   public ArrayList<Surface> getSurfaces(){ return surfaces;}
   public ArrayList<Collidable> getObjects(){ return objects;}
+  public ArrayList<Ball> getBalls(){ return balls;}
   
 }

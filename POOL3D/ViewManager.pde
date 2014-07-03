@@ -37,11 +37,11 @@ public class ViewManager{
     viewAngle = mousePrecisionAngle + mouseRotatorAngle;
     mousePrecisionAngle = (mouseX-X_MID) * 0.001;
     if(abs(mousePrecisionAngle) > .42){
-      mouseRotatorAngle += mousePrecisionAngle/200;
+      mouseRotatorAngle += mousePrecisionAngle/100;
     }
-    viewVertical = mouseY*0.001;
+    viewVertical = mouseY*0.002;
     rotateX(PI*viewVertical);
-    rotate(viewAngle);
+    rotateZ(viewAngle);
   }
   
   public void shootingView(){

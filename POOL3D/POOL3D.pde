@@ -16,7 +16,7 @@ Cloth c;
 Bumper b1, b2, b3, b4, b5, b6;
 Ball testBall;
 static int WINDOW_X = 1200;
-static int WINDOW_Y = 600;
+static int WINDOW_Y = 800;
 
 //List of collidables
 ArrayList<Collidable> objects;
@@ -45,9 +45,6 @@ void setup(){
   world = new World(800,800,800);
   worldViewer = new ViewManager();
   
-  objects = world.getObjects();
-  
-  println(objects.size());
   
 //  bumpers.add( new Bumper(-400, -220,  -20, -220,  -20 - 27 * cos(PI/2.25), -220 + 27 * sin(PI/2.25), -400 + 40 * cos(PI/4), -220 + 40 * sin(PI/4)));
 //  bumpers.add( new Bumper( 400, -220,   20, -220,   20 + 27 * cos(PI/2.25), -220 + 27 * sin(PI/2.25),  400 - 40 * cos(PI/4), -220 + 40 * sin(PI/4)));
@@ -107,15 +104,11 @@ void keyPressed(){
 }
 
 void renderSurfaces(){
-  for(Collidable o : objects){
-    o.renderSurfaces(0,200,0);
-  }
+  world.renderSurfaces();
 }
 
 void update(){
-  for(Collidable o : objects){
-    o.update();
-  }
+  world.update();
 }
 
 

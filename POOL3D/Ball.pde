@@ -54,8 +54,7 @@ public class Ball extends Mass{
   //Collisions//////////////////////////////////////////////////////////////////////////////
   public void insertCollisions(){
     boolean collided = false;
-    for(Segment seg : segments){
-      println("segment");
+    for(Segment seg : world.getSegments()){
       if(!collided){
         Point norm =  seg.normalPoint(center);
         if(center.distance(norm) <= RAD){
@@ -64,7 +63,7 @@ public class Ball extends Mass{
         }
       }
     }
-    for(Surface s : surfaces){
+    for(Surface s : world.getSurfaces()){
       if(s.distance(center) <= RAD){
         if(s.pointOnSurface(s.normalPoint(center))){
           reflect(s.normal());
