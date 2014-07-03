@@ -29,59 +29,13 @@ ArrayList<Point> points;
 
 void setup(){
   size(WINDOW_X, WINDOW_Y,P3D);
-  X_MID = WINDOW_X/2;
-  Y_MID = WINDOW_Y/2;
-  Z_MID = 0;
-  background(24,10,10,30);
-  frameRate(FPS);
-  init();
+//  X_MID = WINDOW_X/2;
+//  Y_MID = WINDOW_Y/2;
+//  Z_MID = 0;
+//  background(24,10,10,30);
+//  frameRate(FPS);
+//  init();
   
-  
-  ArrayList<Point> spoints1 = new ArrayList<Point>();
-  spoints1.add(new Point(400,400,400));
-  spoints1.add(new Point(400,-400,400));
-  spoints1.add(new Point(400,-400,-400));
-  spoints1.add(new Point(400,400,-400));
-  surfaces.add(new Surface(spoints1));
-  
-  ArrayList<Point> spoints2 = new ArrayList<Point>();
-  spoints2.add(new Point(400,400,400));
-  spoints2.add(new Point(400,-400,400));
-  spoints2.add(new Point(-400,-400,400));
-  spoints2.add(new Point(-400,400,400));
-  surfaces.add(new Surface(spoints2));
-  
-//  ArrayList<Point> spoints3 = new ArrayList<Point>();
-//  spoints3.add(new Point(400,400,400));
-//  spoints3.add(new Point(400,400,-400));
-//  spoints3.add(new Point(-400,400,-400));
-//  spoints3.add(new Point(-400,400,400));
-//  surfaces.add(new Surface(spoints3));
-  
-  ArrayList<Point> spoints4 = new ArrayList<Point>();
-  spoints4.add(new Point(-400,-400,400));
-  spoints4.add(new Point(400,-400,400));
-  spoints4.add(new Point(400,-400,-400));
-  spoints4.add(new Point(-400,-400,-400));
-  surfaces.add(new Surface(spoints4));
-  
-  ArrayList<Point> spoints5 = new ArrayList<Point>();
-  spoints5.add(new Point(-400,400,400));
-  spoints5.add(new Point(-400,-400,400));
-  spoints5.add(new Point(-400,-400,-400));
-  spoints5.add(new Point(-400,400,-400));
-  surfaces.add(new Surface(spoints5));
-  
-  ArrayList<Point> spoints6 = new ArrayList<Point>();
-  spoints6.add(new Point(-400,-400,-400));
-  spoints6.add(new Point(-400,400,-400));
-  spoints6.add(new Point(400,400,-400));
-  spoints6.add(new Point(400,-400,-400));
-  surfaces.add(new Surface(spoints6));
-  
-  for(Surface s: surfaces){
-    objects.add(s);
-  }
   
   
 //  bumpers.add( new Bumper(-400, -220,  -20, -220,  -20 - 27 * cos(PI/2.25), -220 + 27 * sin(PI/2.25), -400 + 40 * cos(PI/4), -220 + 40 * sin(PI/4)));
@@ -125,28 +79,28 @@ void setup(){
 //  objects.add(c.getSurface());
 //  surfaces.add(c.getSurface());
   
-  worldViewer = new ViewManager();
+//  worldViewer = new ViewManager();
 }
 
 void init(){
-  objects = new ArrayList<Collidable>();
-  bumpers = new ArrayList<Bumper>();
-  surfaces = new ArrayList<Surface>();
-  segments = new ArrayList<Segment>();
-  points = new ArrayList<Point>();
+//  objects = new ArrayList<Collidable>();
+//  bumpers = new ArrayList<Bumper>();
+//  surfaces = new ArrayList<Surface>();
+//  segments = new ArrayList<Segment>();
+//  points = new ArrayList<Point>();
   
   
 }
 
 void draw(){
-  smooth();
-  fill(0, 0, 0, 180);
-  lighting();
-  translate(X_MID, Y_MID, Z_MID);
-  background(0, 0, 0, 30);
-  worldViewer.update();
-  renderSurfaces();
-  update();
+//  smooth();
+//  fill(0, 0, 0, 180);
+//  lighting();
+//  translate(X_MID, Y_MID, Z_MID);
+//  background(0, 0, 0, 30);
+//  worldViewer.update();
+//  renderSurfaces();
+//  update();
 }
 
 void keyPressed(){
