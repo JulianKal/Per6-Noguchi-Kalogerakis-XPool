@@ -66,6 +66,13 @@ public class World{
     points6.add(p4);
     points6.add(p8);
     points6.add(p5);
+    
+    surfaces.add(new Surface(points1));
+    surfaces.add(new Surface(points2));
+    surfaces.add(new Surface(points3));
+    surfaces.add(new Surface(points4));
+    surfaces.add(new Surface(points5));
+    surfaces.add(new Surface(points6));
     ///////////////////////////////////////////////////////////////////////
     
     
@@ -92,8 +99,10 @@ public class World{
   
   public void objectify(){
     objects = new ArrayList<Collidable>();
+    int x=0;
     for(Surface s : surfaces){
       objects.add(s);
+      println(x++);
     }
     for(Segment s : segments){
       objects.add(s);
