@@ -48,7 +48,7 @@ public class ViewManager{
     //translate(0,0,0); //translate to the coordinates of the cueball; this will come later. DOES NOT FOLLOW THE BALL AFTER SHOT.
     mousePrecisionAngle += (mouseX-X_MID)*.0008;
     if(abs(mouseX-X_MID) > 50){
-      viewAngle += mousePrecisionAngle/3000;
+      viewAngle += mousePrecisionAngle/30;
     }
     else{
       mousePrecisionAngle /= 1.5;

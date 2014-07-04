@@ -194,100 +194,20 @@ public class World{
     points6.add(w24);
     points6.add(w15);
     
-//    points7.add(w1);
-//    points7.add(w4);
-//    points7.add(w7);
-//    points7.add(w10);
-//    
-//    points8.add(w13);
-//    points8.add(w16);
-//    points8.add(w19);
-//    points8.add(w22);
-//
-//    points9.add(w2);
-//    points9.add(w5);
-//    points9.add(w17);
-//    points9.add(w14);
-//
-//    points10.add(w6);
-//    points10.add(w9);
-//    points10.add(w21);
-//    points10.add(w18);
-//
-//    points11.add(w8);
-//    points11.add(w11);
-//    points11.add(w23);
-//    points11.add(w20);
-// 
-//    points12.add(w3);
-//    points12.add(w12);
-//    points12.add(w24);
-//    points12.add(w15);
-//    
-//    points13.add(w1);
-//    points13.add(w4);
-//    points13.add(w7);
-//    points13.add(w10);
-//    
-//    points14.add(w13);
-//    points14.add(w16);
-//    points14.add(w19);
-//    points14.add(w22);
-//
-//    points15.add(w2);
-//    points15.add(w5);
-//    points15.add(w17);
-//    points15.add(w14);
-//
-//    points15.add(w6);
-//    points15.add(w9);
-//    points15.add(w21);
-//    points15.add(w18);
-//
-//    points16.add(w8);
-//    points16.add(w11);
-//    points16.add(w23);
-//    points16.add(w20);
-// 
-//    points17.add(w3);
-//    points17.add(w12);
-//    points17.add(w24);
-//    points17.add(w15);
-//    
-//    points18.add(w1);
-//    points18.add(w4);
-//    points18.add(w7);
-//    points18.add(w10);
-//    
-//    points19.add(w13);
-//    points19.add(w16);
-//    points19.add(w19);
-//    points19.add(w22);
-//
-//    points20.add(w2);
-//    points20.add(w5);
-//    points20.add(w17);
-//    points20.add(w14);
-//
-//    points21.add(w6);
-//    points21.add(w9);
-//    points21.add(w21);
-//    points21.add(w18);
-//
-//    points22.add(w8);
-//    points22.add(w11);
-//    points22.add(w23);
-//    points22.add(w20);
-// 
-//    points23.add(w3);
-//    points23.add(w12);
-//    points23.add(w24);
-//    points23.add(w15);
-//    
-//    points24.add(w3);
-//    points24.add(w12);
-//    points24.add(w24);
-//    points24.add(w15);
+    points7.add(w1);
+    points7.add(w4);
+    points7.add(w7);
+    points7.add(w10);
+    
+    points8.add(w13);
+    points8.add(w16);
+    points8.add(w19);
+    points8.add(w22);
+
+    points9.add(w2);
+    points9.add(w5);
+    points9.add(w17);
+    points9.add(w14);
     
     surfaces.add(new Surface(points1));
     surfaces.add(new Surface(points2));
@@ -295,24 +215,7 @@ public class World{
     surfaces.add(new Surface(points4));
     surfaces.add(new Surface(points5));
     surfaces.add(new Surface(points6));
-//    surfaces.add(new Surface(points7));
-//    surfaces.add(new Surface(points8));
-//    surfaces.add(new Surface(points9));
-//    surfaces.add(new Surface(points10));
-//    surfaces.add(new Surface(points11));
-//    surfaces.add(new Surface(points12));
-//    surfaces.add(new Surface(points13));
-//    surfaces.add(new Surface(points14));
-//    surfaces.add(new Surface(points15));
-//    surfaces.add(new Surface(points16));
-//    surfaces.add(new Surface(points17));
-//    surfaces.add(new Surface(points18));
-//    surfaces.add(new Surface(points19));
-//    surfaces.add(new Surface(points20));
-//    surfaces.add(new Surface(points21));
-//    surfaces.add(new Surface(points22));
-//    surfaces.add(new Surface(points23));
-//    surfaces.add(new Surface(points24));
+
     ///////////////////////////////////////////////////////////////////////
     
     //Bumpers//////////////////////////////////////////////////////////////
@@ -358,21 +261,96 @@ public class World{
     points6.add(b10);
     points6.add(b12);
     points6.add(w6);
-//    
-//    points1.add();
-//    points1.add();
-//    points1.add();
-//    points1.add();
-//    
-//    points1.add();
-//    points1.add();
-//    points1.add();
-//    points1.add();
-//    
-//    points1.add();
-//    points1.add();
-//    points1.add();
-//    points1.add();
+    
+    points7.add(w7);
+    points7.add(b13);
+    points7.add(b17);
+    points7.add(w9);
+    
+    points8.add(w7);
+    points8.add(b14);
+    points8.add(b15);
+    points8.add(w8);
+    
+    points9.add(w8);
+    points9.add(b16);
+    points9.add(b18);
+    points9.add(w9);
+    
+    points10.add(w10);
+    points10.add(b19);
+    points10.add(b23);
+    points10.add(w12);
+
+    points11.add(w10);
+    points11.add(b20);
+    points11.add(b21);
+    points11.add(w11);
+ 
+    points12.add(w11);
+    points12.add(b22);
+    points12.add(b24);
+    points12.add(w12);
+ 
+    points13.add(w13);
+    points13.add(b25);
+    points13.add(b29);
+    points13.add(w15);
+    
+    points14.add(w13);
+    points14.add(b26);
+    points14.add(b27);
+    points14.add(w14);
+
+    points15.add(w14);
+    points15.add(b28);
+    points15.add(b30);
+    points15.add(w15);
+
+    points16.add(w16);
+    points16.add(b31);
+    points16.add(b35);
+    points16.add(w18);
+ 
+    points17.add(w16);
+    points17.add(b32);
+    points17.add(b33);
+    points17.add(w17);
+    
+    points18.add(w17);
+    points18.add(b34);
+    points18.add(b36);
+    points18.add(w18);
+    
+    points19.add(w19);
+    points19.add(b37);
+    points19.add(b41);
+    points19.add(w21);
+
+    points20.add(w19);
+    points20.add(b38);
+    points20.add(b39);
+    points20.add(w20);
+
+    points21.add(w20);
+    points21.add(b40);
+    points21.add(b42);
+    points21.add(w21);
+
+    points22.add(w22);
+    points22.add(b43);
+    points22.add(b47);
+    points22.add(w24);
+ 
+    points23.add(w22);
+    points23.add(b44);
+    points23.add(b45);
+    points23.add(w23);
+    
+    points24.add(w23);
+    points24.add(b46);
+    points24.add(b48);
+    points24.add(w24);
     
     surfaces.add(new Surface(points1));
     surfaces.add(new Surface(points2));
@@ -380,6 +358,24 @@ public class World{
     surfaces.add(new Surface(points4));
     surfaces.add(new Surface(points5));
     surfaces.add(new Surface(points6));
+    surfaces.add(new Surface(points7));
+    surfaces.add(new Surface(points8));
+    surfaces.add(new Surface(points9));
+    surfaces.add(new Surface(points10));
+    surfaces.add(new Surface(points11));
+    surfaces.add(new Surface(points12));
+    surfaces.add(new Surface(points13));
+    surfaces.add(new Surface(points14));
+    surfaces.add(new Surface(points15));
+    surfaces.add(new Surface(points16));
+    surfaces.add(new Surface(points17));
+    surfaces.add(new Surface(points18));
+    surfaces.add(new Surface(points19));
+    surfaces.add(new Surface(points20));
+    surfaces.add(new Surface(points21));
+    surfaces.add(new Surface(points22));
+    surfaces.add(new Surface(points23));
+    surfaces.add(new Surface(points24));
     ///////////////////////////////////////////////////////////////////////
   }
   
@@ -409,6 +405,7 @@ public class World{
     segments.add(new Segment(w12,w24));
     segments.add(new Segment(w24,w15));
     segments.add(new Segment(w3,w15));
+    
     ///////////////////////////////////////////////////////////////////////
     
     //Bumpers//////////////////////////////////////////////////////////////
@@ -418,7 +415,7 @@ public class World{
   }
   
   public void initBalls(){
-    balls.add( new Ball(0,0,0,loadImage("14.png"),2,1,4)); 
+    balls.add( new Ball(0,0,0,loadImage("14.png"),10,5,4)); 
     
     
   }

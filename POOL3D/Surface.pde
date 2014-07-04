@@ -76,9 +76,6 @@ public class Surface extends Collidable{
     if(intersect(p,spare,points.get(0),points.get(points.size()-1))){
       intersections++;
     }
-    println(intersections);
-    println();
-    println();
     if(intersections % 2==1){
       return true;
     }
@@ -100,7 +97,7 @@ public class Surface extends Collidable{
     boolean finished = false;
     if(!finished){
       // Using x and y parametric equations to solve for the t's.
-      println("a");
+//      println("a");
       if(e1!=0 && (d2*e1) - (d1*e2) !=0){ //Original formula.
 //        t2 = (a1 - a2 + (b2*d1/e1) - (b1*d1/e1) + (d1*e2/e1)) / (d2 - (d1*e2/e1));
 //        t2 = ((a1*e1) - (a2*e1) + (b2*d1) - (b1*d1)) / ((d2*e1) - (d1*e2));
@@ -110,112 +107,112 @@ public class Surface extends Collidable{
 //        println(""+a1+" "+b1+" "+c1+" "+t1+" "+d1+" "+e1+" "+f1+"      "+a2+" "+b2+" "+c2+" "+t2+" "+d2+" "+e2+" "+f2+" ");
 //        t2 = longFormula(a1,a2,b2,d1,e1,b1,e2,d2);
         finished = true;
-        println("1");
+//        println("1");
       }else if(e2!=0 && (d1*e2) - (d2*e1)!=0){ // Original formula, but with swapped 1's and 2's.
         t1 = longFormula(a2,e2,a1,b1,d2,b2,d1,e1);
         t2 = shortFormula(b1,b2,t1,e1,e2);
 //        t1 = longFormula(a2,a1,b1,d2,e2,b2,e1,d1);
 //        t2 = shortFormula(b1,b2,t1,e1,e2);
         finished = true;
-        println("2");
+//        println("2");
       }else if(d1!=0 && (e2*d1) - (e1*d2)!=0){ //Original formula, but solved for the opposite variable.
         t2 = longFormula(b1,d1,b2,a2,e1,a1,e2,d2);
         t1 = shortFormula(a2,a1,t2,d2,d1);
 //        t2 = longFormula(b1,b2,a2,e1,d1,a1,d2,e2);
 //        t1 = shortFormula(a2,a1,t2,d2,d1);
         finished = true;
-        println("3");
+//        println("3");
       }else if(d2!=0 && (e1*d2) - (e2*d1)!=0){ //The previous equation with swapped 1's and 2's
         t1 = longFormula(b2,d2,b1,a1,e2,a2,e1,d1);
         t2 = shortFormula(a1,a2,t1,d1,d2);
 //        t1 = longFormula(b2,b1,a1,e2,d2,a2,d1,e1);
 //        t1 = shortFormula(a1,a2,t1,d1,d2);
         finished = true;
-        println("4");
+//        println("4");
       }
       if(finished){
         if(abs((c1 + (t1*f1))-(c2 + (t2*f2))) > 0.1){ //Check if the z's intersect.
-          println("5");
+//          println("5");
           return false;
         }
       }
     }
     if(!finished){
       // Using x and z parametric equations to solve for the t's.
-      println("b");
+//      println("b");
       if(f1!=0 && (d2*f1) - (d1*f2) !=0){ //Original formula.
         t2 = longFormula(a1,f1,a2,c2,d1,c1,d2,f2);
         t1 = shortFormula(c2,c1,t2,f2,f1);
         //println(""+a1+" "+b1+" "+c1+" "+t1+" "+d1+" "+e1+" "+f1+"      "+a2+" "+b2+" "+c2+" "+t2+" "+d2+" "+e2+" "+f2+" ");
         finished = true;
-        println("1");
+//        println("1");
       }else if(f2!=0 && (d1*f2) - (d2*f1)!=0){ // Original formula, but with swapped 1's and 2's.
         t1 = longFormula(a2,f2,a1,c1,d2,c2,d1,f1);
         t2 = shortFormula(c1,c2,t1,f1,f2);
         finished = true;
-        println("2");
+//        println("2");
       }else if(d1!=0 && (f2*d1) - (f1*d2)!=0){ //Original formula, but solved for the opposite variable.
         t2 = longFormula(c1,d1,c2,a2,f1,a1,f2,d2);
         t1 = shortFormula(a2,a1,t2,d2,d1);
         finished = true;
-        println("3");
+//        println("3");
       }else if(d2!=0 && (f1*d2) - (f2*d1)!=0){ //The previous equation with swapped 1's and 2's
         t1 = longFormula(c2,d2,c1,a1,f2,a2,f1,d1);
         t2 = shortFormula(a1,a2,t1,d1,d2);
         finished = true;
-        println("4");
+//        println("4");
       }
       if(finished){
         if(abs((b1 + (t1*e1))-(b2 + (t2*e2))) > 0.1){ //Check if the y's intersect.
-          println("5");
+//          println("5");
           return false;
         }
       }
     }
     if(!finished){
       // Using y and z parametric equations to solve for the t's.
-      println("c");
+//      println("c");
       if(f1!=0 && (e2*f1) - (e1*f2) !=0){ //Original formula.
         t2 = longFormula(b1,f1,b2,c2,e1,b1,e2,f2);
         t1 = shortFormula(c2,c1,t2,f2,f1);
         //println(""+a1+" "+b1+" "+c1+" "+t1+" "+d1+" "+e1+" "+f1+"      "+a2+" "+b2+" "+c2+" "+t2+" "+d2+" "+e2+" "+f2+" ");
         finished = true;
-        println("1");
+//        println("1");
       }else if(f2!=0 && (e1*f2) - (e2*f1)!=0){ // Original formula, but with swapped 1's and 2's.
         t1 = longFormula(b2,f2,b1,c1,e2,c2,e1,f1);
         t2 = shortFormula(c1,c2,t1,f1,f2);
         finished = true;
-        println("2");
+//        println("2");
       }else if(e1!=0 && (f2*e1) - (f1*e2)!=0){ //Original formula, but solved for the opposite variable.
         t2 = longFormula(c1,e1,c2,b2,f1,b1,f2,e2);
         t1 = shortFormula(b2,b1,t2,e2,e1);
         finished = true;
-        println("3");
+//        println("3");
       }else if(e2!=0 && (f1*e2) - (f2*e1)!=0){ //The previous equation with swapped 1's and 2's
         t1 = longFormula(c2,e2,c1,b1,f2,b2,f1,e1);
         t2 = shortFormula(b1,b2,t1,e1,e2);
         finished = true;
-        println("4");
+//        println("4");
       }
       if(finished){
         if(abs((a1 + (t1*d1))-(a2 + (t2*d2))) > 0.1){ //Check if the y's intersect.
-          println("5");
+//          println("5");
           return false;
         }
       }
     }
     if(!finished){
-      println("d");
+//      println("d");
       return false;
     }
-    println(""+a1+" "+b1+" "+c1+" "+t1+" "+d1+" "+e1+" "+f1+"      "+a2+" "+b2+" "+c2+" "+t2+" "+d2+" "+e2+" "+f2+" ");
+//    println(""+a1+" "+b1+" "+c1+" "+t1+" "+d1+" "+e1+" "+f1+"      "+a2+" "+b2+" "+c2+" "+t2+" "+d2+" "+e2+" "+f2+" ");
  
     if(t1<0){ //The intersection is not on the ray.
-      println("6");
+//      println("6");
       return false;
     }
     if(t2>1 || t2<0){ //The intersection is not between the two points.
-      println("7");
+//      println("7");
       return false;
     }
     return true;
