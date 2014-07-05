@@ -32,7 +32,9 @@ public class World{
     for(Ball b : balls){
       b.update();
     }
-    
+    for(Ball b : balls){
+      b.getCenter().update();
+    }
   }
   
   public void initPoints(float x,float y,float z){
@@ -438,9 +440,10 @@ public class World{
   }
   
   public void initBalls(){
-    Ball b = new Ball(0,0,0,loadImage("14.png"),0,0,0);
-    b.insertKinetic(6,5,1,3);
+    Ball b = new Ball(0,0,0,loadImage("14.png"),0,1,0);
+    Ball b1 = new Ball(0,200,0,loadImage("14.png"),0,0,0);
     balls.add(b);
+    balls.add(b1);
 //    balls.add( new Ball(0,100,0,loadImage("14.png"),0,0,0)); 
     
   }

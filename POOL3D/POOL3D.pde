@@ -99,7 +99,7 @@ void draw(){
 
 void keyPressed(){
   if(key==' '){
-    worldViewer.toggleView();
+    //worldViewer.toggleView();
   }
 }
 

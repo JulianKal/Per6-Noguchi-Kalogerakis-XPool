@@ -1,8 +1,8 @@
 public abstract class Mass extends Collidable{
   protected float mass;
   
-  public void applyEnergy(Mass c, float mass, PVector p){
-    c.insertKinetic(mass,p);
+  public void applyEnergy(Mass c, PVector p){
+    c.insertKinetic(this.mass,p);
     insertKinetic(c.mass,PVector.mult(p,-1));
   }
   
@@ -13,9 +13,9 @@ public abstract class Mass extends Collidable{
   public void insertKinetic(float mass,float vx,float vy,float vz){
     if(movable){
       for(Point p : points){
-        p.addVelocity((mass/this.mass) * vx,
-                      (mass/this.mass) * vy,
-                      (mass/this.mass) * vz);
+        p.addVelocity((this.mass/mass) * vx,
+                      (this.mass/mass) * vy,
+                      (this.mass/mass) * vz);
       }
     }
   }

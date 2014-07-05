@@ -32,8 +32,6 @@ public class Ball extends Mass{
   }
   
   public void update(){
-//    center.addVelocity(0,0,-0.001);
-    center.update();
     insertCollisions();
   }
   
@@ -87,15 +85,25 @@ public class Ball extends Mass{
     
     center.setVelocity(PVector.add(velocity, PVector.mult(projection,-2)));
   }
-  public void correctDistance(Ball b){
-    //PVector half = PVector.
-  }
   public void reflect(Ball b){
+    println(center);
+    println(center.velocity());
     //First check if this ball's velocity is actually going to cause it to hit into b
     //Use the normalPoint formula from Segment-- if t is negative, then ignore the case.
-    
-    //Next, use the projection of the velocity onto the vector from center to b.center.
-    
+//    PVector starting = center.getPVector();
+//    PVector direction = center.velocity();
+//    float t = direction.dot(PVector.sub(b.getCenter().getPVector(),direction)) / (direction.dot(direction));
+//    println(t);
+//    if(t>=0){
+//      println("hello");
+      //Next, use the projection of the velocity onto the vector from center to b.center.
+      PVector d = center.vectorTo(b.getCenter());
+      PVector projection = PVector.mult(d,center.velocity().dot(d)/sq(d.mag()));
+      applyEnergy(b, projection);
+//    }
+    println(center);
+    println(center.velocity());
+    println();
   }
   public void correctDistance(float d, Surface s){
     //After a collision with something, it corrects the distance so that no multiple fallacious collisions are detected.
