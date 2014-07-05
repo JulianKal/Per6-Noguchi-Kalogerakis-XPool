@@ -34,6 +34,7 @@ public class World{
       b.update();
     }
     for(Ball b : balls){
+      //PVector projection = PVector.mult(normal,normal.dot(velocity)/normal.magSq());
       b.getCenter().update();
     }
   }
@@ -441,7 +442,7 @@ public class World{
   }
   
   public void initBalls(){
-    for(int x=0;x<100;x++){
+    for(int x=0;x<20;x++){
       balls.add(new Ball(random(200),random(200),random(200),loadImage("14.png"),random(3)-6,random(3)-6,random(3)-6));
     }
   }

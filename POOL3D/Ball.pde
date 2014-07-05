@@ -6,7 +6,7 @@ public class Ball extends Mass{
   //////////////////////////////////////////////////////////////////////////
   public PImage skin;
   private int sDetail = 60;  // Sphere detail setting
-  private float R = 12.5;
+  private float R = RAD;
   private float[] cx, cz, sphereX, sphereY, sphereZ;
   private float sinLUT[];
   private float cosLUT[];
@@ -40,11 +40,8 @@ public class Ball extends Mass{
     fill(r,g,b);
     noStroke();
     translate(center.getX(),center.getY(),center.getZ());
-    sphere(RAD);
+    sphere(R);
     //renderGlobe();
-    //ambient(125,125,125);
-    //specular(150, 150, 150);
-    //shininess(250);
     popMatrix();
   }
   
@@ -55,23 +52,23 @@ public class Ball extends Mass{
     for(Segment seg : world.getSegments()){
       if(!collided){
         Point norm =  seg.normalPoint(center);
-        if(center.distance(norm) <= RAD){
+        if(center.distance(norm) <= R){
            reflect(norm.vectorTo(center));
            collided = true;
-           println(seg.getPoints());
+//           println(seg.getPoints());
         }
       }
     }
     for(Surface s : world.getSurfaces()){
-      if(s.distance(center) <= RAD){
+      if(s.distance(center) <= R){
         if(s.pointOnSurface(s.normalPoint(center))){
           reflect(s.normal());
         }
       }
     }
     for(Ball b : world.getBalls()){
-      if(this != b){ //Make sure they're not the same instance.
-        if(center.distanceSq(b.getCenter()) < 4*sq(RAD)){
+      if(this != b ){ //Make sure they're not the same instance.
+        if(center.distanceSq(b.getCenter()) < 4*sq(R) && abs(center.velocity().mag()) > 0){
           reflect(b);
         }
       }
@@ -81,7 +78,6 @@ public class Ball extends Mass{
   public void reflect(PVector normalVector){
     PVector normal = normalVector;
     PVector velocity = center.velocity();
-    
     PVector projection = PVector.mult(normal,normal.dot(velocity)/normal.magSq());
     
     center.setVelocity(PVector.add(velocity, PVector.mult(projection,-2)));
@@ -102,12 +98,14 @@ public class Ball extends Mass{
 //      println(center.velocity());
       PVector d = center.vectorTo(b.getCenter());
       PVector projection = PVector.mult(d,center.velocity().dot(d)/d.magSq());
+
       applyEnergy(b, projection);
 //      println(center.velocity());
       
 //      println(projection);
 //      println();
 //    }
+
   }
   public void correctDistance(float d, Surface s){
     //After a collision with something, it corrects the distance so that no multiple fallacious collisions are detected.
@@ -254,5 +252,6 @@ public class Ball extends Mass{
     vertex(sphereX[voff]*r, sphereY[voff]*r, sphereZ[voff]*r, u, v);
     endShape();
   }
+  
   
 }
