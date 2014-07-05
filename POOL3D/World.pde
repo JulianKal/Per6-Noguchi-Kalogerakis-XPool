@@ -409,14 +409,39 @@ public class World{
     ///////////////////////////////////////////////////////////////////////
     
     //Bumpers//////////////////////////////////////////////////////////////
-    
+    segments.add(new Segment(b2,b3));
+    segments.add(new Segment(b1,b5));
+    segments.add(new Segment(b4,b6));
+    segments.add(new Segment(b8,b9));
+    segments.add(new Segment(b7,b11));
+    segments.add(new Segment(b10,b12));
+    segments.add(new Segment(b13,b17));
+    segments.add(new Segment(b14,b15));
+    segments.add(new Segment(b16,b18));
+    segments.add(new Segment(b19,b23));
+    segments.add(new Segment(b20,b21));
+    segments.add(new Segment(b22,b24));
+    segments.add(new Segment(b25,b29));
+    segments.add(new Segment(b26,b27));
+    segments.add(new Segment(b28,b30));
+    segments.add(new Segment(b31,b35));
+    segments.add(new Segment(b32,b33));
+    segments.add(new Segment(b34,b36));
+    segments.add(new Segment(b37,b41));
+    segments.add(new Segment(b38,b39));
+    segments.add(new Segment(b40,b42));
+    segments.add(new Segment(b43,b47));
+    segments.add(new Segment(b44,b45));
+    segments.add(new Segment(b46,b48));
     
     ///////////////////////////////////////////////////////////////////////
   }
   
   public void initBalls(){
-    balls.add( new Ball(0,0,0,loadImage("14.png"),10,5,4)); 
-    
+    Ball b = new Ball(0,0,0,loadImage("14.png"),0,0,0);
+    b.insertKinetic(6,5,1,3);
+    balls.add(b);
+//    balls.add( new Ball(0,100,0,loadImage("14.png"),0,0,0)); 
     
   }
   

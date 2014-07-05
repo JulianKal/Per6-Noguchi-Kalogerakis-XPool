@@ -56,6 +56,10 @@ public class Point extends Collidable{
     return sqrt(sq(_x-p.getX()) + sq(_y-p.getY()) + sq(_z-p.getZ()));
   }
   
+  public float distanceSq(Point p){
+    return sq(_x-p.getX()) + sq(_y-p.getY()) + sq(_z-p.getZ());
+  }
+  
   public float getX(){ return _x;}
   public float getY(){ return _y;}
   public float getZ(){ return _z;}

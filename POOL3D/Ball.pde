@@ -20,7 +20,7 @@ public class Ball extends Mass{
     center = new Point(x,y,z,vx,vy,vz);
     points = new ArrayList<Point>();
     points.add(center);
-    setMovable(false);
+    setMovable(true);
     setMass(6);
     ENERGY_LOSS_CONSTANT = 1;
   }
@@ -70,6 +70,13 @@ public class Ball extends Mass{
         }
       }
     }
+    for(Ball b : world.getBalls()){
+      if(this != b){ //Make sure they're not the same instance.
+        if(center.distanceSq(b.getCenter()) < 4*sq(RAD)){
+          reflect(b);
+        }
+      }
+    }
   }
   
   public void reflect(PVector normalVector){
@@ -79,6 +86,16 @@ public class Ball extends Mass{
     PVector projection = PVector.mult(normal,normal.dot(velocity)/normal.magSq());
     
     center.setVelocity(PVector.add(velocity, PVector.mult(projection,-2)));
+  }
+  public void correctDistance(Ball b){
+    //PVector half = PVector.
+  }
+  public void reflect(Ball b){
+    //First check if this ball's velocity is actually going to cause it to hit into b
+    //Use the normalPoint formula from Segment-- if t is negative, then ignore the case.
+    
+    //Next, use the projection of the velocity onto the vector from center to b.center.
+    
   }
   public void correctDistance(float d, Surface s){
     //After a collision with something, it corrects the distance so that no multiple fallacious collisions are detected.
