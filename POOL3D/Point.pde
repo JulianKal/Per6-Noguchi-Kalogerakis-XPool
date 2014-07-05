@@ -1,7 +1,7 @@
 public class Point extends Collidable{
-  
   private float _x,_y,_z;
   PVector velocity;
+  private String name;
   
   public Point(float x,float y, float z, PVector velocity){
     _x = x;
@@ -10,6 +10,10 @@ public class Point extends Collidable{
     this.velocity = velocity;
   }
   
+  public Point(float x, float y, float z, float vx, float vy, float vz, String name){
+    this(x,y,z,new PVector(vx,vy,vz));
+    this.name = name;
+  }
   public Point(float x, float y, float z, float vx, float vy, float vz){
     this(x,y,z,new PVector(vx,vy,vz));
   }
@@ -70,14 +74,16 @@ public class Point extends Collidable{
   public PVector velocity(){ return velocity;}
   public void setVelocity(float x, float y, float z){velocity.set(x,y,z);}
   public void setVelocity(PVector v){ velocity = v;}
-  public void addVelocity(float x, float y, float z){velocity.set(
-                                                                velocity.x+x,
-                                                                velocity.y+y,
-                                                                velocity.z+z);}
-                                                             
-  public String toString(){
-    return "" + _x + "," + _y + "," + _z;
+  public void addVelocity(float x, float y, float z){
+    velocity.set(velocity.x+x, velocity.y+y, velocity.z+z);
+  }
+  public String getName(){
+    return name;
   }
   
+                                                             
+  public String toString(){
+    return name + "(" + (int)_x + "," + (int)_y + "," + (int)_z + ")";
+  }
   
 }

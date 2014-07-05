@@ -29,12 +29,17 @@ public class World{
   }
   
   public void update(){
+    println("\n<UPDATE>");
     for(Ball b : balls){
       b.update();
     }
     for(Ball b : balls){
+      //PVector projection = PVector.mult(normal,normal.dot(velocity)/normal.magSq());
       b.getCenter().update();
+      println(b.getCenter());
+      println(b.getCenter().velocity());
     }
+    println("</UPDATE>");
   }
   
   public void initPoints(float x,float y,float z){
@@ -440,8 +445,8 @@ public class World{
   }
   
   public void initBalls(){
-    Ball b = new Ball(0,0,0,loadImage("14.png"),0,1,0);
-    Ball b1 = new Ball(0,200,0,loadImage("14.png"),0,0,0);
+    Ball b = new Ball(5,5,5,loadImage("14.png"),0,1,0, "movingBall");
+    Ball b1 = new Ball(0,200,0,loadImage("14.png"),0,0,0, "deadBall");
     balls.add(b);
     balls.add(b1);
 //    balls.add( new Ball(0,100,0,loadImage("14.png"),0,0,0)); 
