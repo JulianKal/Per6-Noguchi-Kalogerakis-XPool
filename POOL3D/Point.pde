@@ -1,13 +1,15 @@
 public class Point extends Collidable{
   
   private float _x,_y,_z;
-  PVector velocity;
+  private PVector velocity;
+  private ArrayList<PVector> velocityUpdates;
   
   public Point(float x,float y, float z, PVector velocity){
     _x = x;
     _y = y;
     _z = z;
     this.velocity = velocity;
+    velocityUpdates = new ArrayList<PVector>();
   }
   
   public Point(float x, float y, float z, float vx, float vy, float vz){
@@ -43,9 +45,11 @@ public class Point extends Collidable{
   }
   
   public void update(){
+    updateVelocity();
     _x += velocity.x;
     _y += velocity.y;
     _z += velocity.z;
+    applyFriction();
   }
   
   public PVector vectorTo(Point p){
@@ -58,6 +62,19 @@ public class Point extends Collidable{
   
   public float distanceSq(Point p){
     return sq(_x-p.getX()) + sq(_y-p.getY()) + sq(_z-p.getZ());
+  }
+  
+  public void updateVelocity(){
+    for(PVector v : velocityUpdates){
+      addVelocity(v.x,v.y,v.z);
+    }
+    velocityUpdates.clear();
+  }
+  public void updateVelocity(PVector v){
+    velocityUpdates.add(v);
+  }
+  public void applyFriction(){
+    velocity.mult(1-FRICTION);
   }
   
   public float getX(){ return _x;}

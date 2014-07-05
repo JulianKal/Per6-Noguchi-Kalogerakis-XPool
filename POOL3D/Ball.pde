@@ -58,6 +58,7 @@ public class Ball extends Mass{
         if(center.distance(norm) <= RAD){
            reflect(norm.vectorTo(center));
            collided = true;
+           println(seg.getPoints());
         }
       }
     }
@@ -86,8 +87,6 @@ public class Ball extends Mass{
     center.setVelocity(PVector.add(velocity, PVector.mult(projection,-2)));
   }
   public void reflect(Ball b){
-    println(center);
-    println(center.velocity());
     //First check if this ball's velocity is actually going to cause it to hit into b
     //Use the normalPoint formula from Segment-- if t is negative, then ignore the case.
 //    PVector starting = center.getPVector();
@@ -97,13 +96,18 @@ public class Ball extends Mass{
 //    if(t>=0){
 //      println("hello");
       //Next, use the projection of the velocity onto the vector from center to b.center.
+//      println(center);
+//      println(center.velocity());
+//      println(center);
+//      println(center.velocity());
       PVector d = center.vectorTo(b.getCenter());
-      PVector projection = PVector.mult(d,center.velocity().dot(d)/sq(d.mag()));
+      PVector projection = PVector.mult(d,center.velocity().dot(d)/d.magSq());
       applyEnergy(b, projection);
+//      println(center.velocity());
+      
+//      println(projection);
+//      println();
 //    }
-    println(center);
-    println(center.velocity());
-    println();
   }
   public void correctDistance(float d, Surface s){
     //After a collision with something, it corrects the distance so that no multiple fallacious collisions are detected.
@@ -113,6 +117,14 @@ public class Ball extends Mass{
     center.setX(center.getX()+unit.x);
     center.setY(center.getY()+unit.y);
     center.setZ(center.getZ()+unit.z);
+  }
+
+  public void applyEnergy(Ball b, PVector p){
+    b.insertKinetic(this.mass,p);
+    insertKinetic(b.getMass(),PVector.mult(p,-1));
+  }
+  public void insertKinetic(float mass, PVector v){
+    center.updateVelocity(v);
   }
   
   /*

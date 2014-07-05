@@ -9,6 +9,7 @@ public class World{
   Point p1,p2,p3,p4,p5,p6,p7,p8;
   Point w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20,w21,w22,w23,w24;
   Point b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37,b38,b39,b40,b41,b42,b43,b44,b45,b46,b47,b48;
+  Ball ball1, ball2;
   
   public World(int x, int y, int z){ //Dimensions of the world will be 2x, 2y, and 2z
     surfaces = new ArrayList<Surface>();
@@ -134,9 +135,9 @@ public class World{
     b43 = new Point(-4*RAD,y-4*RAD,-z);
     b44 = new Point(-x+4*RAD,4*RAD,-z);
     b45 = new Point(-x,4*RAD,-z+4*RAD);
-    b46 = new Point(-x,y-4*RAD,-4*RAD);
+    b46 = new Point(-x,y-4*RAD,-4*RAD);//
     b47 = new Point(-4*RAD,y,-z+4*RAD);
-    b48 = new Point(-x+4*RAD,y,-4*RAD);
+    b48 = new Point(-x+4*RAD,y,-4*RAD);//
   }
   
   public void initSurfaces(){
@@ -422,7 +423,7 @@ public class World{
     segments.add(new Segment(b16,b18));
     segments.add(new Segment(b19,b23));
     segments.add(new Segment(b20,b21));
-    segments.add(new Segment(b22,b24));
+    //segments.add(new Segment(b22,b24));
     segments.add(new Segment(b25,b29));
     segments.add(new Segment(b26,b27));
     segments.add(new Segment(b28,b30));
@@ -434,18 +435,15 @@ public class World{
     segments.add(new Segment(b40,b42));
     segments.add(new Segment(b43,b47));
     segments.add(new Segment(b44,b45));
-    segments.add(new Segment(b46,b48));
+    //segments.add(new Segment(b46,b48));
     
     ///////////////////////////////////////////////////////////////////////
   }
   
   public void initBalls(){
-    Ball b = new Ball(0,0,0,loadImage("14.png"),0,1,0);
-    Ball b1 = new Ball(0,200,0,loadImage("14.png"),0,0,0);
-    balls.add(b);
-    balls.add(b1);
-//    balls.add( new Ball(0,100,0,loadImage("14.png"),0,0,0)); 
-    
+    for(int x=0;x<100;x++){
+      balls.add(new Ball(random(200),random(200),random(200),loadImage("14.png"),random(3)-6,random(3)-6,random(3)-6));
+    }
   }
   
   public void objectify(){

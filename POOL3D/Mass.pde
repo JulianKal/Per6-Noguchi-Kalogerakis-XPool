@@ -2,7 +2,7 @@ public abstract class Mass extends Collidable{
   protected float mass;
   
   public void applyEnergy(Mass c, PVector p){
-    c.insertKinetic(this.mass,p);
+//    c.insertKinetic(this.mass,p);
     insertKinetic(c.mass,PVector.mult(p,-1));
   }
   
