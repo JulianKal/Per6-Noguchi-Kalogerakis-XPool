@@ -14,7 +14,10 @@ public class Segment extends Collidable{
     movable = false;
   }
   public void renderSurfaces(int r, int g, int b){
-    
+    pushMatrix();
+    stroke(255);
+    line(points.get(0).getX(),points.get(0).getY(),points.get(0).getZ(),points.get(1).getX(),points.get(1).getY(),points.get(1).getZ());
+    popMatrix();
   }
   
   public void update(){
