@@ -1,10 +1,10 @@
 public class ViewManager{
   private int viewNum;
-  private float viewAngle, mousePrecisionAngle, mouseRotatorAngle;
-  private float viewVertical;
+  private float centerX, centerY, centerZ;
+  private float mousePrecisionAngleHoriz, mouseRotatorAngleHoriz, mousePrecisionAngleVert, mouseRotatorAngleVert;
+  private float viewAngleHoriz, viewAngleVert;
   public ViewManager(){
     viewNum = 1;
-    viewVertical = .35;
   }
   
   public void toggleView(){
@@ -15,59 +15,92 @@ public class ViewManager{
   }
   
   public void update(){
+    keyListener();
     translate(0,0,0); //Center of rotation
+    println("ctrX " + (int)centerX); 
+    println("ctrY " + (int)centerY); 
+    println("ctrZ " + (int)centerZ); 
+    
     if(viewNum == 1){
-      viewVertical = .35;
       viewPosition();
     }
     if(viewNum == 2){
-      viewVertical = .45;
+      viewAngleVert = .45;
       shootingView();
     }
     if(viewNum == 3){
-      viewVertical = 0;
+      viewAngleVert = 0;
       topView();
     }
-//    println("\nPrecisionAngle " + degrees(mousePrecisionAngle)%360);
-//    println("RotatorAngle " + degrees(mouseRotatorAngle)%360);
-//    println("\nViewAngle " + degrees(viewAngle)%360);
+    translate(centerX,centerY,centerZ);
   }
   
+  //Horizontal Rotation
   public void viewPosition(){
-    viewAngle = mousePrecisionAngle + mouseRotatorAngle;
-    mousePrecisionAngle = (mouseX-X_MID) * 0.001;
-    if(abs(mousePrecisionAngle) > .42){
-      mouseRotatorAngle += mousePrecisionAngle/100;
+    viewAngleHoriz = mousePrecisionAngleHoriz + mouseRotatorAngleHoriz;
+    mousePrecisionAngleHoriz = (mouseX-X_MID) * 0.001;
+    if(abs(mousePrecisionAngleHoriz) > .46){
+      mouseRotatorAngleHoriz += mousePrecisionAngleHoriz/20;
     }
-    viewVertical = mouseY*0.002;
-    rotateX(PI*viewVertical);
-    rotateZ(viewAngle);
+    rotateY(-viewAngleHoriz);
+    
+    //Vertical Rotation
+    viewAngleVert = mousePrecisionAngleVert + mouseRotatorAngleVert;
+    mousePrecisionAngleVert = (mouseY-Y_MID) * 0.001;
+    if(abs(mousePrecisionAngleVert) > .32){
+      mouseRotatorAngleVert += mousePrecisionAngleVert/20*.46/.32;
+    }
+    rotateY(-viewAngleHoriz);
+    rotateX(-(viewAngleVert + 1));
+    rotateY(viewAngleHoriz);
   }
   
   public void shootingView(){
     //translate(0,0,0); //translate to the coordinates of the cueball; this will come later. DOES NOT FOLLOW THE BALL AFTER SHOT.
-    mousePrecisionAngle += (mouseX-X_MID)*.0008;
+    mousePrecisionAngleHoriz += (mouseX-X_MID)*.0008;
     if(abs(mouseX-X_MID) > 50){
-      viewAngle += mousePrecisionAngle/30;
+      viewAngleHoriz += mousePrecisionAngleHoriz/30;
     }
     else{
-      mousePrecisionAngle /= 1.5;
+      mousePrecisionAngleHoriz /= 1.5;
     }
-    rotateX(PI*viewVertical);
-    rotate(viewAngle);
-    if(abs(mousePrecisionAngle) > 18){
-      mousePrecisionAngle/=1.1;  
+    rotateX(PI*viewAngleVert);
+    rotate(viewAngleHoriz);
+    if(abs(mousePrecisionAngleHoriz) > 18){
+      mousePrecisionAngleHoriz/=1.1;  
     }
   }
   
   public void topView(){
-    viewAngle = mousePrecisionAngle + mouseRotatorAngle;
-    mousePrecisionAngle = (mouseX-X_MID) * 0.001;
-    if(abs(mousePrecisionAngle) > .22){
-      mouseRotatorAngle += mousePrecisionAngle/35;
+    viewAngleHoriz = mousePrecisionAngleHoriz + mouseRotatorAngleHoriz;
+    mousePrecisionAngleHoriz = (mouseX-X_MID) * 0.001;
+    if(abs(mousePrecisionAngleHoriz) > .22){
+      mouseRotatorAngleHoriz += mousePrecisionAngleHoriz/25;
     }
-    rotateX(PI*viewVertical);
-    rotate(viewAngle);
+    rotateX(PI*viewAngleVert);
+    rotate(viewAngleHoriz);
   }
   
+  void keyListener(){
+    if(keyPressed){
+      if(key=='w' && centerY<200){
+        centerY+=4;
+      }
+      if(key=='a' && centerX>-200){
+        centerX-=4;
+      }
+      if(key=='d' && centerX<200){
+        centerX+=4;
+      }
+      if(key=='s' && centerY>-200){
+        centerY-=4;
+      }
+      if(key=='z' && centerZ<200){
+        centerZ+=4;
+      }
+      if(key=='x' && centerZ>-200){
+        centerZ-=4;
+      }
+    }
+  }
 }

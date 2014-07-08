@@ -442,8 +442,8 @@ public class World{
   }
   
   public void initBalls(){
-    for(int x=0;x<20;x++){
-      balls.add(new Ball(random(200),random(200),random(200),loadImage("14.png"),random(3)-6,random(3)-6,random(3)-6));
+    for(int x=0;x<15;x++){
+      balls.add(new Ball(random(800)-200,random(800)-200,random(800)-200,loadImage("" + x + ".png"),random(30)-15,random(30)-15,random(30)-15));
     }
   }
   

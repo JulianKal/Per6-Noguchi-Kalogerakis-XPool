@@ -23,6 +23,7 @@ public class Ball extends Mass{
     setMovable(true);
     setMass(6);
     ENERGY_LOSS_CONSTANT = 1;
+    initializeSphere(60);
   }
   public Ball(float x, float y, float z, PImage skin){
     this(x,y,z,skin,0,0,0);
@@ -37,11 +38,11 @@ public class Ball extends Mass{
   
   public void renderSurfaces(int r,int g,int b){
     pushMatrix();
-    fill(r,g,b);
+    fill(180, 10, 10);
     noStroke();
     translate(center.getX(),center.getY(),center.getZ());
     sphere(R);
-    //renderGlobe();
+    renderGlobe();
     popMatrix();
   }
   
@@ -68,7 +69,7 @@ public class Ball extends Mass{
     }
     for(Ball b : world.getBalls()){
       if(this != b ){ //Make sure they're not the same instance.
-        if(center.distanceSq(b.getCenter()) < 4*sq(R) && abs(center.velocity().mag()) > 0){
+        if(center.distanceSq(b.getCenter()) <= 4*sq(R)){
           reflect(b);
         }
       }

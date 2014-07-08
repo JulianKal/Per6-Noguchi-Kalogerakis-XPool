@@ -20,7 +20,8 @@ public class Surface extends Collidable{
   
   public void renderSurfaces(int r,int g,int b){
     pushMatrix();
-    fill(200,0,0,200);
+    fill(250,0,0,175);
+    stroke(20);
     beginShape();
     for(Point p : points){
       p.placeVertex();
