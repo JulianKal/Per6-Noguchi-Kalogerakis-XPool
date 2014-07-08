@@ -74,6 +74,9 @@ public class Point extends Collidable{
   }
   public void applyFriction(){
     velocity.mult(1-FRICTION);
+    if(velocity.magSq()<0.001){
+      velocity = new PVector(0,0,0);
+    }
   }
   
   public float getX(){ return _x;}

@@ -24,9 +24,16 @@ public class World{
   }
   
   public void renderSurfaces(){
-    for(Collidable c : objects){
-      c.renderSurfaces(200,0,0);
+    for(Surface s : surfaces){
+      s.renderSurfaces(200,0,0);
     }
+    for(Segment seg : segments){
+      seg.renderSurfaces(0,200,0);
+    }
+    for(Ball b : balls){
+      b.renderSurfaces(0,0,200);
+    }
+    
   }
   
   public void update(){
@@ -424,7 +431,7 @@ public class World{
     segments.add(new Segment(b16,b18));
     segments.add(new Segment(b19,b23));
     segments.add(new Segment(b20,b21));
-    //segments.add(new Segment(b22,b24));
+    segments.add(new Segment(b22,b24));//
     segments.add(new Segment(b25,b29));
     segments.add(new Segment(b26,b27));
     segments.add(new Segment(b28,b30));
@@ -436,15 +443,23 @@ public class World{
     segments.add(new Segment(b40,b42));
     segments.add(new Segment(b43,b47));
     segments.add(new Segment(b44,b45));
-    //segments.add(new Segment(b46,b48));
+    segments.add(new Segment(b46,b48));//
     
     ///////////////////////////////////////////////////////////////////////
   }
   
   public void initBalls(){
+<<<<<<< HEAD
     for(int x=0;x<15;x++){
       balls.add(new Ball(random(800)-200,random(800)-200,random(800)-200,loadImage("" + x + ".png"),random(30)-15,random(30)-15,random(30)-15));
     }
+=======
+//    for(int x=0;x<20;x++){
+//      balls.add(new Ball(random(200),random(200),random(200),loadImage("14.png"),random(3)-6,random(3)-6,random(3)-6));
+//    }
+    balls.add(new Ball(0,0,0,loadImage("14.png"),0,1,0));
+    balls.add(new Ball(0,200,0,loadImage("14.png"),0,-1,0));
+>>>>>>> FETCH_HEAD
   }
   
   public void objectify(){

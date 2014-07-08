@@ -80,8 +80,8 @@ public class Ball extends Mass{
     PVector normal = normalVector;
     PVector velocity = center.velocity();
     PVector projection = PVector.mult(normal,normal.dot(velocity)/normal.magSq());
-    
-    center.setVelocity(PVector.add(velocity, PVector.mult(projection,-2)));
+    insertKinetic(mass, PVector.mult(projection,-2));
+//    center.setVelocity(PVector.add(velocity, PVector.mult(projection,-2)));
   }
   public void reflect(Ball b){
     //First check if this ball's velocity is actually going to cause it to hit into b
