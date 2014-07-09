@@ -43,8 +43,8 @@ public class ViewManager{
     
     //Vertical Rotation
     viewAngleVert = mousePrecisionAngleVert + mouseRotatorAngleVert;
-    mousePrecisionAngleVert = (mouseY-Y_MID) * 0.01;
-    if(abs(mousePrecisionAngleVert) > 1){
+    mousePrecisionAngleVert = (mouseY-Y_MID) * 0.001;
+    if(abs(mousePrecisionAngleVert) > 0.32){
       mouseRotatorAngleVert += mousePrecisionAngleVert/20*.46/.32;
     }
     rotateY(-viewAngleHoriz);

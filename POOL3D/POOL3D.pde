@@ -16,7 +16,7 @@ Cloth c;
 Bumper b1, b2, b3, b4, b5, b6;
 Ball testBall;
 static int WINDOW_X = 1200;
-static int WINDOW_Y = 600;
+static int WINDOW_Y = 750;
 
 //List of collidables
 ArrayList<Collidable> objects;
