@@ -11,12 +11,12 @@ static float X_MID, Y_MID, Z_MID; //Purely for translational purposes.
 float FPS = 2000; //If you set the FPS to lower than this, you get some weird collisions (collisions with more than one wall).
 static float RAD = 15;
 static float RES = 10;
-float FRICTION = 0.001;
+float FRICTION = 0.01;
 Cloth c;
 Bumper b1, b2, b3, b4, b5, b6;
 Ball testBall;
 static int WINDOW_X = 1200;
-static int WINDOW_Y = 750;
+static int WINDOW_Y = 600;
 
 //List of collidables
 ArrayList<Collidable> objects;

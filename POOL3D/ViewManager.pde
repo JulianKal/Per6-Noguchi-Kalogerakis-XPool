@@ -17,9 +17,6 @@ public class ViewManager{
   public void update(){
     keyListener();
     translate(0,0,0); //Center of rotation
-    println("ctrX " + (int)centerX); 
-    println("ctrY " + (int)centerY); 
-    println("ctrZ " + (int)centerZ); 
     
     if(viewNum == 1){
       viewPosition();
@@ -46,8 +43,8 @@ public class ViewManager{
     
     //Vertical Rotation
     viewAngleVert = mousePrecisionAngleVert + mouseRotatorAngleVert;
-    mousePrecisionAngleVert = (mouseY-Y_MID) * 0.001;
-    if(abs(mousePrecisionAngleVert) > .32){
+    mousePrecisionAngleVert = (mouseY-Y_MID) * 0.01;
+    if(abs(mousePrecisionAngleVert) > 1){
       mouseRotatorAngleVert += mousePrecisionAngleVert/20*.46/.32;
     }
     rotateY(-viewAngleHoriz);

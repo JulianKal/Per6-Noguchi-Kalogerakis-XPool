@@ -449,17 +449,10 @@ public class World{
   }
   
   public void initBalls(){
-<<<<<<< HEAD
     for(int x=0;x<15;x++){
       balls.add(new Ball(random(800)-200,random(800)-200,random(800)-200,loadImage("" + x + ".png"),random(30)-15,random(30)-15,random(30)-15));
     }
-=======
-//    for(int x=0;x<20;x++){
-//      balls.add(new Ball(random(200),random(200),random(200),loadImage("14.png"),random(3)-6,random(3)-6,random(3)-6));
-//    }
-    balls.add(new Ball(0,0,0,loadImage("14.png"),0,1,0));
-    balls.add(new Ball(0,200,0,loadImage("14.png"),0,-1,0));
->>>>>>> FETCH_HEAD
+    
   }
   
   public void objectify(){
