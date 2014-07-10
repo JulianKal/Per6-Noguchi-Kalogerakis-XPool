@@ -3,6 +3,7 @@
 public class Ball extends Mass{
   Point center;
   public final float ENERGY_LOSS_CONSTANT;
+  public float _xspin,_yspin,_zspin;
   //////////////////////////////////////////////////////////////////////////
   public PImage skin;
   private int sDetail = 60;  // Sphere detail setting
@@ -143,6 +144,9 @@ public class Ball extends Mass{
   
   /////Getters&Setters//////////////////////////////////////////////////////////////////////
   public Point getCenter(){ return center;}
+  public float xspin(){ return _xspin;}
+  public float yspin(){ return _yspin;}
+  public flaot zspin(){ return _zspin;}
   
   /////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////DO NOT ENTER///////////////////////////////////////////
