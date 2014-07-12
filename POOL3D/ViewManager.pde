@@ -29,6 +29,7 @@ public class ViewManager{
       viewAngleVert = 0;
       topView();
     }
+//    translate(world.getBalls().get(0).getCenter().getX(),world.getBalls().get(0).getCenter().getY(),world.getBalls().get(0).getCenter().getZ());
     translate(centerX,centerY,centerZ);
   }
   
@@ -79,6 +80,8 @@ public class ViewManager{
   }
   
   void keyListener(){
+    
+    
     if(keyPressed){
       if(key=='w' && centerY<200){
         centerY+=4;

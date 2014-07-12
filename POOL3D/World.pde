@@ -419,7 +419,31 @@ public class World{
     
     ///////////////////////////////////////////////////////////////////////
     
-    //Bumpers//////////////////////////////////////////////////////////////
+    //Bumpers//and//Holes//////////////////////////////////////////////////
+    segments.add(new Segment(w1,w2));
+    segments.add(new Segment(w1,w3));
+    segments.add(new Segment(w4,w5));
+    segments.add(new Segment(w4,w6));
+    segments.add(new Segment(w5,w6));
+    segments.add(new Segment(w7,w8));
+    segments.add(new Segment(w7,w9));
+    segments.add(new Segment(w8,w9));
+    segments.add(new Segment(w10,w11));
+    segments.add(new Segment(w10,w12));
+    segments.add(new Segment(w11,w12));
+    segments.add(new Segment(w13,w14));
+    segments.add(new Segment(w13,w15));
+    segments.add(new Segment(w14,w15));
+    segments.add(new Segment(w16,w17));
+    segments.add(new Segment(w16,w18));
+    segments.add(new Segment(w17,w18));
+    segments.add(new Segment(w19,w20));
+    segments.add(new Segment(w19,w21));
+    segments.add(new Segment(w20,w21));
+    segments.add(new Segment(w22,w23));
+    segments.add(new Segment(w22,w24));
+    segments.add(new Segment(w23,w24));
+    
     segments.add(new Segment(b2,b3));
     segments.add(new Segment(b1,b5));
     segments.add(new Segment(b4,b6));
