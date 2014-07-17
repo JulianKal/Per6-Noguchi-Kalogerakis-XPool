@@ -26,9 +26,6 @@ public class Ball extends Mass{
     setMass(6);
     ENERGY_LOSS_CONSTANT = 1;
     initializeSphere(60);
-    _xspin=0;
-    _yspin=1;
-    _zspin=1;
   }
   public Ball(float x, float y, float z, PImage skin){
     this(x,y,z,skin,0,0,0);

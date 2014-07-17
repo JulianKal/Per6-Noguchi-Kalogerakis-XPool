@@ -473,10 +473,33 @@ public class World{
   }
   
   public void initBalls(){
+    /*
     for(int x=0;x<15;x++){
       balls.add(new Ball(random(800)-200,random(800)-200,random(800)-200,loadImage("" + x + ".png"),random(30)-15,random(30)-15,random(30)-15));
     }
-    
+    */
+    balls.add(new Ball(0,0,0,loadImage("0.png")));
+    /*
+    balls.add(new Ball(-200,-200,-200,loadImage("1.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("2.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("3.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("4.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("5.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("6.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("7.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("8.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("9.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("10.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("11.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("12.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("13.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("14.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("15.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("16.png")));
+    balls.add(new Ball(-200,-200,-200,loadImage("17.png")));
+    balls.add(new Ball(-200,-200,-200,loadImage("18.png")));
+    balls.add(new Ball(-200,-200,-200,loadImage("19.png")));
+    */
   }
   
   public void objectify(){
