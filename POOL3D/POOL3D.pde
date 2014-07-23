@@ -1,17 +1,14 @@
 //To do:
-//There are 2 edges which are causing collisions for some reason. They are commented out now (to be fixedlater.)
+//One of the edges in the corner holes is not drawn.
+//Figure out a way to translate to right behind the pool cue.
 //To speed up the code, change squareroot < radius to blah < radius^2
-//Change collision detecting such that each ball can only make one collision with each surface (points and segments included)
-//      Update: this works now, but it needs to be coupled with collision detecting from the pool cloth which still doesn't work well.
-//      Update: Problem fixed by only allowing collisions with one object at a time. A very temporary fix.
-
 
 
 static float X_MID, Y_MID, Z_MID; //Purely for translational purposes.
 float FPS = 2000; //If you set the FPS to lower than this, you get some weird collisions (collisions with more than one wall).
 static float RAD = 15;
 static float RES = 10;
-float FRICTION = 0.001;
+float FRICTION = 0.01;
 Cloth c;
 Bumper b1, b2, b3, b4, b5, b6;
 Ball testBall;

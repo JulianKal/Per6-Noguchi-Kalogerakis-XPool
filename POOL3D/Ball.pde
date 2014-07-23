@@ -3,6 +3,8 @@
 public class Ball extends Mass{
   Point center;
   public final float ENERGY_LOSS_CONSTANT;
+  public float _xspin,_yspin,_zspin; // x,y,z are axes of rotation
+  public float _xrotation,_yrotation,_zrotation; //The current rotation
   //////////////////////////////////////////////////////////////////////////
   public PImage skin;
   private int sDetail = 60;  // Sphere detail setting
@@ -34,6 +36,11 @@ public class Ball extends Mass{
   
   public void update(){
     insertCollisions();
+    insertSpinEffect();
+    _xrotation+=_xspin;
+    _yrotation+=_yspin;
+    _zrotation+=_zspin;
+    applyFriction(); //decrease in spin rotation speed
   }
   
   public void renderSurfaces(int r,int g,int b){
@@ -41,6 +48,9 @@ public class Ball extends Mass{
     fill(180, 10, 10);
     noStroke();
     translate(center.getX(),center.getY(),center.getZ());
+    rotateX(_xrotation);
+    rotateY(_yrotation);
+    rotateZ(_zrotation);
     sphere(R);
     //renderGlobe();
     popMatrix();
@@ -141,8 +151,35 @@ public class Ball extends Mass{
   r = b(v - 2(v • n)n)
   */
   
+  //Spin///////////////////////////////////////////////////////////////////////////////////
+  public void insertSpinEffect(){
+    
+    
+  }
+  
+  public void applyFriction(){ //For decreasing the spin on the ball
+    _xspin *= 0.99;
+    _yspin *= 0.99;
+    _zspin *= 0.99;
+    if(_xspin<0.01){
+      _xspin=0;
+    }if(_yspin<0.01){
+      _yspin=0;
+    }if(_zspin<0.01){
+      _zspin=0;
+    }
+    println(_xspin + " " + _yspin + " " + _zspin);
+  }
+  
+  
+  
+  /////////////////////////////////////////////////////////////////////////////////////////
+  
   /////Getters&Setters//////////////////////////////////////////////////////////////////////
   public Point getCenter(){ return center;}
+  public float xspin(){ return _xspin;}
+  public float yspin(){ return _yspin;}
+  public float zspin(){ return _zspin;}
   
   /////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////DO NOT ENTER///////////////////////////////////////////

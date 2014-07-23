@@ -419,7 +419,31 @@ public class World{
     
     ///////////////////////////////////////////////////////////////////////
     
-    //Bumpers//////////////////////////////////////////////////////////////
+    //Bumpers//and//Holes//////////////////////////////////////////////////
+    segments.add(new Segment(w1,w2));
+    segments.add(new Segment(w1,w3));
+    segments.add(new Segment(w4,w5));
+    segments.add(new Segment(w4,w6));
+    segments.add(new Segment(w5,w6));
+    segments.add(new Segment(w7,w8));
+    segments.add(new Segment(w7,w9));
+    segments.add(new Segment(w8,w9));
+    segments.add(new Segment(w10,w11));
+    segments.add(new Segment(w10,w12));
+    segments.add(new Segment(w11,w12));
+    segments.add(new Segment(w13,w14));
+    segments.add(new Segment(w13,w15));
+    segments.add(new Segment(w14,w15));
+    segments.add(new Segment(w16,w17));
+    segments.add(new Segment(w16,w18));
+    segments.add(new Segment(w17,w18));
+    segments.add(new Segment(w19,w20));
+    segments.add(new Segment(w19,w21));
+    segments.add(new Segment(w20,w21));
+    segments.add(new Segment(w22,w23));
+    segments.add(new Segment(w22,w24));
+    segments.add(new Segment(w23,w24));
+    
     segments.add(new Segment(b2,b3));
     segments.add(new Segment(b1,b5));
     segments.add(new Segment(b4,b6));
@@ -449,9 +473,39 @@ public class World{
   }
   
   public void initBalls(){
+<<<<<<< HEAD
     for(int x=0;x<145;x++){
       balls.add(new Ball(random(800)-200,random(800)-200,random(800)-200,loadImage("" + x + ".png"),random(30)-15,random(30)-15,random(30)-15));
     }
+=======
+    /*
+    for(int x=0;x<15;x++){
+      balls.add(new Ball(random(800)-200,random(800)-200,random(800)-200,loadImage("" + x + ".png"),random(30)-15,random(30)-15,random(30)-15));
+    }
+    */
+    balls.add(new Ball(0,0,0,loadImage("0.png")));
+    /*
+    balls.add(new Ball(-200,-200,-200,loadImage("1.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("2.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("3.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("4.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("5.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("6.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("7.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("8.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("9.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("10.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("11.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("12.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("13.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("14.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("15.png")));   
+    balls.add(new Ball(-200,-200,-200,loadImage("16.png")));
+    balls.add(new Ball(-200,-200,-200,loadImage("17.png")));
+    balls.add(new Ball(-200,-200,-200,loadImage("18.png")));
+    balls.add(new Ball(-200,-200,-200,loadImage("19.png")));
+    */
+>>>>>>> FETCH_HEAD
   }
   
   public void objectify(){
