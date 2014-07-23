@@ -11,30 +11,12 @@ public class ViewManager{
   
   public void update(){
     keyListener();
-<<<<<<< HEAD
     translate(0,0,0); //Center of rotation
     println("ctrX " + (int)centerX); 
     println("ctrY " + (int)centerY); 
     println("ctrZ " + (int)centerZ);
     viewPosition();
     translate(centerX,centerY,centerZ);
-=======
-    //translate(0,0,0); //Center of rotation
-    translate(centerX,centerY,-centerZ);
-    
-    if(viewNum == 1){
-      viewPosition();
-    }
-    if(viewNum == 2){
-      viewAngleVert = .45;
-      shootingView();
-    }
-    if(viewNum == 3){
-      viewAngleVert = 0;
-      topView();
-    }
-//    translate(world.getBalls().get(0).getCenter().getX(),world.getBalls().get(0).getCenter().getY(),world.getBalls().get(0).getCenter().getZ());
->>>>>>> FETCH_HEAD
   }
   
   //Horizontal Rotation
@@ -44,16 +26,13 @@ public class ViewManager{
     if(abs(mousePrecisionAngleHoriz) > .46 && !shooting){
       mouseRotatorAngleHoriz += mousePrecisionAngleHoriz/20;
     }
+    
     rotateY(-viewAngleHoriz);
     
     //Vertical Rotation
     viewAngleVert = mousePrecisionAngleVert + mouseRotatorAngleVert;
     mousePrecisionAngleVert = (mouseY-Y_MID) * 0.001;
-<<<<<<< HEAD
     if(abs(mousePrecisionAngleVert) > .32 && !shooting){
-=======
-    if(abs(mousePrecisionAngleVert) > 0.32){
->>>>>>> FETCH_HEAD
       mouseRotatorAngleVert += mousePrecisionAngleVert/20*.46/.32;
     }
     rotateY(-viewAngleHoriz);
@@ -62,8 +41,6 @@ public class ViewManager{
   }
   
   void keyListener(){
-    
-    
     if(keyPressed){
       if(key=='w' && centerY<200){
         centerY+=4;
