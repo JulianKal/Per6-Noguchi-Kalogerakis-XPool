@@ -23,7 +23,7 @@ public class Ball extends Mass{
     setMovable(true);
     setMass(6);
     ENERGY_LOSS_CONSTANT = 1;
-    initializeSphere(60);
+    //initializeSphere(60);
   }
   public Ball(float x, float y, float z, PImage skin){
     this(x,y,z,skin,0,0,0);
@@ -42,7 +42,7 @@ public class Ball extends Mass{
     noStroke();
     translate(center.getX(),center.getY(),center.getZ());
     sphere(R);
-    renderGlobe();
+    //renderGlobe();
     popMatrix();
   }
   
