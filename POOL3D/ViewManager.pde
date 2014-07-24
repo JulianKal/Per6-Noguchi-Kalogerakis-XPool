@@ -9,14 +9,19 @@ public class ViewManager{
     shooting = false;
   }
   
-  public void update(){
+  public void update(float x, float y, float z){
     keyListener();
-    translate(0,0,0); //Center of rotation
+    centerX = x;
+    centerY = y;
+    centerZ = z;
+    camera(x, y, z, 100, 100, 100, 0, 1, 0);
+    //translate(0,0,0); //Center of rotation
     println("ctrX " + (int)centerX); 
     println("ctrY " + (int)centerY); 
     println("ctrZ " + (int)centerZ);
     viewPosition();
-    translate(centerX,centerY,centerZ);
+    //translate(centerX,centerY,centerZ);
+    //Center of rotation
   }
   
   //Horizontal Rotation
@@ -27,7 +32,9 @@ public class ViewManager{
       mouseRotatorAngleHoriz += mousePrecisionAngleHoriz/20;
     }
     
+    //rotateX(-viewAngleVert);
     rotateY(-viewAngleHoriz);
+    //rotateX(viewAngleVert);
     
     //Vertical Rotation
     viewAngleVert = mousePrecisionAngleVert + mouseRotatorAngleVert;
@@ -35,9 +42,12 @@ public class ViewManager{
     if(abs(mousePrecisionAngleVert) > .32 && !shooting){
       mouseRotatorAngleVert += mousePrecisionAngleVert/20*.46/.32;
     }
-    rotateY(-viewAngleHoriz);
+    
+    //rotateY(-viewAngleHoriz);
     rotateX(-(viewAngleVert + 1));
-    rotateY(viewAngleHoriz);
+    //rotateY(viewAngleHoriz);
+    
+    
   }
   
   void keyListener(){
@@ -45,19 +55,19 @@ public class ViewManager{
       if(key=='w' && centerY<200){
         centerY+=4;
       }
-      if(key=='a' && centerX>-200){
+      if(key=='a' && centerX>-1200){
         centerX-=4;
       }
-      if(key=='d' && centerX<200){
+      if(key=='d' && centerX<1200){
         centerX+=4;
       }
-      if(key=='s' && centerY>-200){
+      if(key=='s' && centerY>-1200){
         centerY-=4;
       }
-      if(key=='z' && centerZ<200){
+      if(key=='z' && centerZ<1200){
         centerZ+=4;
       }
-      if(key=='x' && centerZ>-200){
+      if(key=='x' && centerZ>-1200){
         centerZ-=4;
       }
       if(key==' '){

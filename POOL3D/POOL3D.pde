@@ -89,7 +89,7 @@ void draw(){
   lighting();
   translate(X_MID, Y_MID, Z_MID);
   background(0, 0, 0, 30);
-  worldViewer.update();
+  worldViewer.update(world.getBalls().get(0).getCenter().getX(), world.getBalls().get(0).getCenter().getY(), world.getBalls().get(0).getCenter().getZ());
   renderSurfaces();
   update();
 }

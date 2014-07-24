@@ -473,17 +473,18 @@ public class World{
   }
   
   public void initBalls(){
-<<<<<<< HEAD
+    /*
     for(int x=0;x<145;x++){
       balls.add(new Ball(random(800)-200,random(800)-200,random(800)-200,loadImage("" + x + ".png"),random(30)-15,random(30)-15,random(30)-15));
     }
-=======
+    */
+
     /*
     for(int x=0;x<15;x++){
       balls.add(new Ball(random(800)-200,random(800)-200,random(800)-200,loadImage("" + x + ".png"),random(30)-15,random(30)-15,random(30)-15));
     }
     */
-    balls.add(new Ball(0,0,0,loadImage("0.png")));
+    balls.add(new Ball(0,0,0,loadImage("0.png"), 16, 16, 15));
     /*
     balls.add(new Ball(-200,-200,-200,loadImage("1.png")));   
     balls.add(new Ball(-200,-200,-200,loadImage("2.png")));   
@@ -505,7 +506,6 @@ public class World{
     balls.add(new Ball(-200,-200,-200,loadImage("18.png")));
     balls.add(new Ball(-200,-200,-200,loadImage("19.png")));
     */
->>>>>>> FETCH_HEAD
   }
   
   public void objectify(){
