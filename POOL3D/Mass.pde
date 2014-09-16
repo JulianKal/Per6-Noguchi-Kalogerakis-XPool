@@ -7,7 +7,7 @@ public abstract class Mass extends Collidable{
   }
   
   public void insertKinetic(float mass,PVector v){
-    println("\tinsertKinetic( " + (int)mass + ", " + v + ")");
+    //println("\tinsertKinetic( " + (int)mass + ", " + v + ")");
     insertKinetic(mass,v.x,v.y,v.z);
   }
   

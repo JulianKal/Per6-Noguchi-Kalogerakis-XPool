@@ -66,7 +66,7 @@ public class Surface extends Collidable{
     }else if(c!=0){
       spare = new Point(0,p.getX()+1,(d-(b*(p.getY()+1)))/c);
     }else{
-      println("Genji doesn't do cs the right way.");
+      //println("Genji doesn't do cs the right way.");
     }
     int intersections = 0;
     for(int x=1;x<points.size();x++){

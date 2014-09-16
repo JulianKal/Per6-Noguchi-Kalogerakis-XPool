@@ -6,7 +6,7 @@
 
 static float X_MID, Y_MID, Z_MID; //Purely for translational purposes.
 float FPS = 2000; //If you set the FPS to lower than this, you get some weird collisions (collisions with more than one wall).
-static float RAD = 15;
+static float RAD = 25;
 static float RES = 10;
 float FRICTION = 0.01;
 Cloth c;
@@ -87,9 +87,9 @@ void draw(){
   smooth();
   fill(0, 0, 0, 180);
   lighting();
-  translate(X_MID, Y_MID, Z_MID);
+  //translate(X_MID, Y_MID, Z_MID);
   background(0, 0, 0, 30);
-  worldViewer.update(world.getBalls().get(0).getCenter().getX(), world.getBalls().get(0).getCenter().getY(), world.getBalls().get(0).getCenter().getZ());
+  worldViewer.update(X_MID,Y_MID,Z_MID);
   renderSurfaces();
   update();
 }

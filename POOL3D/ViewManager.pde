@@ -9,37 +9,41 @@ public class ViewManager{
     shooting = false;
   }
   
-  public void update(){
+  public void update(float x, float y, float z){
     keyListener();
-    translate(0,0,0); //Center of rotation
-    println("ctrX " + (int)centerX); 
+    centerX = x;
+    centerY = y;
+    centerZ = z;
+    println("\nctrX " + (int)centerX); 
     println("ctrY " + (int)centerY); 
     println("ctrZ " + (int)centerZ);
     viewPosition();
-    translate(centerX,centerY,centerZ);
+    
+    translate(centerX, centerY, centerZ);
   }
   
   //Horizontal Rotation
   public void viewPosition(){
+     
     viewAngleHoriz = mousePrecisionAngleHoriz + mouseRotatorAngleHoriz;
     mousePrecisionAngleHoriz = (mouseX-X_MID) * 0.001;
     if(abs(mousePrecisionAngleHoriz) > .46 && !shooting){
       mouseRotatorAngleHoriz += mousePrecisionAngleHoriz/20;
     }
-    
-    rotateY(-viewAngleHoriz);
+   
+    rotateY(viewAngleHoriz);
     
     //Vertical Rotation
     viewAngleVert = mousePrecisionAngleVert + mouseRotatorAngleVert;
     mousePrecisionAngleVert = (mouseY-Y_MID) * 0.001;
     if(abs(mousePrecisionAngleVert) > .32 && !shooting){
       mouseRotatorAngleVert += mousePrecisionAngleVert/20*.46/.32;
-    }
-    
-    rotateY(-viewAngleHoriz);
-    rotateX(-(viewAngleVert + 1));
-    rotateY(viewAngleHoriz);
-    
+   }
+   
+   rotateY(-viewAngleHoriz);
+   rotateX(viewAngleVert);
+   rotateY(viewAngleHoriz);
+   
   }
   
   void keyListener(){
